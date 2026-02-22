@@ -67,14 +67,13 @@ function DockItemComponent({
       style={{ scale, y: translateY }}
       onMouseEnter={() => setTooltip(true)}
       onMouseLeave={() => setTooltip(false)}
-      className={`relative flex items-center justify-center rounded-2xl transition-colors duration-200 ${baseStyle} ${
-        item.isLogo ? 'w-12 h-12 p-0' : item.isCTA ? 'w-12 h-12' : 'w-12 h-12'
-      }`}
+      className={`relative flex items-center justify-center rounded-2xl transition-colors duration-200 ${baseStyle} ${item.isLogo ? 'w-12 h-12 p-0' : item.isCTA ? 'w-12 h-12' : 'w-12 h-12'
+        }`}
     >
       {item.isLogo ? (
         <div className="relative w-9 h-9">
           <Image
-            src="/Gemini_Generated_Image_2i7jnj2i7jnj2i7j.png"
+            src="/logo2.png"
             alt="Polpo AI"
             fill
             className="object-contain"
@@ -131,11 +130,10 @@ function MobileDock() {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 }}
-                    className={`flex items-center gap-3 px-4 py-2.5 rounded-2xl backdrop-blur-xl text-sm font-semibold ${
-                      item.isCTA
-                        ? 'bg-[#00d4aa] text-[#000b1e]'
-                        : 'bg-white/10 text-white border border-white/10'
-                    }`}
+                    className={`flex items-center gap-3 px-4 py-2.5 rounded-2xl backdrop-blur-xl text-sm font-semibold ${item.isCTA
+                      ? 'bg-[#00d4aa] text-[#000b1e]'
+                      : 'bg-white/10 text-white border border-white/10'
+                      }`}
                   >
                     {Icon && <Icon size={16} />}
                     {item.label}
@@ -168,7 +166,7 @@ function MobileDock() {
       <div className="flex md:hidden fixed top-5 left-5 z-50">
         <a href="#" className="flex items-center gap-2.5">
           <div className="relative w-8 h-8">
-            <Image src="/Gemini_Generated_Image_2i7jnj2i7jnj2i7j.png" alt="Polpo AI" fill className="object-contain" />
+            <Image src="/logo2.png" alt="Polpo AI" fill className="object-contain" />
           </div>
           <span className="text-sm font-bold text-white">
             Polpo <span style={{ background: 'linear-gradient(135deg, #bc13fe, #00d4aa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>AI</span>
@@ -192,7 +190,7 @@ export default function DockNav() {
         transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
         onMouseMove={(e) => mouseX.set(e.clientX)}
         onMouseLeave={() => mouseX.set(Infinity)}
-        onFocus={() => {}}
+        onFocus={() => { }}
         aria-label="Navigation dock"
       >
         <div

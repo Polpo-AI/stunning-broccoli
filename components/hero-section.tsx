@@ -177,7 +177,8 @@ export default function HeroSection() {
               <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight">
                 <span className="text-white block">
                   <LaserText delay={0.5} charDelay={0.04} scanColor="#00d4aa" once={false}>
-                    Un cervello
+                    Il tuo business,
+                    automatizzato
                   </LaserText>
                 </span>
                 <span
@@ -190,13 +191,11 @@ export default function HeroSection() {
                   }}
                 >
                   <LaserText delay={0.9} charDelay={0.06} scanColor="#00a8ff" once={false}>
-                    digitale.
+                    online e
                   </LaserText>
                 </span>
                 <span className="text-white text-4xl lg:text-5xl xl:text-6xl font-semibold leading-tight block">
-                  <LaserText delay={1.2} charDelay={0.025} scanColor="#00d4aa" once={false}>
-                    Otto braccia operative per il tuo business.
-                  </LaserText>
+
                 </span>
               </h1>
             </motion.div>
@@ -205,9 +204,7 @@ export default function HeroSection() {
               variants={itemVariants}
               className="text-lg text-white/55 leading-relaxed max-w-xl"
             >
-              Non costruiamo semplici siti. Creiamo il tuo{' '}
-              <span className="text-[#00d4aa] font-medium">sistema nervoso digitale</span>
-              {' '}— un ecosistema intelligente dove ogni automazione lavora in perfetta sinergia.
+              Creiamo un sito che porta contatti e aggiungiamo automazioni e chatbot che rispondono al posto tuo. Così risparmi tempo, riduci errori e segui i clienti più velocemente.
             </motion.p>
 
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
@@ -217,7 +214,7 @@ export default function HeroSection() {
                 className="px-8 py-4 rounded-xl bg-[#00d4aa] text-[#000b1e] font-bold text-base glow-teal"
               >
                 <span className="flex items-center gap-2">
-                  Attiva il tuo sistema
+                  Ricevi una consulenza gratuia
                   <ArrowRight size={18} />
                 </span>
               </ShimmerButton>

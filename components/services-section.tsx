@@ -14,11 +14,11 @@ import {
   MessageSquare,
   GitBranch,
   TrendingUp,
-  Puzzle,
-  BarChart3,
-  Brain,
-  Rocket,
+  X,
+  CheckCircle2,
+  ArrowRight,
 } from 'lucide-react';
+import { Button } from './ui/button';
 import LaserText from './effects/laser-text';
 
 type Ease = [number, number, number, number];
@@ -26,92 +26,112 @@ const EASE: Ease = [0.22, 1, 0.36, 1];
 
 const SERVICES = [
   {
-    id: 1,
+    id: 'siti-web',
     num: '01',
     icon: Globe,
     name: 'Siti Web',
-    tagline: 'Presenza digitale premium',
+    tagline: 'Un sito chiaro e veloce che trasforma visite in contatti.',
     description:
-      'Progettiamo siti ad alte performance — veloci, SEO-ottimizzati e convertibili. Non un sito web, ma una macchina da lead.',
+      'Costruiamo un sito che spiega bene cosa fai e guida le persone a contattarti. Messaggio chiaro, struttura semplice, prestazioni veloci.',
+    extendedDescription:
+      'Costruiamo un sito che spiega bene cosa fai e guida le persone a contattarti. Messaggio chiaro, struttura semplice, prestazioni veloci.',
+    badges: ['Conversione', 'Performance', 'Struttura'],
+    isIdealeSe: [
+      'Hai un sito vecchio che non porta richieste',
+      'Le persone visitano ma non ti contattano',
+      'Vuoi comunicare meglio il tuo valore',
+    ],
+    whatYouGet: [
+      'Pagina chiara con call-to-action efficaci',
+      'Struttura pensata per convertire (contatti, prenotazioni, richieste)',
+      'Sito veloce e pronto per campagne',
+    ],
+    practicalExamples: [
+      { title: 'Landing con form', desc: 'email automatica + notifica immediata' },
+      { title: 'Pagina servizi', desc: 'pulsante WhatsApp / Prenota call' },
+    ],
     accent: '#00d4aa',
-    size: 'large',
   },
   {
-    id: 2,
+    id: 'chatbot',
     num: '02',
     icon: MessageSquare,
-    name: 'Chatbot AI',
-    tagline: 'Assistenza 24/7 intelligente',
+    name: 'Chatbot',
+    tagline: 'Risposte 24/7 e contatti qualificati, senza perdere tempo.',
     description:
-      'Chatbot addestrati sul tuo business. Gestiscono obiezioni, qualificano lead e prenotano appuntamenti in autonomia.',
+      'Un assistente digitale che risponde subito alle domande più frequenti e raccoglie i dati utili, così ricevi solo contatti interessati.',
+    extendedDescription:
+      'Un assistente digitale che risponde subito alle domande più frequenti e raccoglie i dati utili, così ricevi solo contatti interessati.',
+    badges: ['24/7', 'FAQ', 'Lead'],
+    isIdealeSe: [
+      'Ricevi sempre le stesse domande',
+      'Non riesci a rispondere subito',
+      'Vuoi filtrare i contatti prima di chiamarli',
+    ],
+    whatYouGet: [
+      'Risposte 24/7 su servizi, prezzi e FAQ',
+      'Raccolta contatti (nome, email, bisogno) in modo ordinato',
+      'Qualificazione: capisci subito chi è pronto a parlare',
+    ],
+    practicalExamples: [
+      { title: 'FAQ + proposta di call', desc: 'risposta immediata e invito a parlare' },
+      { title: 'Richiesta preventivo', desc: 'raccolta info → invio al team' },
+    ],
     accent: '#00a8ff',
-    size: 'normal',
   },
   {
-    id: 3,
+    id: 'automazioni',
     num: '03',
     icon: GitBranch,
-    name: 'Automazioni CRM',
-    tagline: 'Pipeline che si muovono da sole',
+    name: 'Automazioni',
+    tagline: 'Meno attività manuali: richieste, follow-up e appuntamenti in automatico.',
     description:
-      'Integriamo e automatizziamo il tuo CRM per eliminare le attività ripetitive e aumentare il tasso di chiusura.',
+      'Automatizziamo le attività ripetitive che rubano tempo: risposte iniziali, promemoria, follow-up e aggiornamento contatti.',
+    extendedDescription:
+      'Automatizziamo le attività ripetitive che rubano tempo: risposte iniziali, promemoria, follow-up e aggiornamento contatti.',
+    badges: ['Follow-up', 'Reminder', 'Workflow'],
+    isIdealeSe: [
+      'Dimentichi follow-up o richiami',
+      'Fai tutto con copia-incolla',
+      'Hai troppi passaggi manuali',
+    ],
+    whatYouGet: [
+      'Meno attività manuali e meno errori',
+      'Risposte e follow-up più veloci',
+      'Processi standardizzati e tracciabili',
+    ],
+    practicalExamples: [
+      { title: 'Nuova richiesta', desc: 'email + task + reminder dopo 24h' },
+      { title: 'Prenotazione call', desc: 'conferma + promemoria automatico' },
+    ],
     accent: '#00d4aa',
-    size: 'normal',
   },
   {
-    id: 4,
+    id: 'crm-funnel',
     num: '04',
     icon: TrendingUp,
-    name: 'Funnel',
-    tagline: 'Percorsi di vendita convertenti',
+    name: 'CRM & Funnel',
+    tagline: 'Ordine nei contatti e percorso fino alla vendita.',
     description:
-      'Costruiamo funnel di acquisizione multi-step con logiche comportamentali per trasformare i visitatori in clienti.',
+      'Mettiamo ordine nei contatti e nel percorso fino alla vendita. Sai sempre a che punto è ogni richiesta e cosa fare dopo.',
+    extendedDescription:
+      'Mettiamo ordine nei contatti e nel percorso fino alla vendita. Sai sempre a che punto è ogni richiesta e cosa fare dopo.',
+    badges: ['Tracking', 'Stato', 'Vendite'],
+    isIdealeSe: [
+      'Usi Excel/WhatsApp per gestire clienti',
+      'Non sai a che punto sono le trattative',
+      'Vuoi più controllo sul commerciale',
+    ],
+    whatYouGet: [
+      'Contatti organizzati e storico conversazioni',
+      'Percorso semplice: da contatto a cliente',
+      'Visibilità su richieste e risultati',
+    ],
+    practicalExamples: [
+      { title: 'Lead', desc: 'stato ‘Da richiamare’ → follow-up programmato' },
+      { title: 'Cliente caldo', desc: 'sequenza messaggi + appuntamento' },
+    ],
     accent: '#00a8ff',
-    size: 'normal',
-  },
-  {
-    id: 5,
-    num: '05',
-    icon: Puzzle,
-    name: 'Integrazioni',
-    tagline: 'Ecosistema connesso',
-    description:
-      'Connettiamo tutti i tuoi strumenti — CRM, e-commerce, payment gateway, calendari — in un flusso unico e sincronizzato.',
-    accent: '#00d4aa',
-    size: 'normal',
-  },
-  {
-    id: 6,
-    num: '06',
-    icon: BarChart3,
-    name: 'Analytics',
-    tagline: 'Decisioni basate sui dati',
-    description:
-      'Dashboard centralizzate che aggregano dati da tutte le fonti. Vedi cosa funziona e ottimizza in tempo reale.',
-    accent: '#00a8ff',
-    size: 'large',
-  },
-  {
-    id: 7,
-    num: '07',
-    icon: Brain,
-    name: 'Supporto AI',
-    tagline: "L'AI come risorsa interna",
-    description:
-      'Agenti AI personalizzati per il tuo team. Rispondono, analizzano documenti, generano report e supportano le vendite.',
-    accent: '#00d4aa',
-    size: 'normal',
-  },
-  {
-    id: 8,
-    num: '08',
-    icon: Rocket,
-    name: 'Scaling',
-    tagline: 'Crescita sistematica',
-    description:
-      'Strategie e architetture scalabili che permettono al tuo business di crescere senza aumentare i costi operativi.',
-    accent: '#00a8ff',
-    size: 'normal',
   },
 ];
 
@@ -182,22 +202,26 @@ function GlitchNumber({ num, accent }: { num: string; accent: string }) {
 function TiltCard({
   service,
   index,
+  onClick,
+  isHidden,
 }: {
   service: (typeof SERVICES)[0];
   index: number;
+  onClick: () => void;
+  isHidden: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
 
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
-  const rotateX = useSpring(useTransform(rawY, [-0.5, 0.5], [10, -10]), {
-    stiffness: 400,
-    damping: 35,
+  const rotateX = useSpring(useTransform(rawY, [-0.5, 0.5], [6, -6]), {
+    stiffness: 300,
+    damping: 30,
   });
-  const rotateY = useSpring(useTransform(rawX, [-0.5, 0.5], [-10, 10]), {
-    stiffness: 400,
-    damping: 35,
+  const rotateY = useSpring(useTransform(rawX, [-0.5, 0.5], [-6, 6]), {
+    stiffness: 300,
+    damping: 30,
   });
   const beamX = useTransform(rawX, [-0.5, 0.5], ['0%', '100%']);
   const beamY = useTransform(rawY, [-0.5, 0.5], ['0%', '100%']);
@@ -206,8 +230,10 @@ function TiltCard({
     (e: React.MouseEvent<HTMLDivElement>) => {
       if (!ref.current) return;
       const rect = ref.current.getBoundingClientRect();
-      rawX.set((e.clientX - rect.left) / rect.width - 0.5);
-      rawY.set((e.clientY - rect.top) / rect.height - 0.5);
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      rawX.set(x);
+      rawY.set(y);
     },
     [rawX, rawY]
   );
@@ -223,16 +249,25 @@ function TiltCard({
   return (
     <motion.div
       ref={ref}
+      layoutId={`card-${service.id}`}
       style={{
         rotateX,
         rotateY,
         transformPerspective: 1200,
         transformStyle: 'preserve-3d',
       }}
+      animate={{
+        opacity: isHidden ? 0 : 1,
+        scale: isHidden ? 0.95 : hovered ? 1.02 : 1,
+        pointerEvents: isHidden ? 'none' : 'auto',
+      }}
+      whileHover={{ y: -4 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={() => setHovered(true)}
-      className="relative rounded-2xl h-full cursor-pointer"
+      onClick={onClick}
+      className="relative rounded-2xl h-full cursor-pointer group"
     >
       <motion.div
         className="relative h-full rounded-2xl overflow-hidden flex flex-col"
@@ -301,27 +336,34 @@ function TiltCard({
             <GlitchNumber num={service.num} accent={hovered ? service.accent : 'rgba(255,255,255,0.2)'} />
           </div>
 
-          <h3 className="text-base font-bold text-white mb-1 leading-tight">
+          <motion.h3
+            layoutId={`title-${service.id}`}
+            className="text-lg font-bold text-white mb-2 leading-tight group-hover:text-[#00d4aa] transition-colors"
+          >
             {service.name}
-          </h3>
-          <p
-            className="text-[11px] font-semibold tracking-wider uppercase mb-3"
+          </motion.h3>
+
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            {service.badges.map((badge) => (
+              <span
+                key={badge}
+                className="text-[9px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md border border-white/5 bg-white/[0.03] text-white/40 group-hover:border-[#00d4aa]/20 group-hover:text-[#00d4aa]/60 transition-colors"
+              >
+                {badge}
+              </span>
+            ))}
+          </div>
+
+          <motion.p
+            layoutId={`desc-${service.id}`}
+            className="text-xs leading-relaxed flex-1"
             style={{
-              color: hovered ? service.accent : 'rgba(255,255,255,0.3)',
+              color: hovered ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.35)',
               transition: 'color 0.3s ease',
             }}
           >
             {service.tagline}
-          </p>
-          <p
-            className="text-xs leading-relaxed flex-1"
-            style={{
-              color: hovered ? 'rgba(255,255,255,0.65)' : 'rgba(255,255,255,0.35)',
-              transition: 'color 0.3s ease',
-            }}
-          >
-            {service.description}
-          </p>
+          </motion.p>
 
           <div className="mt-4 flex items-center justify-between">
             <motion.div
@@ -487,12 +529,54 @@ const cardVariants: Variants = {
 };
 
 export default function ServicesSection() {
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const activeService = SERVICES.find((s) => s.id === activeId);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!containerRef.current) return;
+    const { left, top } = containerRef.current.getBoundingClientRect();
+    mouseX.set(e.clientX - left);
+    mouseY.set(e.clientY - top);
+  }, [mouseX, mouseY]);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActiveId(null);
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
+
+  useEffect(() => {
+    if (activeId) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [activeId]);
+
   return (
     <section
       id="servizi"
-      className="py-28 relative overflow-hidden"
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      className="py-28 relative overflow-hidden group/section"
       style={{ background: 'transparent' }}
     >
+      {/* Spotlight Effect (Desktop Only) */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover/section:opacity-100 transition-opacity duration-500 hidden lg:block"
+        style={{
+          background: useTransform(
+            [mouseX, mouseY],
+            ([x, y]) => `radial-gradient(600px circle at ${x}px ${y}px, rgba(0, 212, 170, 0.08), transparent 40%)`
+          ),
+        }}
+      />
+
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute inset-0 opacity-[0.045]"
@@ -506,7 +590,7 @@ export default function ServicesSection() {
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-t from-[#00a8ff]/40 to-transparent" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -528,7 +612,7 @@ export default function ServicesSection() {
                 fontFamily: 'JetBrains Mono, monospace',
               }}
             >
-              I Tentacoli Operativi
+              I nostri Servizi
             </p>
             <motion.div
               className="w-8 h-px"
@@ -538,13 +622,10 @@ export default function ServicesSection() {
             />
           </div>
 
-          <h2 className="text-4xl lg:text-5xl font-bold mb-5 leading-tight">
-            <span className="text-white block">
-              <LaserText charDelay={0.05} scanColor="#00d4aa">
-                Otto braccia.
-              </LaserText>
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+            <span className="text-white block mb-2">
+              Costruiamo il tuo sistema digitale
             </span>
-            <br />
             <span
               style={{
                 background: 'linear-gradient(135deg, #00d4aa 0%, #00a8ff 100%)',
@@ -553,36 +634,199 @@ export default function ServicesSection() {
                 backgroundClip: 'text',
               }}
             >
-              Un unico sistema.
+              in 4 parti collegate tra loro.
             </span>
           </h2>
-          <p className="text-white/40 text-base max-w-xl mx-auto leading-relaxed tracking-wide">
-            Ogni servizio è un tentacolo specializzato. Tutti connessi al core centrale,
-            tutti sincronizzati, tutti orientati a un obiettivo: la crescita del tuo business.
-          </p>
+
+          <div className="flex items-center justify-center gap-3 font-mono text-[10px] tracking-[0.2em] text-white/30 uppercase">
+            <span>Traffico</span>
+            <ArrowRight size={10} className="text-[#00d4aa]/40" />
+            <span>Conversazione</span>
+            <ArrowRight size={10} className="text-[#00d4aa]/40" />
+            <span>Automazione</span>
+            <ArrowRight size={10} className="text-[#00d4aa]/40" />
+            <span>Vendita</span>
+            <motion.span
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{ duration: 0.8, repeat: Infinity }}
+              className="w-1.5 h-3 bg-[#00d4aa]/50 inline-block ml-1"
+            />
+          </div>
         </motion.div>
 
         <div className="relative">
           <TentaclesSVG />
 
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-60px' }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 relative z-10"
-          >
-            {SERVICES.map((service, index) => (
-              <motion.div
-                key={service.id}
-                variants={cardVariants}
-                className="h-full min-h-[220px]"
-              >
-                <TiltCard service={service} index={index} />
-              </motion.div>
-            ))}
-          </motion.div>
+          <div className="relative min-h-[500px]">
+            <AnimatePresence mode="wait">
+              {!activeId ? (
+                <motion.div
+                  key="grid"
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10"
+                >
+                  {SERVICES.map((service, index) => (
+                    <motion.div
+                      key={service.id}
+                      variants={cardVariants}
+                      className="h-full min-h-[200px]"
+                    >
+                      <TiltCard
+                        service={service}
+                        index={index}
+                        onClick={() => setActiveId(service.id)}
+                        isHidden={activeId !== null && activeId !== service.id}
+                      />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="overlay"
+                  layoutId={`card-${activeId}`}
+                  className="absolute inset-0 z-20"
+                  transition={{ type: 'spring', stiffness: 350, damping: 35 }}
+                >
+                  <div
+                    className="h-full w-full rounded-2xl p-8 lg:p-12 relative overflow-auto border border-white/10"
+                    style={{
+                      background: 'rgba(0, 11, 30, 0.98)',
+                      backdropFilter: 'blur(12px)',
+                    }}
+                  >
+                    <button
+                      onClick={() => setActiveId(null)}
+                      className="absolute top-6 right-6 p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-white/50 hover:text-white z-30"
+                    >
+                      <X size={24} />
+                    </button>
+
+                    <div className="flex flex-col lg:flex-row gap-12 h-full relative z-20">
+                      <div className="flex-1 space-y-10">
+                        <div>
+                          <div className="flex items-center gap-5 mb-8">
+                            <motion.div
+                              layoutId={`icon-${activeId}`}
+                              className="w-16 h-16 rounded-2xl flex items-center justify-center border border-white/10"
+                              style={{ background: `${activeService?.accent}15`, borderColor: `${activeService?.accent}30` }}
+                            >
+                              {activeService && <activeService.icon size={32} style={{ color: activeService.accent }} />}
+                            </motion.div>
+                            <div>
+                              <p className="text-[10px] font-mono tracking-widest uppercase mb-1" style={{ color: activeService?.accent }}>
+                                SERVIZIO {activeService?.num}
+                              </p>
+                              <motion.h3
+                                layoutId={`title-${activeId}`}
+                                className="text-3xl font-bold text-white uppercase tracking-tight"
+                              >
+                                {activeService?.name}
+                              </motion.h3>
+                            </div>
+                          </div>
+
+                          <motion.p
+                            layoutId={`desc-${activeId}`}
+                            className="text-xl text-white leading-relaxed font-light mb-8"
+                          >
+                            {activeService?.extendedDescription}
+                          </motion.p>
+
+                          <div className="grid sm:grid-cols-2 gap-10">
+                            <div className="space-y-6">
+                              <h4 className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#00d4aa] flex items-center gap-2">
+                                <span className="w-4 h-px bg-[#00d4aa]/30" />
+                                Cosa ottieni
+                              </h4>
+                              <ul className="grid gap-4">
+                                {activeService?.whatYouGet.map((item, i) => (
+                                  <li key={i} className="flex items-start gap-4 text-white/80 group">
+                                    <CheckCircle2 size={18} className="text-[#00d4aa] mt-0.5 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                                    <span className="text-sm leading-relaxed">{item}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            <div className="space-y-6">
+                              <h4 className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#00a8ff] flex items-center gap-2">
+                                <span className="w-4 h-px bg-[#00a8ff]/30" />
+                                È ideale se
+                              </h4>
+                              <ul className="grid gap-4">
+                                {activeService?.isIdealeSe.map((item, i) => (
+                                  <li key={i} className="flex items-start gap-4 text-white/60 group">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-[#00a8ff] mt-2 flex-shrink-0 group-hover:scale-125 transition-transform" />
+                                    <span className="text-sm leading-relaxed">{item}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="lg:w-1/3 space-y-6">
+                        <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/5 space-y-8 h-full flex flex-col justify-between">
+                          <div className="space-y-8">
+                            <h4 className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/40">
+                              Esempi pratici
+                            </h4>
+                            <div className="space-y-5">
+                              {activeService?.practicalExamples.map((example, i) => (
+                                <div key={i} className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 group hover:border-white/10 transition-colors">
+                                  <p className="text-[10px] font-bold text-[#00a8ff] uppercase mb-2">
+                                    {example.title}
+                                  </p>
+                                  <p className="text-sm text-white/80 leading-relaxed font-light">
+                                    {example.desc}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="space-y-3 pt-6">
+                            <Button
+                              asChild
+                              className="w-full bg-[#00d4aa] hover:bg-[#00d4aa]/90 text-[#000b1e] font-bold h-12 rounded-xl group"
+                            >
+                              <a href="#contatti" className="flex items-center justify-center gap-2">
+                                Parliamone
+                                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                              </a>
+                            </Button>
+                            <Button
+                              onClick={() => setActiveId(null)}
+                              variant="ghost"
+                              className="w-full text-white/30 hover:text-white hover:bg-white/5 h-12 rounded-xl"
+                            >
+                              Torna ai servizi
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-20 text-center"
+        >
+          <p className="text-white/20 text-xs font-mono tracking-[0.3em] uppercase">
+            Non sono strumenti separati. È un unico sistema che lavora per te.
+          </p>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

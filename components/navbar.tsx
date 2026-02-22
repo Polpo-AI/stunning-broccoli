@@ -131,7 +131,7 @@ export default function Navbar() {
             transition={{ duration: 0.4 }}
           >
             <Image
-              src="/Gemini_Generated_Image_2i7jnj2i7jnj2i7j.png"
+              src="/logo2.png"
               alt="Polpo AI"
               fill
               className="object-contain"
