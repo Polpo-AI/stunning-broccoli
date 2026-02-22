@@ -296,9 +296,7 @@ export default function CTASection() {
               </h2>
 
               <p className="text-white/55 text-base leading-relaxed mb-10">
-                Parliamo del tuo business. In 30 minuti ti mostriamo come
-                costruire un'architettura AI che lavora per te — 24 ore su 24,
-                7 giorni su 7.
+                Parliamo del tuo business. In 30 minuti capiamo cosa automatizzare e da dove partire per costruire il tuo sistema nervoso digitale.
               </p>
 
               <div className="space-y-4">
@@ -394,7 +392,7 @@ export default function CTASection() {
                     />
                     <ElectricInput
                       label="Il tuo Business"
-                      placeholder="Raccontaci del tuo business e cosa vuoi automatizzare..."
+                      placeholder="Raccontaci della tua attività e di come possiamo aiutarti a crescere."
                       value={form.message}
                       onChange={(v) => setForm({ ...form, message: v })}
                       required

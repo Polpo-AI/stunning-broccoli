@@ -67,13 +67,13 @@ function DockItemComponent({
       style={{ scale, y: translateY }}
       onMouseEnter={() => setTooltip(true)}
       onMouseLeave={() => setTooltip(false)}
-      className={`relative flex items-center justify-center rounded-2xl transition-colors duration-200 ${baseStyle} ${item.isLogo ? 'w-12 h-12 p-0' : item.isCTA ? 'w-12 h-12' : 'w-12 h-12'
+      className={`relative flex items-center justify-center rounded-2xl transition-colors duration-200 ${baseStyle} ${item.isLogo ? 'w-16 h-16 p-0' : item.isCTA ? 'w-12 h-12' : 'w-12 h-12'
         }`}
     >
       {item.isLogo ? (
-        <div className="relative w-9 h-9">
+        <div className="relative w-14 h-14 flex items-center justify-center">
           <Image
-            src="/logo2.png"
+            src="/polpo-icona.png"
             alt="Polpo AI"
             fill
             className="object-contain"
@@ -165,8 +165,8 @@ function MobileDock() {
 
       <div className="flex md:hidden fixed top-5 left-5 z-50">
         <a href="#" className="flex items-center gap-2.5">
-          <div className="relative w-8 h-8">
-            <Image src="/logo2.png" alt="Polpo AI" fill className="object-contain" />
+          <div className="relative w-14 h-14 flex items-center justify-center">
+            <Image src="/polpo-icona.png" alt="Polpo AI" fill className="object-contain" />
           </div>
           <span className="text-sm font-bold text-white">
             Polpo <span style={{ background: 'linear-gradient(135deg, #bc13fe, #00d4aa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>AI</span>

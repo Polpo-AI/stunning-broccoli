@@ -6,9 +6,9 @@ import { motion, useInView } from 'framer-motion';
 import LaserText from './effects/laser-text';
 
 const STATS = [
-  { value: 50, suffix: '+', label: 'Aziende trasformate', color: '#00d4aa' },
+  { value: 50, suffix: '+', label: 'Clienti seguiti', color: '#00d4aa' },
   { value: 300, suffix: '%', label: 'ROI medio', color: '#00a8ff' },
-  { value: 8, suffix: '', label: 'Servizi integrati', color: '#00d4aa' },
+  { value: 4, suffix: '', label: 'Moduli integrati', color: '#00d4aa' },
   { value: 30, suffix: 'gg', label: 'Tempo medio di deploy', color: '#00a8ff' },
 ];
 
@@ -151,14 +151,14 @@ function HolographicCard() {
         <div className="absolute bottom-4 right-6 w-24 h-24 rounded-full bg-[#00a8ff] opacity-[0.08] blur-[30px]" />
       </div>
 
-      <div className="relative z-10 flex items-start gap-4">
+      <div className="relative z-10 flex items-center gap-6">
         <motion.div
-          className="relative w-16 h-16 flex-shrink-0"
+          className="relative w-24 h-24 flex-shrink-0"
           animate={hovered ? { scale: 1.08, rotate: [0, -3, 3, 0] } : {}}
           transition={{ duration: 0.5 }}
         >
           <Image
-            src="/logo2.png"
+            src="/polpo-icona.png"
             alt="Polpo AI"
             fill
             className="object-contain"

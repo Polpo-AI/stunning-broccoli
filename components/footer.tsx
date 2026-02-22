@@ -8,9 +8,8 @@ const LINKS = {
   Servizi: [
     { label: 'Siti Web', href: '#servizi' },
     { label: 'Chatbot AI', href: '#servizi' },
-    { label: 'Automazioni CRM', href: '#servizi' },
-    { label: 'Funnel', href: '#servizi' },
-    { label: 'Analytics', href: '#servizi' },
+    { label: 'Automazioni', href: '#servizi' },
+    { label: 'CRM & Funnel', href: '#servizi' },
   ],
   Agenzia: [
     { label: 'Come Funziona', href: '#come-funziona' },
@@ -157,12 +156,12 @@ export default function Footer() {
               transition={{ duration: 0.2 }}
             >
               <motion.div
-                className="relative w-10 h-10"
+                className="relative w-16 h-16"
                 whileHover={{ rotate: [0, -5, 5, 0], scale: 1.1 }}
                 transition={{ duration: 0.4 }}
               >
                 <Image
-                  src="/logo2.png"
+                  src="/polpo-icona.png"
                   alt="Polpo AI"
                   fill
                   className="object-contain"
@@ -183,7 +182,7 @@ export default function Footer() {
               </span>
             </motion.a>
             <p className="text-sm text-white/40 leading-relaxed max-w-xs mb-6">
-              Il tuo sistema nervoso digitale. Intelligenza centrale, otto braccia operative.
+              Il tuo sistema nervoso digitale. Intelligenza centrale, braccia operative integrate.
             </p>
 
             <div className="flex items-center gap-3">

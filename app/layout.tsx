@@ -8,6 +8,11 @@ const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space
 export const metadata: Metadata = {
   title: 'Polpo AI — Il tuo sistema nervoso digitale',
   description: 'Un cervello digitale. Otto braccia operative per il tuo business. Automazioni AI, Chatbot, CRM, Funnel e molto altro.',
+  icons: {
+    icon: '/polpo-icona.png',
+    shortcut: '/polpo-icona.png',
+    apple: '/polpo-icona.png',
+  },
 };
 
 export default function RootLayout({

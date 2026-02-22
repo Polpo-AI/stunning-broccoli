@@ -24,7 +24,7 @@ const coreVariants: Variants = {
 };
 
 const STAT_TARGETS = [
-  { value: 8, suffix: '', label: 'Servizi integrati', color: '#00d4aa' },
+  { value: 4, suffix: '', label: 'Moduli integrati', color: '#00d4aa' },
   { value: 100, suffix: '%', label: 'Automazioni AI', color: '#00a8ff' },
   { value: 24, suffix: '/7', label: 'Operatività', color: '#00d4aa' },
 ];
@@ -169,7 +169,7 @@ export default function HeroSection() {
                 transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
               >
                 <Zap size={10} className="fill-current" />
-                AI-Powered Agency
+                Polpo AI. Il tuo alleato digitale.
               </motion.span>
             </motion.div>
 
@@ -177,8 +177,9 @@ export default function HeroSection() {
               <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight">
                 <span className="text-white block">
                   <LaserText delay={0.5} charDelay={0.04} scanColor="#00d4aa" once={false}>
-                    Il tuo business,
-                    automatizzato
+                    Il tuo business.
+                    Più semplice.
+                    Più automatico.
                   </LaserText>
                 </span>
                 <span
@@ -191,7 +192,7 @@ export default function HeroSection() {
                   }}
                 >
                   <LaserText delay={0.9} charDelay={0.06} scanColor="#00a8ff" once={false}>
-                    online e
+                    più semplice. Più automatico.
                   </LaserText>
                 </span>
                 <span className="text-white text-4xl lg:text-5xl xl:text-6xl font-semibold leading-tight block">
@@ -204,7 +205,8 @@ export default function HeroSection() {
               variants={itemVariants}
               className="text-lg text-white/55 leading-relaxed max-w-xl"
             >
-              Creiamo un sito che porta contatti e aggiungiamo automazioni e chatbot che rispondono al posto tuo. Così risparmi tempo, riduci errori e segui i clienti più velocemente.
+              Realizziamo un sito pensato per trasformare le visite in richieste concrete.
+              Lo colleghiamo a chatbot e automazioni che gestiscono i contatti in automatico, mentre tu ti concentri sul tuo lavoro.
             </motion.p>
 
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
@@ -214,7 +216,7 @@ export default function HeroSection() {
                 className="px-8 py-4 rounded-xl bg-[#00d4aa] text-[#000b1e] font-bold text-base glow-teal"
               >
                 <span className="flex items-center gap-2">
-                  Ricevi una consulenza gratuia
+                  Richiedi una consulenza gratuita
                   <ArrowRight size={18} />
                 </span>
               </ShimmerButton>
@@ -224,7 +226,7 @@ export default function HeroSection() {
                 shimmerColor="rgba(0,168,255,0.15)"
                 className="px-8 py-4 rounded-xl border border-white/10 text-white/80 font-medium text-base hover:border-[#00a8ff]/40 hover:text-white bg-white/[0.02]"
               >
-                Scopri i servizi
+                Vedi i 4 moduli
               </ShimmerButton>
             </motion.div>
 
@@ -272,9 +274,9 @@ export default function HeroSection() {
                 className="absolute -bottom-4 -left-4 font-mono text-[9px] tracking-widest"
                 style={{ color: 'rgba(0,168,255,0.5)', fontFamily: 'JetBrains Mono, monospace' }}
                 animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 4, repeat: Infinity, delay: 1.5 }}
-              >
-                8 NODES_ONLINE
+                transition={{ duration: 8, repeat: Infinity, delay: 1.5 }}
+              >4 moduli attivi
+
               </motion.div>
 
               <motion.div
@@ -288,7 +290,7 @@ export default function HeroSection() {
             </div>
           </motion.div>
         </div>
-      </motion.div>
+      </motion.div >
 
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
@@ -306,6 +308,6 @@ export default function HeroSection() {
           transition={{ duration: 2, repeat: Infinity }}
         />
       </motion.div>
-    </section>
+    </section >
   );
 }

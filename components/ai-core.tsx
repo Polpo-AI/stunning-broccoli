@@ -4,13 +4,9 @@ import { useEffect, useRef } from 'react';
 
 const TENTACLES = [
   { angle: -90, label: 'Siti Web' },
-  { angle: -45, label: 'Chatbot' },
-  { angle: 0, label: 'CRM' },
-  { angle: 45, label: 'Funnel' },
-  { angle: 90, label: 'Analytics' },
-  { angle: 135, label: 'Integrazioni' },
-  { angle: 180, label: 'Supporto AI' },
-  { angle: -135, label: 'Scaling' },
+  { angle: 0, label: 'Chatbot AI' },
+  { angle: 90, label: 'Automazioni' },
+  { angle: 180, label: 'CRM & Funnel' },
 ];
 
 function getTentaclePath(angleDeg: number, cx: number, cy: number, length: number) {

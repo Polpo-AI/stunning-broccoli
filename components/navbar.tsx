@@ -105,9 +105,8 @@ export default function Navbar() {
   return (
     <nav
       ref={navRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'bg-glass border-b border-white/5 py-3' : 'bg-transparent py-5'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-glass border-b border-white/5 py-3' : 'bg-transparent py-5'
+        }`}
     >
       <div
         className="absolute inset-0 pointer-events-none overflow-hidden"
@@ -126,12 +125,12 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between relative">
         <a href="#" className="flex items-center gap-3 group">
           <motion.div
-            className="relative w-10 h-10"
+            className="relative w-16 h-16"
             whileHover={{ rotate: [0, -5, 5, -3, 0], scale: 1.08 }}
             transition={{ duration: 0.4 }}
           >
             <Image
-              src="/logo2.png"
+              src="/polpo-icona.png"
               alt="Polpo AI"
               fill
               className="object-contain"

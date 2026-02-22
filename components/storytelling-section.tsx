@@ -9,13 +9,13 @@ const PILLARS = [
   {
     icon: Cpu,
     title: 'Intelligenza Centrale',
-    text: "Un'AI che impara dal tuo business, analizza i dati e orchestra ogni automazione con precisione chirurgica.",
+    text: "Un'AI che impara dal tuo business, analizza i dati e orchestra ogni automazione in modo fluido.",
     color: '#00d4aa',
   },
   {
     icon: Network,
-    title: 'Neuroni Distribuiti',
-    text: 'Ogni servizio opera in modo autonomo ma comunicante — come i neuroni di un polpo che pensa con tutti gli otto tentacoli.',
+    title: 'Moduli Integrati',
+    text: 'Ogni componente opera in modo autonomo ma comunicante — come un sistema nervoso coordinato.',
     color: '#00a8ff',
   },
   {
@@ -26,8 +26,8 @@ const PILLARS = [
   },
   {
     icon: Layers,
-    title: 'Architettura Modulare',
-    text: 'Parti con ciò che ti serve oggi. Scala aggiungendo nuovi tentacoli quando il business cresce.',
+    title: 'Architettura Scalabile',
+    text: 'Parti con ciò che ti serve oggi. Aggiungi nuovi moduli quando il business cresce.',
     color: '#00a8ff',
   },
 ];
@@ -227,8 +227,8 @@ export default function StorytellingSection() {
 
   const TERMINAL_LINES = [
     'Analizzando architettura business...',
-    'Mapping flussi operativi → 14 colli di bottiglia',
-    'Deploy automazioni AI: 8/8 tentacoli attivi',
+    'Mapping flussi operativi → 14 punti di ottimizzazione',
+    'Deploy automazioni AI: 4/4 moduli attivi',
     'Sistema nervoso digitale: ONLINE ✓',
   ];
 
@@ -278,9 +278,9 @@ export default function StorytellingSection() {
                 di per sé, ma coordinato da un cervello centrale. Questa è la nostra filosofia.
               </p>
               <p className="text-white/60 text-base leading-relaxed">
-                Il tuo business ha bisogno della stessa architettura: un core decisionale
-                (la strategia AI) che coordina otto braccia operative specializzate,
-                ciascuna capace di agire in autonomia e in perfetta sinergia.
+                Il tuo business ha bisogno della stessa architettura: un cervello centrale
+                (la strategia) che coordina moduli operativi specializzati,
+                ciascuno capace di agire in autonomia e in perfetta sinergia.
               </p>
             </div>
 
