@@ -24,7 +24,7 @@ export default function TentacleCurtainHero() {
   const leftX      = useTransform(scrollYProgress, [0, 0.35], ['10%', '-110%']);
   const leftRot    = useTransform(scrollYProgress, [0, 0.35], [0, -18]);
   const leftScale  = useTransform(scrollYProgress, [0, 0.35], [1, 0.88]);
-  const rightX     = useTransform(scrollYProgress, [0, 0.35], ['0%', '110%']);
+  const rightX     = useTransform(scrollYProgress, [0, 0.35], ['10%', '110%']);
   const rightRot   = useTransform(scrollYProgress, [0, 0.35], [0, 18]);
   const rightScale = useTransform(scrollYProgress, [0, 0.35], [1, 0.88]);
   const curtainOp  = useTransform(scrollYProgress, [0.26, 0.38], [1, 0]);
