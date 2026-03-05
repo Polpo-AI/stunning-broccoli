@@ -2,7 +2,7 @@ import Navbar from '@/components/landing/Navbar';
 import TentacleCurtainHero from '@/components/landing/TentacleCurtainHero';
 import ProblemSection from '@/components/landing/ProblemSection';
 import ServicesSection from '@/components/landing/ServicesSection';
-import ExampleSection from '@/components/landing/ExampleSection';
+import ExampleStepsLiquidPinned from '@/components/landing/ExampleStepsLiquidPinned';
 import BenefitsSection from '@/components/landing/BenefitsSection';
 import TrustSection from '@/components/landing/TrustSection';
 import CTASection from '@/components/landing/CTASection';
@@ -15,7 +15,7 @@ export default function Home() {
       <TentacleCurtainHero />
       <ProblemSection />
       <ServicesSection />
-      <ExampleSection />
+      <ExampleStepsLiquidPinned />
       <BenefitsSection />
       <TrustSection />
       <CTASection />

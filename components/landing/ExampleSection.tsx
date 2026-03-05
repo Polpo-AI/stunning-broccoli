@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { Mail, Brain, FileText, CircleCheck as CheckCircle, Send } from 'lucide-react';
 
 const steps = [
@@ -13,11 +13,19 @@ const steps = [
 ];
 
 export default function ExampleSection() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  // The scroll target is the container of the section.
+  // offset 'start 0.8' means the animation starts when the top of the section is at 80% viewport height.
+  // offset 'end 0.4' means it finishes when the bottom of the section is at 40% viewport height.
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start 0.8', 'end 0.4'],
+  });
 
   return (
-    <section id="esempio" className="relative py-24 bg-[#07091A]">
+    <section id="esempio" ref={containerRef} className="relative py-24 bg-[#07091A]">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -26,13 +34,7 @@ export default function ExampleSection() {
       />
 
       <div className="relative max-w-5xl mx-auto px-6">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-20">
           <span className="text-xs font-semibold tracking-[0.25em] text-cyan-400 uppercase opacity-80">
             Esempio di Assistente AI
           </span>
@@ -42,55 +44,194 @@ export default function ExampleSection() {
           <p className="text-slate-400 mt-4 max-w-xl mx-auto text-lg">
             Prendi le email: le gestisce da solo, tu controlli solo il risultato finale.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="relative">
-          <div className="hidden md:block absolute top-1/2 left-0 right-0 -translate-y-1/2">
-            <div className="w-full h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
-          </div>
+        {/* Scroll-driven Steps Container */}
+        <div className="relative w-full max-w-4xl mx-auto z-10">
 
-          <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
+          {/* DESKTOP LAYOUT (Horizontal) */}
+          <div className="hidden md:flex items-start justify-between relative">
+
+            {/* Background passive Line */}
+            {/* spans from center of 1st column (10%) to center of 5th column (90%) */}
+            <div className="absolute top-8 left-[10%] right-[10%] h-0.5 bg-slate-800/40 -z-10" />
+
             {steps.map((step, idx) => {
               const Icon = step.icon;
+              const isLast = idx === steps.length - 1;
+
+              // Illumination Math:
+              // Total scroll = 1. Divided into 5 windows of 0.2.
+              // Step box illuminates in the first 0.1 of its window.
+              // Connection bar illuminates in the second 0.1 of its window.
+              const stepStart = idx * 0.2;
+              const stepEnd = stepStart + 0.1;
+              const stepProgress = useTransform(scrollYProgress, [stepStart, stepEnd], [0, 1]);
+
+              const barStart = stepEnd;
+              const barEnd = (idx + 1) * 0.2;
+              const barProgress = useTransform(scrollYProgress, [barStart, barEnd], [0, 1]);
+
+              // Map properties based on stepProgress
+              const opacity = prefersReducedMotion ? 1 : useTransform(stepProgress, [0, 1], [0.3, 1]);
+              const scale = prefersReducedMotion ? 1 : useTransform(stepProgress, [0, 1], [0.95, 1.05]);
+              const glow = prefersReducedMotion
+                ? `0 0 24px ${step.color}66`
+                : useTransform(stepProgress, [0, 1], ["0 0 0px rgba(0,0,0,0)", `0 0 24px ${step.color}66`]);
+              const borderColor = prefersReducedMotion
+                ? `${step.color}88`
+                : useTransform(stepProgress, [0, 1], ["rgba(255,255,255,0.05)", `${step.color}88`]);
+              const iconOpacity = prefersReducedMotion ? 1 : useTransform(stepProgress, [0, 1], [0.5, 1]);
+
+              const barWidth = prefersReducedMotion ? "100%" : useTransform(barProgress, [0, 1], ["0%", "100%"]);
+
               return (
-                <motion.div
-                  key={step.label}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={inView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.5, delay: idx * 0.12 + 0.3 }}
-                  className="relative flex flex-col items-center gap-3 z-10"
-                >
-                  <div
-                    className="w-16 h-16 rounded-2xl flex items-center justify-center border border-cyan-500/20 bg-[#0A0F1E] relative"
-                    style={{
-                      boxShadow: `0 0 24px ${step.color}22`,
-                    }}
+                <div key={step.label} className="relative flex flex-col items-center flex-1">
+                  {/* Step Box */}
+                  <motion.div
+                    style={{ opacity, scale }}
+                    className="relative z-10 flex flex-col items-center gap-4"
                   >
-                    <div
-                      className="absolute inset-0 rounded-2xl opacity-20"
-                      style={{ background: `radial-gradient(circle at center, ${step.color}33, transparent)` }}
-                    />
-                    <Icon className="w-7 h-7 relative z-10" style={{ color: step.color }} strokeWidth={1.5} />
-                  </div>
+                    <motion.div
+                      className="w-16 h-16 rounded-2xl flex items-center justify-center bg-[#0A0F1E] border transition-colors duration-300"
+                      style={{
+                        boxShadow: glow,
+                        borderColor: borderColor,
+                        backgroundColor: useTransform(stepProgress, [0, 1], ["#0A0F1E", "#0c152a"]),
+                      }}
+                    >
+                      <motion.div
+                        className="absolute inset-0 rounded-2xl"
+                        style={{
+                          background: `radial-gradient(circle at center, ${step.color}44, transparent)`,
+                          opacity: useTransform(stepProgress, [0, 1], [0, 1])
+                        }}
+                      />
+                      <motion.div style={{ opacity: iconOpacity }} className="relative z-10">
+                        <Icon className="w-7 h-7" style={{ color: step.color }} strokeWidth={1.5} />
+                      </motion.div>
+                    </motion.div>
 
-                  <span className="text-xs font-semibold text-slate-300 text-center max-w-[80px] leading-tight">
-                    {step.label}
-                  </span>
+                    <motion.span
+                      style={{ opacity }}
+                      className="text-xs font-semibold text-slate-300 text-center max-w-[90px] leading-tight"
+                    >
+                      {step.label}
+                    </motion.span>
+                  </motion.div>
 
-                  {idx < steps.length - 1 && (
-                    <div className="md:hidden w-0.5 h-6 bg-gradient-to-b from-cyan-500/40 to-transparent" />
+                  {/* Active Bar filling up to the next step */}
+                  {!isLast && (
+                    <div className="absolute top-8 left-[calc(50%+2rem)] w-[calc(100%-4rem)] h-0.5 z-0">
+                      <motion.div
+                        className="h-full rounded-full"
+                        style={{
+                          width: barWidth,
+                          background: `linear-gradient(90deg, ${step.color}, ${steps[idx + 1].color})`,
+                          boxShadow: `0 0 10px ${step.color}55`
+                        }}
+                      />
+                    </div>
                   )}
-                </motion.div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* MOBILE LAYOUT (Vertical Stack) */}
+          <div className="flex md:hidden flex-col items-start px-2 sm:px-8 relative">
+
+            {/* Background passive vertical line (from center of first icon to center of last icon) */}
+            <div className="absolute top-8 bottom-8 left-[2.5rem] sm:left-[4rem] -ml-px w-0.5 bg-slate-800/40 -z-10" />
+
+            {steps.map((step, idx) => {
+              const Icon = step.icon;
+              const isLast = idx === steps.length - 1;
+
+              const stepStart = idx * 0.2;
+              const stepEnd = stepStart + 0.1;
+              const stepProgress = useTransform(scrollYProgress, [stepStart, stepEnd], [0, 1]);
+
+              const barStart = stepEnd;
+              const barEnd = (idx + 1) * 0.2;
+              const barProgress = useTransform(scrollYProgress, [barStart, barEnd], [0, 1]);
+
+              // Values
+              const opacity = prefersReducedMotion ? 1 : useTransform(stepProgress, [0, 1], [0.3, 1]);
+              const scale = prefersReducedMotion ? 1 : useTransform(stepProgress, [0, 1], [0.95, 1.05]);
+              const glow = prefersReducedMotion
+                ? `0 0 24px ${step.color}66`
+                : useTransform(stepProgress, [0, 1], ["0 0 0px rgba(0,0,0,0)", `0 0 24px ${step.color}66`]);
+              const borderColor = prefersReducedMotion
+                ? `${step.color}88`
+                : useTransform(stepProgress, [0, 1], ["rgba(255,255,255,0.05)", `${step.color}88`]);
+              const iconOpacity = prefersReducedMotion ? 1 : useTransform(stepProgress, [0, 1], [0.5, 1]);
+
+              const barHeight = prefersReducedMotion ? "100%" : useTransform(barProgress, [0, 1], ["0%", "100%"]);
+
+              return (
+                <div key={step.label} className={`relative flex items-start gap-6 w-full ${isLast ? '' : 'pb-14'}`}>
+                  {/* Step Box */}
+                  <motion.div
+                    style={{ opacity, scale }}
+                    className="relative z-10 w-16 h-16 shrink-0 rounded-2xl flex items-center justify-center bg-[#0A0F1E] border transition-colors duration-300"
+                  // Inline styles on the wrapper to keep the glow on the element correctly
+                  >
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl w-full h-full"
+                      style={{
+                        boxShadow: glow,
+                        borderColor: borderColor,
+                        borderWidth: 1,
+                        borderStyle: 'solid',
+                        backgroundColor: useTransform(stepProgress, [0, 1], ["#0A0F1E", "#0c152a"]),
+                      }}
+                    />
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl"
+                      style={{
+                        background: `radial-gradient(circle at center, ${step.color}44, transparent)`,
+                        opacity: useTransform(stepProgress, [0, 1], [0, 1])
+                      }}
+                    />
+                    <motion.div style={{ opacity: iconOpacity }} className="relative z-10">
+                      <Icon className="w-7 h-7" style={{ color: step.color }} strokeWidth={1.5} />
+                    </motion.div>
+                  </motion.div>
+
+                  {/* Label next to the icon */}
+                  <motion.div style={{ opacity }} className="pt-5">
+                    <span className="text-base font-semibold text-slate-200 leading-tight">
+                      {step.label}
+                    </span>
+                  </motion.div>
+
+                  {/* Active Bar filling downwards to the next step */}
+                  {!isLast && (
+                    <div className="absolute top-[4rem] bottom-0 left-[2rem] -ml-px w-0.5 z-0">
+                      <motion.div
+                        className="w-full rounded-full"
+                        style={{
+                          height: barHeight,
+                          background: `linear-gradient(180deg, ${step.color}, ${steps[idx + 1].color})`,
+                          boxShadow: `0 0 10px ${step.color}55`
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
         </div>
 
+        {/* STATS CARD */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-16 rounded-2xl border border-cyan-500/10 bg-white/[0.02] p-8 text-center"
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6 }}
+          className="mt-20 md:mt-24 rounded-2xl border border-cyan-500/10 bg-white/[0.02] p-8 text-center"
         >
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
             {[
