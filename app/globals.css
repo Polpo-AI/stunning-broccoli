@@ -40,9 +40,10 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-[#070B14] text-white;
+    @apply bg-[#070B14] text-white leading-relaxed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 }
 
