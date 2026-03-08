@@ -13,22 +13,22 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8 mb-10">
           <div className="flex flex-col items-center md:items-start gap-3">
-            <a href="#" className="flex items-center gap-2">
+            <a href="#" className="flex items-center gap-2 group transition-transform duration-300 hover:scale-105">
               <div className="relative w-7 h-7">
-                <Image src="/polpo.png" alt="PolpoAI" fill className="object-contain" />
+                <Image src="/logo a.jpg" alt="logo a.jpg" fill className="object-contain" />
               </div>
               <span className="text-lg font-bold text-white">
-                Polpo<span className="text-cyan-400">AI</span>
+                Polpo<span className="text-cyan-400 group-hover:text-cyan-300 transition-colors">AI</span>
               </span>
             </a>
             <p className="text-slate-500 text-sm max-w-xs text-center md:text-left">
               Soluzioni AI su misura per il tuo business.
             </p>
             <a
-              href="mailto:hello@polpoai.it"
+              href="mailto:info@polpo-ai.com"
               className="text-sm text-cyan-400/80 hover:text-cyan-400 transition-colors"
             >
-              hello@polpoai.it
+              info@polpo-ai.com
             </a>
           </div>
 
@@ -37,7 +37,7 @@ export default function Footer() {
               <a
                 key={l.href}
                 href={l.href}
-                className="text-sm text-slate-500 hover:text-slate-300 transition-colors"
+                className="text-sm text-slate-500 hover:text-cyan-400 transition-all duration-200 hover:-translate-y-0.5"
               >
                 {l.label}
               </a>

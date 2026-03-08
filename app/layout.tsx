@@ -24,6 +24,8 @@ export const metadata: Metadata = {
   },
 };
 
+import SmoothScroll from '@/components/landing/SmoothScroll';
+
 export default function RootLayout({
   children,
 }: {
@@ -31,7 +33,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="it">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
+      </body>
     </html>
   );
 }

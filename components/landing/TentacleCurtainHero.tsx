@@ -29,11 +29,29 @@ export default function TentacleCurtainHero() {
   // ── 2. SMOOTHING (SPRING PHYSICS) ────────────────────────────────────────────
   // Unovershootato, smorzato, ma reattivo per un feeling super premium
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 70,
-    damping: 20,
-    mass: 0.5,
-    restDelta: 0.0001
+    stiffness: 100, // Più reattivo
+    damping: 40,   // Più fermo
+    mass: 1,
+    restDelta: 0.001
   });
+
+  const smoothScroll = useSpring(scrollYProgress, {
+    stiffness: 80,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  // Mascot specific parallax
+  const mascotY = useTransform(smoothProgress, [0, 0.5], [0, -30]);
+  const mascotFloatingY = useSpring(0, { stiffness: 40, damping: 10 });
+
+  useEffect(() => {
+    if (!mounted) return;
+    const interval = setInterval(() => {
+      // Subtle organic breathing pulse
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [mounted]);
 
   // ── 3. CURTAIN ANIMATION (0 -> 0.45 dello scroll) ────────────────────────────
   // Usiamo un easing non lineare nativo maping progress -> transform
@@ -50,13 +68,19 @@ export default function TentacleCurtainHero() {
   });
 
   // Le tende si spostano oltre il 100% per sparire del tutto, e ruotano leggermente
-  const leftX = useTransform(easedProgress, [0, 1], ['0%', '-115%']);
-  const leftRot = useTransform(easedProgress, [0, 1], [0, -8]);
-  const leftScale = useTransform(easedProgress, [0, 1], [1, 0.95]);
+  const leftX = useTransform(easedProgress, [0, 1], ['0%', '-120%']);
+  const leftRot = useTransform(easedProgress, [0, 1], [0, -12]);
+  const leftScale = useTransform(easedProgress, [0, 1], [1, 0.9]);
+  const curtainBlur = useTransform(easedProgress, [0, 0.5], [0, 15]);
 
-  const rightX = useTransform(easedProgress, [0, 1], ['0%', '115%']);
-  const rightRot = useTransform(easedProgress, [0, 1], [0, 8]);
-  const rightScale = useTransform(easedProgress, [0, 1], [1, 0.95]);
+  const rightX = useTransform(easedProgress, [0, 1], ['0%', '120%']);
+  const rightRot = useTransform(easedProgress, [0, 1], [0, 12]);
+  const rightScale = useTransform(easedProgress, [0, 1], [1, 0.9]);
+
+  // Reactive organic drift when scrolling
+  const scrollDriftY = useTransform(smoothProgress, [0, 0.5], [0, 12]);
+  const leftDriftX = useTransform(smoothProgress, [0, 0.5], [0, -8]);
+  const rightDriftX = useTransform(smoothProgress, [0, 0.5], [0, 8]);
 
   // Scomparsa pannelli (inizia quando sono già quasi fuori, per evitare pop-in)
   const panelsOpacity = useTransform(smoothProgress, [0.35, 0.5], [1, 0]);
@@ -64,14 +88,20 @@ export default function TentacleCurtainHero() {
   // Seam cover sparisce subitissimo al primo frame di scroll
   const seamOpacity = useTransform(smoothProgress, [0, 0.05], [1, 0]);
 
-  // ── 4. HERO REVEAL (0.1 -> 0.5 dello scroll) ─────────────────────────────────
-  const heroRevealT = [0.1, 0.5];
-  const heroOpacity = useTransform(smoothProgress, heroRevealT, [0, 1]);
-  const heroScale = useTransform(smoothProgress, heroRevealT, [0.97, 1]);
+  // ── 4. HERO REVEAL (0.05 -> 0.45 dello scroll) ─────────────────────────────────
+  const heroRevealT = [0.05, 0.45];
+  const heroOpacity = useTransform(smoothProgress, [0.05, 0.4], [0, 1]);
+  const heroScale = useTransform(smoothProgress, heroRevealT, [0.95, 1]);
   const heroY = useTransform(smoothProgress, heroRevealT, [40, 0]);
+  const heroBlur = useTransform(smoothProgress, [0.05, 0.3], [10, 0]);
+  const heroBlurFilter = useTransform(heroBlur, (v) => `blur(${v}px)`);
 
   // Parallasse di sfondo (movimento lento continuo)
-  const bgTranslation = useTransform(smoothProgress, [0, 1], ['0%', '20%']);
+  const bgTranslation = useTransform(smoothProgress, [0, 1], ['0%', '30%']);
+  const bgBlur = useTransform(smoothProgress, [0, 0.5], [4, 0]);
+
+  // Curtain specific transformations
+  const curtainBlurFilter = useTransform(curtainBlur, (v) => `blur(${v}px)`);
 
   const scrollTo = (id: string) => {
     const el = document.querySelector(id);
@@ -93,7 +123,11 @@ export default function TentacleCurtainHero() {
             ===================================================================== */}
         <motion.div
           className="absolute inset-0 pointer-events-none z-0"
-          style={{ y: bgTranslation, willChange: 'transform' }}
+          style={{
+            y: bgTranslation,
+            willChange: 'transform',
+            filter: 'blur(1px)' // Leggera sfocatura parallasse
+          }}
         >
           <Particles />
           <div
@@ -127,48 +161,66 @@ export default function TentacleCurtainHero() {
             opacity: heroOpacity,
             scale: heroScale,
             y: heroY,
-            willChange: 'opacity, transform'
+            filter: heroBlurFilter,
+            willChange: 'opacity, transform, filter',
+            transform: 'translateZ(0)'
           }}
         >
           <div className="text-center px-6 max-w-5xl mx-auto">
             {/* Mascot */}
             <div className="mb-8 flex justify-center">
-              <div
+              <motion.div
+                animate={{
+                  y: [0, -12, 0],
+                  rotate: [0, 1.5, -1.5, 0],
+                  scale: [1, 1.02, 1],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 style={{
-                  animation: 'float 4s ease-in-out infinite',
+                  y: mascotY,
                   filter: 'drop-shadow(0 0 32px rgba(6,182,212,0.4)) drop-shadow(0 0 10px rgba(6,182,212,0.2))',
+                  willChange: 'transform, filter',
+                  transform: 'translateZ(0)'
                 }}
               >
                 <Image src="/polpo.png" alt="PolpoAI" width={180} height={180} priority className="select-none" />
-              </div>
+              </motion.div>
             </div>
 
             {/* Headlines */}
             <div className="flex flex-col items-center">
-              <span className="text-xs font-semibold tracking-[0.25em] text-cyan-400 uppercase opacity-90 mb-4 drop-shadow-md">
+              <span className="text-[10px] sm:text-xs font-semibold tracking-[0.15em] text-cyan-400 uppercase opacity-90 mb-4 drop-shadow-md">
                 Intelligenza Artificiale su misura
               </span>
-              <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6 drop-shadow-lg">
+              <h1 className="text-5xl md:text-7xl font-bold text-white leading-[1.1] tracking-tight mb-6 drop-shadow-lg">
                 Il tuo business, <span className="text-cyan-400">più semplice.</span>
               </h1>
-              <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 drop-shadow-md">
+              <p className="text-lg md:text-xl text-slate-300 max-w-xl mx-auto mb-10 drop-shadow-md leading-relaxed">
                 Siti web, chatbot e assistenti AI su misura che lavorano al posto tuo.
               </p>
 
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <button
+                <motion.button
                   onClick={() => scrollTo('#contatti')}
-                  className="px-8 py-4 rounded-full font-bold bg-cyan-500 text-[#070B14] hover:bg-cyan-400 hover:-translate-y-1 transition-all duration-300 shadow-xl shadow-cyan-500/30 active:scale-95 pointer-events-auto"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="px-8 py-4 rounded-full font-bold bg-cyan-500 text-[#070B14] shadow-xl shadow-cyan-500/30 transition-all duration-300 pointer-events-auto"
                 >
                   Prenota una demo
-                </button>
-                <button
+                </motion.button>
+                <motion.button
                   onClick={() => scrollTo('#esempio')}
-                  className="px-8 py-4 rounded-full font-bold text-cyan-400 border border-cyan-500/40 hover:bg-cyan-500/10 hover:-translate-y-1 transition-all duration-300 active:scale-95 pointer-events-auto"
+                  whileHover={{ scale: 1.05, y: -2, backgroundColor: 'rgba(6, 182, 212, 0.1)' }}
+                  whileTap={{ scale: 0.98 }}
+                  className="px-8 py-4 rounded-full font-bold text-cyan-400 border border-cyan-500/40 transition-all duration-300 pointer-events-auto"
                 >
                   Vedi come funziona
-                </button>
+                </motion.button>
               </div>
             </div>
           </div>
@@ -193,8 +245,20 @@ export default function TentacleCurtainHero() {
                 x: leftX,
                 rotate: leftRot,
                 scale: leftScale,
+                y: scrollDriftY,
+                translateX: leftDriftX,
+                filter: curtainBlurFilter,
                 transformOrigin: 'left center',
-                willChange: 'transform'
+                willChange: 'transform, filter'
+              }}
+              animate={{
+                y: [0, -4, 0],
+                rotate: [0, -0.4, 0],
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut",
               }}
             >
               <img
@@ -216,8 +280,20 @@ export default function TentacleCurtainHero() {
                 x: rightX,
                 rotate: rightRot,
                 scale: rightScale,
+                y: scrollDriftY,
+                translateX: rightDriftX,
+                filter: curtainBlurFilter,
                 transformOrigin: 'right center',
-                willChange: 'transform'
+                willChange: 'transform, filter'
+              }}
+              animate={{
+                y: [0, -4, 0],
+                rotate: [0, 0.4, 0],
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: "easeInOut",
               }}
             >
               {/* objectPosition: 'left' assicura lo stesso ritaglio speculare */}

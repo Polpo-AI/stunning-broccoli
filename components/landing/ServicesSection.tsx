@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useReducedMotion, type Transition } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useReducedMotion, type Transition, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Globe, MessageSquare, Bot, X } from 'lucide-react';
 
 const springTransition: Transition = {
   type: "spring",
-  stiffness: 350,
-  damping: 35,
+  stiffness: 260,
+  damping: 30,
   mass: 1
 };
 
@@ -65,6 +65,36 @@ export default function ServicesSection() {
   // Selected service object
   const selectedService = services.find((s) => s.id === selectedId);
 
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  // ── 2. SMOOTHING (SPRING PHYSICS) ────────────────────────────────────────────
+  const smoothScroll = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 40,
+    restDelta: 0.001
+  });
+
+  const opacity = useTransform(smoothScroll, [0, 0.2, 0.5, 0.8, 1], [0, 0.4, 1, 0.4, 0]);
+  const decorOpacity = useTransform(smoothScroll, [0, 0.3, 0.5, 0.7, 1], [0, 0.4, 1, 0.4, 0]);
+
+  // Layering Parallax
+  const contentY = useTransform(smoothScroll, [0, 0.2, 0.8, 1], [30, 0, 0, -20]);
+  const bgY = useTransform(smoothScroll, [0, 1], ["-10%", "10%"]); // Slower background
+  const decorY = useTransform(smoothScroll, [0, 1], ["5%", "-15%"]); // Faster decorative
+
+  const revealMask = useTransform(smoothScroll, [0, 0.3], [100, 0]);
+  const blur = useTransform(smoothScroll, [0, 0.25], [6, 0]);
+  const bgScale = useTransform(smoothScroll, [0, 0.5, 1], [0.95, 1.05, 0.95]);
+
+  const maskStyle = useTransform(revealMask, (v) =>
+    `linear-gradient(to top, black ${100 - v}%, transparent ${110 - v}%)`
+  );
+  const blurFilter = useTransform(blur, (v) => `blur(${v}px)`);
+
   // --- HOOKS: Scroll Lock & ESC Key ---
   useEffect(() => {
     // Scroll Lock
@@ -87,44 +117,101 @@ export default function ServicesSection() {
   }, [selectedId]);
 
   return (
-    <section id="servizi" className="relative py-24 bg-[#070B14]">
-      {/* Background Decor */}
-      <div
-        className="absolute inset-0 pointer-events-none"
+    <section ref={containerRef} id="servizi" className="relative py-32 md:py-48 bg-[#070B14] overflow-hidden">
+      {/* Background Decor with Parallax */}
+      {/* Layer 1: Background Aura */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none z-0"
         style={{
-          background: 'radial-gradient(ellipse 60% 40% at 50% 50%, rgba(6,182,212,0.04) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse 60% 40% at 50% 50%, rgba(6, 182, 212, 0.02) 0%, transparent 70%)',
+          opacity: decorOpacity,
+          scale: bgScale,
+          y: bgY
         }}
       />
 
-      <div className="relative max-w-6xl mx-auto px-6">
+      {/* Layer 2: Decorative Floating Orbs */}
+      <motion.div
+        className="absolute top-1/3 left-0 w-96 h-96 pointer-events-none z-10 opacity-10"
+        style={{
+          background: 'radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%)',
+          y: decorY,
+          filter: 'blur(60px)'
+        }}
+      />
+
+      {/* Layer 3: Content */}
+      <motion.div
+        style={{
+          opacity,
+          y: contentY,
+          WebkitMaskImage: maskStyle,
+          maskImage: maskStyle,
+          filter: blurFilter,
+          willChange: 'opacity, transform, mask-image, filter',
+          transform: 'translateZ(0)'
+        }}
+        className="relative z-20 max-w-7xl mx-auto px-6"
+      >
 
         {/* Header */}
         <div className="text-center mb-16">
-          <span className="text-xs font-semibold tracking-[0.25em] text-cyan-400 uppercase opacity-80">
+          <motion.span
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-xs font-semibold tracking-[0.15em] text-cyan-400 uppercase opacity-80 block"
+          >
             I nostri servizi
-          </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-white mt-3 leading-tight">
+          </motion.span>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="text-3xl md:text-5xl font-bold text-white mt-3 leading-tight tracking-tight"
+          >
             Cosa facciamo per te.
-          </h2>
-          <p className="text-slate-400 mt-4 max-w-xl mx-auto text-lg">
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="text-slate-400 mt-6 max-w-lg mx-auto text-lg leading-relaxed"
+          >
             Tre soluzioni concrete. Tutte su misura. Tutte con un obiettivo: farti risparmiare tempo e guadagnare di più.
-          </p>
+          </motion.p>
         </div>
 
         {/* --- CARDS GRID --- */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-20">
           {services.map((s) => {
             const Icon = s.icon;
 
             return (
               <motion.div
-                layoutId={`card-container-${s.id}`}
-                transition={springTransition}
                 key={s.id}
+                layoutId={`card-container-${s.id}`}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, margin: "-50px" }}
+                transition={{
+                  duration: 0.7,
+                  delay: 0.3 + services.indexOf(s) * 0.1,
+                  ease: [0.25, 0.1, 0.25, 1]
+                }}
                 onClick={() => setSelectedId(s.id)}
-                className={`group relative rounded-2xl border border-white/5 bg-gradient-to-br ${s.color} p-8 cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:${s.borderColor}`}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = `0 20px 60px ${s.glow}`;
+                className={`
+                  relative p-8 rounded-2xl border ${s.borderColor} bg-white/[0.02] 
+                  cursor-pointer transition-all duration-500 hover:shadow-2xl 
+                  overflow-hidden group
+                `}
+                style={{
+                  boxShadow: `0 0 0 rgba(0,0,0,0)`,
+                  willChange: 'transform, opacity, box-shadow',
+                  transform: 'translateZ(0)'
                 }}
                 onMouseLeave={(e) => {
                   (e.currentTarget as HTMLElement).style.boxShadow = 'none';
@@ -146,7 +233,7 @@ export default function ServicesSection() {
                   {s.title}
                 </motion.h3>
 
-                <motion.p layoutId={`card-desc-${s.id}`} transition={springTransition} className="text-slate-400 leading-relaxed text-sm mb-6">
+                <motion.p layoutId={`card-desc-${s.id}`} transition={springTransition} className="text-slate-400 leading-relaxed text-sm mb-6 max-w-[35ch]">
                   {s.desc}
                 </motion.p>
 
@@ -157,7 +244,7 @@ export default function ServicesSection() {
             );
           })}
         </div>
-      </div>
+      </motion.div>
 
       {/* --- EXPANDED MODAL OVERLAY --- */}
       <AnimatePresence>
@@ -183,7 +270,6 @@ export default function ServicesSection() {
 
             {/* EXPANDED CARD */}
             <motion.div
-              layoutId={`card-container-${selectedService.id}`}
               transition={springTransition}
               className={`
                 relative z-[110] bg-[#0A0F1C] border border-white/10 
@@ -194,14 +280,18 @@ export default function ServicesSection() {
                 pt-[env(safe-area-inset-top,16px)] pb-[env(safe-area-inset-bottom,16px)]
                 
                 /* DESKTOP/TABLET: Dialog centrata */
-                md:w-[90vw] md:max-w-3xl md:h-[85vh] md:max-h-[85vh] md:rounded-2xl
+                md:w-[90vw] md:max-w-4xl md:h-[min(800px,85vh)] md:rounded-2xl
               `}
               layout={prefersReducedMotion ? false : true}
               {...(prefersReducedMotion ? {
-                initial: { opacity: 0, y: 50 },
+                initial: { opacity: 0, y: 20 },
                 animate: { opacity: 1, y: 0 },
-                exit: { opacity: 0, scale: 0.95 }
-              } : {})}
+                exit: { opacity: 0, scale: 0.98 }
+              } : {
+                initial: { opacity: 0 },
+                animate: { opacity: 1 },
+                exit: { opacity: 0 }
+              })}
               // Fermiamo il click per evitare che chiuda se propaga al backdrop
               onClick={(e) => e.stopPropagation()}
             >
@@ -216,10 +306,10 @@ export default function ServicesSection() {
                 <button
                   onClick={() => setSelectedId(null)}
                   autoFocus
-                  className="pointer-events-auto w-10 h-10 flex items-center justify-center rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white backdrop-blur-md border border-white/10 transition-colors shadow-lg active:scale-95"
+                  className="pointer-events-auto w-12 h-12 flex items-center justify-center rounded-full bg-slate-800/90 hover:bg-slate-700 text-slate-300 hover:text-white backdrop-blur-md border border-white/10 transition-all shadow-lg active:scale-90"
                   aria-label="Chiudi finestra"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-6 h-6" />
                 </button>
               </motion.div>
 

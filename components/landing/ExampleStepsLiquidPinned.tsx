@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useMotionValue, animate } from 'framer-motion';
 import { Mail, Brain, FileText, CircleCheck as CheckCircle, Send } from 'lucide-react';
 
 const steps = [
@@ -35,15 +35,31 @@ export default function ExampleStepsLiquidPinned() {
     // Segmento = 1 / 9 = 0.1111...
     const SEGMENT = 1 / 9;
 
+    // Mouse proximity tracking for interactive glow
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!wrapperRef.current) return;
+        const rect = wrapperRef.current.getBoundingClientRect();
+        mouseX.set(e.clientX - rect.left);
+        mouseY.set(e.clientY - rect.top);
+    };
+
     return (
         // Wrapper molto alto per consumare scroll. Mobile richiede un po' più di spazio per la lettura verticale.
-        <section ref={wrapperRef} id="esempio" className="relative min-h-[240vh] md:min-h-[250vh] bg-[#07091A]">
+        <section
+            ref={wrapperRef}
+            id="esempio"
+            onMouseMove={handleMouseMove}
+            className="relative min-h-[240vh] md:min-h-[250vh] bg-[#07091A]"
+        >
 
             {/* Sticky Inner Container */}
             <div className="sticky top-0 h-[100svh] w-full overflow-hidden flex flex-col justify-center">
 
                 <div className="relative max-w-6xl mx-auto px-6 w-full">
-                    <div className="text-center mb-16 md:mb-24">
+                    <div className="text-center mb-24 md:mb-32">
                         <span className="text-xs font-semibold tracking-[0.25em] uppercase opacity-80" style={{ color: ACCENT_COLOR }}>
                             Esempio di Assistente AI
                         </span>
@@ -88,11 +104,28 @@ export default function ExampleStepsLiquidPinned() {
                                 <div key={step.label} className="relative flex flex-col items-center flex-1">
 
                                     {/* Step Box */}
-                                    <div className="relative z-10 flex flex-col items-center gap-4">
+                                    <div className="relative z-10 flex flex-col items-center gap-4 group">
                                         <motion.div
-                                            className="w-16 h-16 shrink-0 rounded-2xl flex items-center justify-center bg-transparent border-[2px] transition-colors duration-200 overflow-hidden relative"
-                                            style={{ borderColor }}
+                                            className="w-16 h-16 shrink-0 rounded-2xl flex items-center justify-center bg-transparent border-[2px] transition-all duration-300 overflow-hidden relative"
+                                            style={{
+                                                borderColor,
+                                                boxShadow: isActive.get() ? `0 0 15px -8px ${ACCENT_COLOR}44` : 'none'
+                                            }}
+                                            whileHover={{ scale: 1.05, boxShadow: `0 0 25px -2px ${ACCENT_COLOR}88` }}
                                         >
+                                            {/* Safe zone buffer background */}
+                                            <div className="absolute inset-0 bg-[#07091A]" />
+
+                                            {/* Ripple Pulse Overlay */}
+                                            <motion.div
+                                                className="absolute inset-0 bg-white/10 opacity-0"
+                                                animate={isActive.get() ? {
+                                                    opacity: [0, 0.1, 0],
+                                                    scale: [0.9, 1.1, 1]
+                                                } : {}}
+                                                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                                            />
+
                                             {/* Bordo curvo simulato per l'effetto liquido usando un border-radius custom sul content interno */}
                                             <motion.div
                                                 className="absolute bottom-0 left-0 right-0 origin-bottom"
@@ -112,7 +145,7 @@ export default function ExampleStepsLiquidPinned() {
 
                                         <motion.span
                                             style={{ color: iconColor }}
-                                            className="text-sm font-bold text-center max-w-[100px] leading-tight transition-colors duration-200"
+                                            className="text-sm font-bold text-center max-w-[100px] leading-tight transition-colors duration-200 group-hover:text-white"
                                         >
                                             {step.label}
                                         </motion.span>
@@ -120,10 +153,30 @@ export default function ExampleStepsLiquidPinned() {
 
                                     {/* Linea orizzontale di riempimento continuo verso il prossimo step */}
                                     {!isLast && (
-                                        <div className="absolute top-8 left-[calc(50%+2rem)] w-[calc(100%-4rem)] h-1 z-0">
+                                        <div className="absolute top-8 left-[calc(50%+2rem)] w-[calc(100%-4rem)] h-1 z-0 pointer-events-none">
+                                            {/* Passive background line */}
+                                            <div className="absolute inset-0 bg-slate-800" />
+
+                                            {/* Active progress line */}
                                             <motion.div
-                                                className="h-full origin-left bg-[#00FFC6]"
+                                                className="absolute inset-0 origin-left bg-[#00FFC6]"
                                                 style={{ scaleX: lineProgress }}
+                                            />
+
+                                            {/* Ripple moving along the active segment */}
+                                            <motion.div
+                                                className="absolute top-0 bottom-0 w-20 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                                                style={{ left: '-10%' }}
+                                                animate={isActive.get() ? {
+                                                    left: ['-20%', '120%'],
+                                                    opacity: [0, 0.6, 0]
+                                                } : { opacity: 0 }}
+                                                transition={{
+                                                    duration: 4,
+                                                    repeat: Infinity,
+                                                    ease: "linear",
+                                                    delay: idx * 0.8
+                                                }}
                                             />
                                         </div>
                                     )}
@@ -193,7 +246,7 @@ export default function ExampleStepsLiquidPinned() {
 
                                     {/* Active Bar filling downwards to the next step */}
                                     {!isLast && (
-                                        <div className="absolute top-[4rem] bottom-0 left-[2rem] ml-[-2px] w-1 z-0">
+                                        <div className="absolute top-[4rem] bottom-0 left-[2rem] ml-[-2px] w-1 z-0 pointer-events-none">
                                             <motion.div
                                                 className="w-full origin-top bg-[#00FFC6]"
                                                 style={{ scaleY: lineProgress, height: '100%' }}
