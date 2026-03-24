@@ -1,422 +1,86 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useReducedMotion, type Transition, useScroll, useTransform, useSpring } from 'framer-motion';
-import { Globe, MessageSquare, Bot, X } from 'lucide-react';
+import { Globe, MessageSquare, Bot } from 'lucide-react';
+import { motion } from 'framer-motion';
+import ServiceCard from '@/components/shared/ServiceCard';
 
-const springTransition: Transition = {
-  type: "spring",
-  stiffness: 260,
-  damping: 30,
-  mass: 1
-};
-
-// --- DATA ---
 const services = [
   {
     id: 'siti-web',
-    icon: Globe,
-    kicker: 'ONLINE IN POCHI GIORNI.',
-    title: 'Creazione siti web',
-    desc: 'Ti costruiamo un sito veloce, ottimizzato per Google e pronto a convertire visitatori in clienti. Ci occupiamo di tutto — tu pensi al business.',
-    target: 'Professionisti, PMI, attività locali',
-    examples: 'Landing contatti, sito vetrina, pagina prenotazione call, FAQ/testimonianze',
-    benefits: 'Più richieste, sito veloce, SEO base, design coerente',
-    deliverables: 'Sito responsive, SEO base, form contatti/WhatsApp/Calendly',
-    color: 'from-cyan-500/10 to-blue-500/10',
-    borderColor: 'border-cyan-500/40',
-    glow: 'rgba(6, 182, 212, 0.15)',
-    iconColor: 'text-cyan-400',
+    icon: <Globe className="w-6 h-6" />,
+    title: 'Creazione Siti Web',
+    desc: 'Un sito veloce, bellissimo su mobile e ottimizzato per Google — pronto a convertire visitatori in clienti.',
+    href: '/creazione-siti-web',
+    accentColor: 'cyan',
+    numberLabel: '01',
   },
   {
     id: 'chatbot',
-    icon: MessageSquare,
-    kicker: 'RISPONDE 24/7, CATTURA CONTATTI.',
-    title: 'Chatbot personalizzati',
-    desc: 'Un assistente virtuale che conosce il tuo business, risponde ai clienti in tempo reale e raccoglie contatti anche di notte.',
-    target: 'Chi riceve domande frequenti, e-commerce/servizi, team piccoli',
-    examples: 'FAQ automatiche, raccolta lead, supporto prezzi/orari, pre-qualifica clienti',
-    benefits: 'Risposte immediate, più lead, meno lavoro ripetitivo, esperienza cliente migliore',
-    color: 'from-teal-500/10 to-cyan-500/10',
-    borderColor: 'border-teal-500/40',
-    glow: 'rgba(20, 184, 166, 0.15)',
-    iconColor: 'text-teal-400',
+    icon: <MessageSquare className="w-6 h-6" />,
+    title: 'Chatbot WhatsApp',
+    desc: 'Un assistente virtuale 24/7 che gestisce prenotazioni, risponde ai clienti e non perde nessun contatto.',
+    href: '/chatbot-whatsapp-prenotazioni',
+    accentColor: 'green',
+    numberLabel: '02',
   },
   {
     id: 'agenti-ai',
-    icon: Bot,
-    kicker: 'AUTOMATIZZA IL LAVORO RIPETITIVO.',
+    icon: <Bot className="w-6 h-6" />,
     title: 'Agenti AI su misura',
-    desc: 'Attività che fai ogni giorno diventano automatiche. Email, report, gestione dati — il tuo AI agent lavora mentre tu ti concentri su altro.',
-    target: 'Chi fa report/email/gestione dati, processi ripetitivi',
-    examples: 'Report automatici, email follow-up, aggiornamento CRM, estrazione dati da file',
-    benefits: 'Risparmio tempo, meno errori, processi standard, scalabilità',
-    color: 'from-blue-500/10 to-cyan-500/10',
-    borderColor: 'border-blue-500/40',
-    glow: 'rgba(59, 130, 246, 0.15)',
-    iconColor: 'text-blue-400',
+    desc: 'Automazioni intelligenti per email, report e data entry. Lavoro ripetitivo eliminato, focus sulla crescita.',
+    href: '/agenti-ai',
+    accentColor: 'purple',
+    numberLabel: '03',
   },
 ];
 
 export default function ServicesSection() {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const prefersReducedMotion = useReducedMotion();
-
-  // Selected service object
-  const selectedService = services.find((s) => s.id === selectedId);
-
-  const containerRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  // ── 2. SMOOTHING (SPRING PHYSICS) ────────────────────────────────────────────
-  const smoothScroll = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 40,
-    restDelta: 0.001
-  });
-
-  const opacity = useTransform(smoothScroll, [0, 0.2, 0.5, 0.8, 1], [0, 0.4, 1, 0.4, 0]);
-  const decorOpacity = useTransform(smoothScroll, [0, 0.3, 0.5, 0.7, 1], [0, 0.4, 1, 0.4, 0]);
-
-  // Layering Parallax
-  const contentY = useTransform(smoothScroll, [0, 0.2, 0.8, 1], [30, 0, 0, -20]);
-  const bgY = useTransform(smoothScroll, [0, 1], ["-10%", "10%"]); // Slower background
-  const decorY = useTransform(smoothScroll, [0, 1], ["5%", "-15%"]); // Faster decorative
-
-  const revealMask = useTransform(smoothScroll, [0, 0.3], [100, 0]);
-  const blur = useTransform(smoothScroll, [0, 0.25], [6, 0]);
-  const bgScale = useTransform(smoothScroll, [0, 0.5, 1], [0.95, 1.05, 0.95]);
-
-  const maskStyle = useTransform(revealMask, (v) =>
-    `linear-gradient(to top, black ${100 - v}%, transparent ${110 - v}%)`
-  );
-  const blurFilter = useTransform(blur, (v) => `blur(${v}px)`);
-
-  // --- HOOKS: Scroll Lock & ESC Key ---
-  useEffect(() => {
-    // Scroll Lock
-    if (selectedId) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-
-    // Modal behavior: ESC to close
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setSelectedId(null);
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.body.style.overflow = ''; // Cleanup
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [selectedId]);
-
   return (
-    <section ref={containerRef} id="servizi" className="relative py-32 md:py-48 bg-[#070B14] overflow-hidden">
-      {/* Background Decor with Parallax */}
-      {/* Layer 1: Background Aura */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none z-0"
+    <section id="servizi" className="relative py-28 md:py-36 bg-[var(--bg-base)]">
+      {/* Subtle background accent */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        aria-hidden
         style={{
-          background: 'radial-gradient(ellipse 60% 40% at 50% 50%, rgba(6, 182, 212, 0.02) 0%, transparent 70%)',
-          opacity: decorOpacity,
-          scale: bgScale,
-          y: bgY
+          background:
+            'radial-gradient(ellipse 60% 40% at 50% 50%, rgba(6,182,212,0.025) 0%, transparent 70%)',
         }}
       />
 
-      {/* Layer 2: Decorative Floating Orbs */}
-      <motion.div
-        className="absolute top-1/3 left-0 w-96 h-96 pointer-events-none z-10 opacity-10"
-        style={{
-          background: 'radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%)',
-          y: decorY,
-          filter: 'blur(60px)'
-        }}
-      />
-
-      {/* Layer 3: Content */}
-      <motion.div
-        style={{
-          opacity,
-          y: contentY,
-          WebkitMaskImage: maskStyle,
-          maskImage: maskStyle,
-          filter: blurFilter,
-          willChange: 'opacity, transform, mask-image, filter',
-          transform: 'translateZ(0)'
-        }}
-        className="relative z-20 max-w-7xl mx-auto px-6"
-      >
-
+      <div className="relative max-w-6xl mx-auto px-6">
         {/* Header */}
-        <div className="text-center mb-16">
-          <motion.span
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xs font-semibold tracking-[0.15em] text-cyan-400 uppercase opacity-80 block"
-          >
-            I nostri servizi
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-3xl md:text-5xl font-bold text-white mt-3 leading-tight tracking-tight"
-          >
+        <motion.div
+          className="text-center mb-14"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
+        >
+          <span className="section-label">I nostri servizi</span>
+          <h2 className="section-title mb-5">
             Cosa facciamo per te.
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-slate-400 mt-6 max-w-lg mx-auto text-lg leading-relaxed"
-          >
-            Tre soluzioni concrete. Tutte su misura. Tutte con un obiettivo: farti risparmiare tempo e guadagnare di più.
-          </motion.p>
-        </div>
+          </h2>
+          <p className="section-subtitle max-w-md mx-auto">
+            Tre soluzioni concrete, tutte su misura. Clicca sul servizio che ti interessa.
+          </p>
+        </motion.div>
 
-        {/* --- CARDS GRID --- */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-20">
-          {services.map((s) => {
-            const Icon = s.icon;
-
-            return (
-              <motion.div
-                key={s.id}
-                layoutId={`card-container-${s.id}`}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, margin: "-50px" }}
-                transition={{
-                  duration: 0.7,
-                  delay: 0.3 + services.indexOf(s) * 0.1,
-                  ease: [0.25, 0.1, 0.25, 1]
-                }}
-                onClick={() => setSelectedId(s.id)}
-                className={`
-                  relative p-8 rounded-2xl border ${s.borderColor} bg-white/[0.02] 
-                  cursor-pointer transition-all duration-500 hover:shadow-2xl 
-                  overflow-hidden group
-                `}
-                style={{
-                  boxShadow: `0 0 0 rgba(0,0,0,0)`,
-                  willChange: 'transform, opacity, box-shadow',
-                  transform: 'translateZ(0)'
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = 'none';
-                }}
-                // Disable reduced motion layout anims if user prefers
-                layout={prefersReducedMotion ? false : true}
-              >
-                <motion.div layoutId={`card-icon-${s.id}`} transition={springTransition} className="mb-6 inline-flex items-center justify-center w-13 h-13 rounded-xl">
-                  <Icon className={`w-8 h-8 ${s.iconColor}`} strokeWidth={1.5} />
-                </motion.div>
-
-                <motion.div layoutId={`card-kicker-${s.id}`} transition={springTransition} className="mb-1">
-                  <span className={`text-xs font-semibold ${s.iconColor} opacity-70 tracking-wide uppercase`}>
-                    {s.kicker}
-                  </span>
-                </motion.div>
-
-                <motion.h3 layoutId={`card-title-${s.id}`} transition={springTransition} className="text-xl font-bold text-white mb-3">
-                  {s.title}
-                </motion.h3>
-
-                <motion.p layoutId={`card-desc-${s.id}`} transition={springTransition} className="text-slate-400 leading-relaxed text-sm mb-6 max-w-[35ch]">
-                  {s.desc}
-                </motion.p>
-
-                <motion.div layoutId={`card-cta-dummy-${s.id}`} transition={springTransition} className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-400 group-hover:text-cyan-300 transition-colors">
-                  Scopri i dettagli
-                </motion.div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </motion.div>
-
-      {/* --- EXPANDED MODAL OVERLAY --- */}
-      <AnimatePresence>
-        {selectedId && selectedService && (
-          // CONTENITORE PRINCIPALE (Fixed full screen wrapper)
-          <div
-            className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-auto"
-            // Role & Aria for A11y
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby={`dialog-title-${selectedService.id}`}
-          >
-            {/* BACKDROP (Dim + Blur) */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-[#070B14]/80 backdrop-blur-sm"
-              // Cliccando il backdrop su desktop si chiude
-              onClick={() => setSelectedId(null)}
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {services.map((s, idx) => (
+            <ServiceCard
+              key={s.id}
+              title={s.title}
+              description={s.desc}
+              href={s.href}
+              icon={s.icon}
+              index={idx}
+              accentColor={s.accentColor}
+              numberLabel={s.numberLabel}
             />
-
-            {/* EXPANDED CARD */}
-            <motion.div
-              transition={springTransition}
-              className={`
-                relative z-[110] bg-[#0A0F1C] border border-white/10 
-                shadow-2xl overflow-hidden flex flex-col
-                
-                /* MOBILE: Modal Full Screen con safe areas */
-                w-full h-full rounded-none
-                pt-[env(safe-area-inset-top,16px)] pb-[env(safe-area-inset-bottom,16px)]
-                
-                /* DESKTOP/TABLET: Dialog centrata */
-                md:w-[90vw] md:max-w-4xl md:h-[min(800px,85vh)] md:rounded-2xl
-              `}
-              layout={prefersReducedMotion ? false : true}
-              {...(prefersReducedMotion ? {
-                initial: { opacity: 0, y: 20 },
-                animate: { opacity: 1, y: 0 },
-                exit: { opacity: 0, scale: 0.98 }
-              } : {
-                initial: { opacity: 0 },
-                animate: { opacity: 1 },
-                exit: { opacity: 0 }
-              })}
-              // Fermiamo il click per evitare che chiuda se propaga al backdrop
-              onClick={(e) => e.stopPropagation()}
-            >
-
-              {/* TOP BAR FIXA (Bottone Chiudi) */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0, transition: { duration: 0.15 } }}
-                className="flex-none sticky top-0 right-0 z-[120] flex justify-end p-4 md:p-6 bg-gradient-to-b from-[#0A0F1C] to-transparent pointer-events-none"
-              >
-                <button
-                  onClick={() => setSelectedId(null)}
-                  autoFocus
-                  className="pointer-events-auto w-12 h-12 flex items-center justify-center rounded-full bg-slate-800/90 hover:bg-slate-700 text-slate-300 hover:text-white backdrop-blur-md border border-white/10 transition-all shadow-lg active:scale-90"
-                  aria-label="Chiudi finestra"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </motion.div>
-
-              {/* CONTENUTO SCROLLABILE */}
-              <div
-                className="flex-1 overflow-y-auto overscroll-contain px-6 pb-20 md:px-10 md:pb-12 pt-4 md:pt-0"
-                style={{ WebkitOverflowScrolling: 'touch' }}
-              >
-                <div className="max-w-2xl mx-auto md:mx-0">
-
-                  {/* Icon & Intro */}
-                  <div className="flex items-start gap-4 mb-6">
-                    <motion.div layoutId={`card-icon-${selectedService.id}`} transition={springTransition} className="mt-1 flex-shrink-0 inline-flex items-center justify-center w-14 h-14 rounded-xl bg-[#070B14] border border-white/5">
-                      <selectedService.icon className={`w-7 h-7 ${selectedService.iconColor}`} strokeWidth={1.5} />
-                    </motion.div>
-                    <div>
-                      <motion.div layoutId={`card-kicker-${selectedService.id}`} transition={springTransition} className="mb-1">
-                        <span className={`text-xs font-semibold ${selectedService.iconColor} opacity-70 tracking-wide uppercase`}>
-                          {selectedService.kicker}
-                        </span>
-                      </motion.div>
-                      <motion.h3 layoutId={`card-title-${selectedService.id}`} transition={springTransition} id={`dialog-title-${selectedService.id}`} className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">
-                        {selectedService.title}
-                      </motion.h3>
-                    </div>
-                  </div>
-
-                  <motion.p layoutId={`card-desc-${selectedService.id}`} transition={springTransition} className="text-slate-300 text-lg md:text-xl leading-relaxed mb-10">
-                    {selectedService.desc}
-                  </motion.p>
-
-                  {/* Details Grid: Compaiono con Fade-In quando la card è aperta */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 5, transition: { duration: 0.15 } }}
-                    transition={{ delay: 0.2, duration: 0.4 }}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8 border-t border-white/5 pt-8"
-                  >
-                    {/* Per chi è */}
-                    <div>
-                      <h4 className="text-sm font-semibold tracking-widest text-[#818cf8] uppercase mb-3">
-                        Per chi è
-                      </h4>
-                      <p className="text-slate-200 leading-relaxed font-medium">
-                        {selectedService.target}
-                      </p>
-                    </div>
-
-                    {/* Vantaggi concreti */}
-                    <div>
-                      <h4 className="text-sm font-semibold tracking-widest text-[#34d399] uppercase mb-3">
-                        Vantaggi concreti
-                      </h4>
-                      <p className="text-slate-200 leading-relaxed font-medium">
-                        {selectedService.benefits}
-                      </p>
-                    </div>
-
-                    {/* Esempi tipici */}
-                    <div className="md:col-span-2">
-                      <h4 className="text-sm font-semibold tracking-widest text-cyan-400 uppercase mb-3">
-                        Esempi tipici
-                      </h4>
-                      <p className="text-slate-200 leading-relaxed">
-                        {selectedService.examples}
-                      </p>
-                    </div>
-
-                    {/* Cosa consegniamo (Opzionale, renderizzato se c'è) */}
-                    {selectedService.deliverables && (
-                      <div className="md:col-span-2">
-                        <h4 className="text-sm font-semibold tracking-widest text-amber-400 uppercase mb-3">
-                          Cosa consegniamo
-                        </h4>
-                        <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-                          <p className="text-slate-200 leading-relaxed">
-                            {selectedService.deliverables}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                  </motion.div>
-
-                  {/* CTA interno chiudi (Solo per dare una exit route comoda da mobile se scrolli fondo) */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0, transition: { duration: 0.15 } }}
-                    transition={{ delay: 0.4 }}
-                    className="mt-12 flex justify-center md:justify-start"
-                  >
-                    <button
-                      onClick={() => setSelectedId(null)}
-                      className="px-8 py-3 rounded-full text-sm font-semibold bg-white/10 hover:bg-white/20 text-white transition-colors"
-                    >
-                      Chiudi dettagli
-                    </button>
-                  </motion.div>
-
-                </div>
-              </div>
-
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
