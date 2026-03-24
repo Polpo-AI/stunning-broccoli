@@ -2,7 +2,8 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useLenis } from 'lenis/react';
 
 /**
  * Depth-based page transition.
@@ -15,6 +16,8 @@ export function PageWrapper({ children }: { children: React.ReactNode }) {
   const reduced = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const lenis = useLenis();
+  const isInitialMount = useRef(true);
 
   useEffect(() => {
     setMounted(true);
@@ -23,6 +26,30 @@ export function PageWrapper({ children }: { children: React.ReactNode }) {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // Handle scroll position on route change
+  useEffect(() => {
+    if (!lenis) return;
+    
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
+    // We use a slight delay to ensure Next.js standard scroll restoration is overridden
+    const t = setTimeout(() => {
+      // If there is a hash in the URL, don't interfere. Let the browser/Lenis handle it.
+      if (window.location.hash) return;
+
+      if (pathname === '/') {
+        lenis.scrollTo(400, { immediate: true });
+      } else {
+        lenis.scrollTo(0, { immediate: true });
+      }
+    }, 10);
+
+    return () => clearTimeout(t);
+  }, [pathname, lenis]);
 
   const ease = [0.22, 1, 0.36, 1] as const;
   // If not mounted, default to faster transition to be safe
