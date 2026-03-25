@@ -25,7 +25,7 @@ export default function CleanHero() {
   const yBg = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
   
   // Text content fades out and moves down slightly
-  const opacityText = useTransform(scrollYProgress, [0, 0.7], [1, 0.3]);
+  const opacityText = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const yText = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
 
   return (
@@ -75,14 +75,14 @@ export default function CleanHero() {
 
       {/* ── Bottom fade to next section ── */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none z-10"
-        style={{ background: 'linear-gradient(to bottom, transparent, var(--bg-base))' }}
+        className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none z-20"
+        style={{ background: 'linear-gradient(to bottom, transparent, #070B14)' }}
         aria-hidden
       />
 
       {/* ── Main Content ── */}
       <motion.div 
-        className="relative z-20 text-center px-6 max-w-4xl mx-auto w-full pt-12"
+        className="relative z-10 text-center px-6 max-w-4xl mx-auto w-full pt-12"
         style={{ y: yText, opacity: opacityText }}
       >
         <motion.div 
