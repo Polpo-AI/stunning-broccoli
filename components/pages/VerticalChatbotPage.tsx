@@ -102,7 +102,7 @@ export default function VerticalChatbotPage({
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
-              className="relative z-10 hidden lg:block"
+              className="relative z-10 mt-12 lg:mt-0 flex justify-center w-full"
             >
               <WhatsAppMockup messages={mockupMessages} />
             </motion.div>

@@ -121,9 +121,9 @@ export default function ExampleStepsLiquidPinned() {
                                                 className="absolute inset-0 bg-white/10 opacity-0"
                                                 animate={isActive.get() ? {
                                                     opacity: [0, 0.1, 0],
-                                                    scale: [0.9, 1.1, 1]
+                                                    scale: [0.9, 1.1, 1],
+                                                    transition: { duration: 3, repeat: Infinity, ease: "easeInOut" }
                                                 } : {}}
-                                                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                                             />
 
                                             {/* Bordo curvo simulato per l'effetto liquido usando un border-radius custom sul content interno */}
@@ -169,14 +169,14 @@ export default function ExampleStepsLiquidPinned() {
                                                 style={{ left: '-10%' }}
                                                 animate={isActive.get() ? {
                                                     left: ['-20%', '120%'],
-                                                    opacity: [0, 0.6, 0]
+                                                    opacity: [0, 0.6, 0],
+                                                    transition: {
+                                                        duration: 4,
+                                                        repeat: Infinity,
+                                                        ease: "linear",
+                                                        delay: idx * 0.8
+                                                    }
                                                 } : { opacity: 0 }}
-                                                transition={{
-                                                    duration: 4,
-                                                    repeat: Infinity,
-                                                    ease: "linear",
-                                                    delay: idx * 0.8
-                                                }}
                                             />
                                         </div>
                                     )}
