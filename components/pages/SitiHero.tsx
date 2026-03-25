@@ -13,15 +13,14 @@ export default function SitiHero() {
 
       {/* Mascotte — in basso a sinistra, integrata nella section */}
       <motion.div
-        className="absolute bottom-4 left-2 md:bottom-0 md:left-16 pointer-events-none select-none z-0 opacity-40 md:opacity-60"
+        className="absolute bottom-4 left-2 md:bottom-8 md:left-16 pointer-events-none select-none z-0 opacity-40 md:opacity-60"
         initial={{ opacity: 0, y: 40, scale: 0.8 }}
-        animate={{ opacity: '', y: 0, scale: 1 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 1, delay: 0.6, ease: [0.23, 1, 0.32, 1] }}
         aria-hidden
       >
         <motion.div
-          animate={{ y: [0, -12, 0], rotate: [0, -3, 3, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', times: [0, 0.4, 0.7, 1] }}
+          animate={{ y: [0, -4, 0], rotate: [0, -1, 1, 0], transition: { duration: 8, repeat: Infinity, ease: 'easeInOut', times: [0, 0.4, 0.7, 1] } }}
           style={{
             filter: 'drop-shadow(0 0 28px rgba(6,182,212,0.45)) drop-shadow(0 0 10px rgba(56,189,248,0.2))',
             willChange: 'transform',
@@ -44,8 +43,7 @@ export default function SitiHero() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/25 bg-cyan-500/8 text-cyan-400 text-sm font-medium mb-8"
           >
             <motion.div
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+              animate={{ rotate: [0, 360], transition: { duration: 20, repeat: Infinity, ease: 'linear' } }}
             >
               <Globe className="w-4 h-4" />
             </motion.div>

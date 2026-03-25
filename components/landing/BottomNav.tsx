@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
@@ -25,6 +25,11 @@ function NavItem({ label, href, icon: Icon, accent, active }: {
   const ref = useRef<HTMLAnchorElement>(null);
   const [hovered, setHovered] = useState(false);
   const [ripple, setRipple] = useState<{ x: number; y: number; key: number } | null>(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    setIsTouchDevice(window.matchMedia('(hover: none) and (pointer: coarse)').matches);
+  }, []);
 
   // Magnetic pull values
   const x = useMotionValue(0);
@@ -33,6 +38,7 @@ function NavItem({ label, href, icon: Icon, accent, active }: {
   const springY = useSpring(y, { stiffness: 250, damping: 18 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (isTouchDevice) return;
     const rect = ref.current?.getBoundingClientRect();
     if (!rect) return;
     const cx = rect.left + rect.width / 2;
@@ -45,12 +51,16 @@ function NavItem({ label, href, icon: Icon, accent, active }: {
   };
 
   const handleMouseLeave = () => {
+    if (isTouchDevice) return;
     x.set(0);
     y.set(0);
     setHovered(false);
   };
 
-  const handleMouseEnter = () => setHovered(true);
+  const handleMouseEnter = () => {
+    if (isTouchDevice) return;
+    setHovered(true);
+  };
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const rect = ref.current?.getBoundingClientRect();

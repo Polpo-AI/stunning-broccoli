@@ -34,14 +34,12 @@ export default function HowItWorksSection() {
       {/* Animated background */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
-        animate={{ opacity: [0.4, 0.7, 0.4] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        animate={{ opacity: [0.4, 0.7, 0.4], transition: { duration: 6, repeat: Infinity, ease: 'easeInOut' } }}
         aria-hidden
         style={{
           background: 'radial-gradient(ellipse 70% 50% at 50% 100%, rgba(6,182,212,0.05) 0%, transparent 70%)',
         }}
       />
-
       <div className="relative max-w-6xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -61,7 +59,6 @@ export default function HowItWorksSection() {
             Un processo snello, trasparente e veloce. Di solito si va live in meno di 30 giorni.
           </motion.p>
         </motion.div>
-
         {/* Steps */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
           {/* Connector (desktop) */}
@@ -72,7 +69,6 @@ export default function HowItWorksSection() {
               background: 'linear-gradient(to right, transparent 0%, rgba(6,182,212,0.3) 30%, rgba(6,182,212,0.3) 70%, transparent 100%)',
             }}
           />
-
           {steps.map(({ n, icon: Icon, title, desc }, idx) => (
             <motion.div
               key={n}
@@ -94,8 +90,7 @@ export default function HowItWorksSection() {
                 {/* Number badge */}
                 <motion.span
                   className="absolute -top-2.5 -right-2.5 w-6 h-6 rounded-full bg-[var(--bg-surface)] border border-cyan-500/40 text-[10px] font-bold text-cyan-400 flex items-center justify-center"
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, delay: idx * 0.4, repeat: Infinity, ease: 'easeInOut' }}
+                  animate={{ scale: [1, 1.1, 1], transition: { duration: 2, delay: idx * 0.4, repeat: Infinity, ease: 'easeInOut' } }}
                 >
                   {idx + 1}
                 </motion.span>

@@ -41,12 +41,12 @@ export default function FloatingMascot({
         animate={{
           y:      [0, -12, 0],
           rotate: [0, 3, -3, 0],
-        }}
-        transition={{
-          duration: 5.5,
-          repeat: Infinity,
-          ease: 'easeInOut',
-          times: [0, 0.4, 0.7, 1],
+          transition: {
+            duration: 5.5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            times: [0, 0.4, 0.7, 1],
+          }
         }}
         style={{
           filter:      'drop-shadow(0 0 28px rgba(6,182,212,0.45)) drop-shadow(0 0 8px rgba(6,182,212,0.2))',

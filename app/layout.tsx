@@ -6,6 +6,7 @@ import Navbar from '@/components/landing/Navbar';
 import Footer from '@/components/landing/Footer';
 import BottomNav from '@/components/landing/BottomNav';
 import { PageWrapper } from '@/components/landing/PageWrapper';
+import GlobalParallaxBackground from '@/components/shared/GlobalParallaxBackground';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -14,17 +15,31 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://polpo-ai.com'),
   title: 'PolpoAI — Siti web, Chatbot e Agenti AI su misura',
   description:
-    'PolpoAI crea siti web, chatbot personalizzati e agenti AI su misura per il tuo business. Risparmia tempo e non perdere più contatti.',
+    'Siti web, chatbot e agenti AI su misura che lavorano al posto tuo.',
   openGraph: {
     title: 'PolpoAI — Siti web, Chatbot e Agenti AI su misura',
-    description: 'PolpoAI crea siti web, chatbot personalizzati e agenti AI su misura per il tuo business.',
-    images: [{ url: 'https://bolt.new/static/og_default.png' }],
+    description: 'Siti web, chatbot e agenti AI su misura che lavorano al posto tuo.',
+    url: 'https://polpo-ai.com',
+    siteName: 'PolpoAI',
+    locale: 'it_IT',
+    type: 'website',
+    images: [
+      {
+        url: '/polpo.png',
+        width: 1200,
+        height: 630,
+        alt: 'PolpoAI Mascotte',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://bolt.new/static/og_default.png' }],
+    title: 'PolpoAI — Siti web, Chatbot e Agenti AI su misura',
+    description: 'Siti web, chatbot e agenti AI su misura che lavorano al posto tuo.',
+    images: ['/polpo.png'],
   },
 };
 
@@ -50,6 +65,7 @@ export default function RootLayout({
               '#070B14',
           }}
         />
+        <GlobalParallaxBackground />
         <SmoothScroll>
           <div className="relative min-h-screen flex flex-col">
             <Navbar />
