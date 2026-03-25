@@ -2,19 +2,37 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
+import { LayoutRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 // Easing requested by user: cubic-bezier(0.4, 0, 0.2, 1)
 const TRANSITION_EASING = [0.4, 0, 0.2, 1] as const;
 const TRANSITION_DURATION = 0.6; // 600ms total duration
 
 /**
+ * Freezes the Next.js App Router context for the exiting component.
+ * This prevents the old page from receiving new server components while `AnimatePresence` runs its unmount.
+ * Fixes the notorious "mount stall" freeze in Next.js 14 production builds.
+ */
+function FrozenRouter({ children }: { children: React.ReactNode }) {
+  const context = useContext(LayoutRouterContext);
+  const frozen = useRef(context).current;
+
+  if (!frozen) {
+    return <>{children}</>;
+  }
+
+  return (
+    <LayoutRouterContext.Provider value={frozen}>
+      {children}
+    </LayoutRouterContext.Provider>
+  );
+}
+
+/**
  * Liquid Curtain Transition Strategy:
  * When path changes, we do NOT block the router. Instead, the `AnimatePresence` mode="wait" in PageWrapper
  * allows this component (which wraps the children) to visually perform the open/close sequence.
- * 
- * Wait, `AnimatePresence` mode="wait" will keep the old page mounted until its exit animation finishes.
- * We want the dark liquid shapes to close (exit of old page), and open (enter of new page).
  */
 export default function GlobalTransition({ 
   children,
@@ -97,7 +115,7 @@ export default function GlobalTransition({
           className="w-full origin-top"
           style={{ willChange: 'opacity, transform, filter' }}
         >
-          {children}
+          <FrozenRouter>{children}</FrozenRouter>
         </motion.div>
 
         {/* The Transition Overlay (Tentacle Curtains) */}
