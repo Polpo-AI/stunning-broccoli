@@ -2,16 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-// Server-side Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!
-);
-
 export async function POST(req: NextRequest) {
   try {
+    // Inizializzare all'interno della funzione previene errori di build su Vercel 
+    // se le variabili d'ambiente non sono presenti in fase di build.
+    const resend = new Resend(process.env.RESEND_API_KEY || 're_build_placeholder');
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
+      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY || 'placeholder_key'
+    );
+
     const { nome, email, messaggio } = await req.json();
 
     // Validation
