@@ -1,9 +1,8 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { supabase } from '@/lib/supabase';
 import { CircleCheck as CheckCircle, Loader as Loader2 } from 'lucide-react';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
@@ -27,13 +26,17 @@ export default function CTASection() {
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setErrors({});
     setStatus('loading');
-    if (!supabase) { setStatus('error'); return; }
-    const { error } = await supabase.from('leads').insert([form]);
-    if (error) {
-      setStatus('error');
-    } else {
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error('Errore invio');
       setStatus('success');
       setForm({ nome: '', email: '', messaggio: '' });
+    } catch {
+      setStatus('error');
     }
   };
 
