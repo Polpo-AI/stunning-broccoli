@@ -2,16 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-// Server-side Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!
-);
-
 export async function POST(req: NextRequest) {
   try {
+    // Inizializzare all'interno della funzione previene errori di build su Vercel 
+    // se le variabili d'ambiente non sono presenti in fase di build.
+    const resend = new Resend(process.env.RESEND_API_KEY || 're_build_placeholder');
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
+      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY || 'placeholder_key'
+    );
+
     const { nome, email, messaggio } = await req.json();
 
     // Validation
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 2. Notification email to PolpoAI team
-    await resend.emails.send({
+    const res1 = await resend.emails.send({
       from: 'PolpoAI <info@polpo-ai.com>',
       to: ['info@polpo-ai.com'],
       subject: `🦑 Nuovo lead da ${nome}`,
@@ -45,7 +45,9 @@ export async function POST(req: NextRequest) {
                 <!-- Header -->
                 <tr>
                   <td style="background:linear-gradient(135deg,#0e1729 0%,#111827 100%);border:1px solid rgba(6,182,212,0.2);border-radius:16px 16px 0 0;padding:32px 40px;text-align:center;">
-                    <p style="margin:0 0 8px;font-size:32px;">🦑</p>
+                    <div style="margin-bottom:8px;">
+                      <img src="https://polpo-ai.com/polpo.png" alt="PolpoAI Mascot" width="60" style="display:inline-block;max-width:100%;height:auto;" />
+                    </div>
                     <h1 style="margin:0;color:#06b6d4;font-size:22px;font-weight:700;letter-spacing:-0.5px;">Nuovo messaggio ricevuto</h1>
                     <p style="margin:8px 0 0;color:#64748b;font-size:14px;">PolpoAI — Form di contatto</p>
                   </td>
@@ -91,8 +93,14 @@ export async function POST(req: NextRequest) {
       `,
     });
 
+    if (res1.error) {
+       console.error('Errore Resend mail 1 (a team):', res1.error);
+    } else {
+       console.log('Mail 1 inviata!', res1.data);
+    }
+
     // 3. Confirmation email to the user
-    await resend.emails.send({
+    const res2 = await resend.emails.send({
       from: 'PolpoAI <info@polpo-ai.com>',
       to: [email],
       subject: 'Abbiamo ricevuto il tuo messaggio 🦑',
@@ -107,7 +115,9 @@ export async function POST(req: NextRequest) {
                 <!-- Header -->
                 <tr>
                   <td style="background:linear-gradient(135deg,#070B14 0%,#0d1526 100%);border-radius:16px 16px 0 0;padding:48px 40px;text-align:center;">
-                    <p style="margin:0 0 12px;font-size:48px;">🦑</p>
+                    <div style="margin-bottom:16px;">
+                      <img src="https://polpo-ai.com/polpo.png" alt="PolpoAI Mascot" width="80" style="display:inline-block;max-width:100%;height:auto;" />
+                    </div>
                     <h1 style="margin:0 0 8px;color:#ffffff;font-size:26px;font-weight:800;letter-spacing:-0.5px;">Ciao, ${nome}!</h1>
                     <p style="margin:0;color:#06b6d4;font-size:16px;font-weight:500;">Abbiamo ricevuto il tuo messaggio</p>
                   </td>
@@ -158,6 +168,12 @@ export async function POST(req: NextRequest) {
         </html>
       `,
     });
+
+    if (res2.error) {
+       console.error('Errore Resend mail 2 (a cliente):', res2.error);
+    } else {
+       console.log('Mail 2 inviata!', res2.data);
+    }
 
     return NextResponse.json({ success: true });
   } catch (err) {
