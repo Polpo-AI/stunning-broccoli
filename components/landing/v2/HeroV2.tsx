@@ -42,10 +42,10 @@ export default function HeroV2() {
             Siti, chatbot e agenti su misura per <strong className="text-white font-medium">artigiani digitali</strong> che hanno smesso di rispondere al telefono — e iniziato a rispondere ai clienti.
           </p>
           <div className="flex gap-3.5 items-center">
-            <Link href="/v2/contatti" className="btn-magenta">
+            <Link href="/contatti" className="btn-magenta">
               Prenotiamo una call <ArrowRight className="w-4 h-4" strokeWidth={1.8} />
             </Link>
-            <Link href="/v2#casi" className="px-6 py-4 text-[15px] font-medium text-slate-400 underline underline-offset-[6px] decoration-white/20 inline-flex items-center gap-2">
+            <Link href="/#casi" className="px-6 py-4 text-[15px] font-medium text-slate-400 underline underline-offset-[6px] decoration-white/20 inline-flex items-center gap-2">
               Vedi i casi <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={1.8} />
             </Link>
           </div>

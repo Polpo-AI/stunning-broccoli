@@ -6,10 +6,10 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 const links = [
-  { label: 'Lavoro', href: '/v2' },
-  { label: 'Studio', href: '/v2#studio' },
-  { label: 'Casi',   href: '/v2#casi' },
-  { label: 'Diario', href: '/v2#diario' },
+  { label: 'Lavoro', href: '/' },
+  { label: 'Studio', href: '/#studio' },
+  { label: 'Casi',   href: '/#casi' },
+  { label: 'Diario', href: '/#diario' },
 ];
 
 export default function NavbarV2() {
@@ -32,7 +32,7 @@ export default function NavbarV2() {
       }}
     >
       <div className="max-w-[1320px] mx-auto w-full flex items-center justify-between">
-        <Link href="/v2" className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3">
           <Image src="/logo a.jpg" alt="" width={34} height={34} className="rounded-[9px]" />
           <span className="font-display text-[22px] font-semibold italic tracking-tight">
             Polpo<span className="text-cyan-400 not-italic font-normal">/AI</span>
@@ -46,7 +46,7 @@ export default function NavbarV2() {
           ))}
         </div>
         <Link
-          href="/v2/contatti"
+          href="/contatti"
           className="px-[22px] py-[11px] rounded-full bg-white text-[#070B14] text-sm font-semibold inline-flex items-center gap-2 hover:scale-105 transition-transform"
         >
           Parliamone

@@ -32,7 +32,7 @@ export default function AgentiHeroV2() {
             Email triagiate, dati estratti, report generati. Un agente AI cucito attorno al tuo flusso — non un altro tool da imparare.
           </p>
           <div className="flex gap-3">
-            <MagentaButton href="/v2#diario">Parliamone</MagentaButton>
+            <MagentaButton href="/#diario">Parliamone</MagentaButton>
             <MagentaButton href="#esempi" variant="outline" trailingArrow={false}>Casi reali</MagentaButton>
           </div>
         </motion.div>

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const cols = [
-  { h: 'Lavoro',   items: [{l:'Chatbot',href:'/v2/chatbot-whatsapp'},{l:'Siti',href:'/v2/siti-web'},{l:'Agenti AI',href:'/v2/agenti-ai'},{l:'Integrazioni',href:'/v2#integrazioni'}] },
+  { h: 'Lavoro',   items: [{l:'Chatbot',href:'/chatbot-whatsapp'},{l:'Siti',href:'/siti-web'},{l:'Agenti AI',href:'/agenti-ai'},{l:'Integrazioni',href:'/#integrazioni'}] },
   { h: 'Casi',     items: [{l:'Padel Roma',href:'#'},{l:'Hotel Garda',href:'#'},{l:'Studio Biaggi',href:'#'}] },
   { h: 'Contatti', items: [{l:'ciao@polpo-ai.com',href:'mailto:ciao@polpo-ai.com'},{l:'Instagram',href:'#'},{l:'LinkedIn',href:'#'}] },
 ];
@@ -13,7 +13,7 @@ export default function FooterV2() {
       <div className="max-w-[1320px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr] gap-14 mb-14">
           <div>
-            <Link href="/v2" className="flex items-center gap-3">
+            <Link href="/" className="flex items-center gap-3">
               <Image src="/logo a.jpg" alt="" width={34} height={34} className="rounded-[9px]" />
               <span className="font-display text-[22px] font-semibold italic tracking-tight">
                 Polpo<span className="text-cyan-400 not-italic font-normal">/AI</span>

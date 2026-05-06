@@ -32,7 +32,7 @@ export default function SitiHeroV2() {
             Siti veloci, mobile-first, indicizzati su Google. In meno di 30 giorni online — con i contenuti scritti insieme.
           </p>
           <div className="flex gap-3">
-            <MagentaButton href="/v2#diario">Parliamone</MagentaButton>
+            <MagentaButton href="/#diario">Parliamone</MagentaButton>
             <MagentaButton href="#portfolio" variant="outline" trailingArrow={false}>Vedi i lavori</MagentaButton>
           </div>
         </motion.div>

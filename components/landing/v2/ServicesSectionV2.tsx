@@ -27,7 +27,7 @@ export default function ServicesSectionV2() {
 
       <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr_1fr] gap-5 lg:grid-rows-[380px_280px]">
         {/* Featured */}
-        <Link href="/v2/chatbot-whatsapp" className="lg:row-span-2 relative p-9 rounded-[28px] flex flex-col justify-between overflow-hidden transition-all duration-300 hover:-translate-y-1.5"
+        <Link href="/chatbot-whatsapp" className="lg:row-span-2 relative p-9 rounded-[28px] flex flex-col justify-between overflow-hidden transition-all duration-300 hover:-translate-y-1.5"
               style={{ background: 'linear-gradient(160deg, rgba(255,61,138,0.10) 0%, rgba(7,11,20,0.4) 50%)', border: '1px solid rgba(255,61,138,0.25)' }}>
           <div>
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-[0.1em] uppercase text-magenta-soft mb-4"
@@ -63,7 +63,7 @@ export default function ServicesSectionV2() {
           icon={<Globe className="w-[22px] h-[22px]" strokeWidth={1.4} />}
           title={<>Siti <em className="italic text-cyan-400">vetrina</em></>}
           desc="Veloci, mobile-first, ottimizzati per Google. Online in meno di 30 giorni."
-          href="/v2/siti-web" linkColor="text-cyan-400"
+          href="/siti-web" linkColor="text-cyan-400"
         />
 
         {/* Agenti */}
@@ -72,11 +72,11 @@ export default function ServicesSectionV2() {
           icon={<Bot className="w-[22px] h-[22px]" strokeWidth={1.4} />}
           title={<>Agenti <em className="italic text-violet-400">AI</em> su misura</>}
           desc="Email, dati, report. Un agente che lavora di notte — al posto tuo."
-          href="/v2/agenti-ai" linkColor="text-violet-400" titleSize="text-[22px]"
+          href="/agenti-ai" linkColor="text-violet-400" titleSize="text-[22px]"
         />
 
         {/* Wide integrations */}
-        <Link href="/v2#integrazioni" className="lg:col-span-2 lg:row-start-2 relative p-7 rounded-[28px] flex items-center justify-between gap-6 overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:border-white/20"
+        <Link href="/#integrazioni" className="lg:col-span-2 lg:row-start-2 relative p-7 rounded-[28px] flex items-center justify-between gap-6 overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:border-white/20"
               style={{ background: 'rgba(255,255,255,0.022)', border: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(12px)' }}>
           <div className="max-w-[60%]">
             <div className="font-display text-sm italic text-white/40 mb-2.5">— 04 · su richiesta</div>
