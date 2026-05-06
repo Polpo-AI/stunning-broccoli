@@ -20,6 +20,18 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
+        magenta: {
+          DEFAULT: '#ff3d8a',
+          soft: '#ff7ab0',
+          50: '#fff1f6',
+          100: '#ffe4ee',
+          400: '#ff7ab0',
+          500: '#ff3d8a',
+          600: '#e6246e',
+        },
+        amber: {
+          DEFAULT: '#ffb547',
+        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -61,7 +73,22 @@ const config: Config = {
           '5': 'hsl(var(--chart-5))',
         },
       },
+      fontFamily: {
+        display: ['var(--font-fraunces)', 'Georgia', 'serif'],
+      },
+      boxShadow: {
+        'magenta-cta':       '0 8px 32px rgba(255,61,138,0.30)',
+        'magenta-cta-hover': '0 12px 40px rgba(255,61,138,0.45)',
+      },
       keyframes: {
+        'pulse-magenta': {
+          '0%, 100%': { opacity: '0.4' },
+          '50%':      { opacity: '1', boxShadow: '0 0 12px #ff3d8a' },
+        },
+        'marquee-scroll': {
+          from: { transform: 'translateX(0)' },
+          to:   { transform: 'translateX(-50%)' },
+        },
         'accordion-down': {
           from: {
             height: '0',
@@ -80,6 +107,8 @@ const config: Config = {
         },
       },
       animation: {
+        'pulse-magenta':  'pulse-magenta 2s ease-in-out infinite',
+        'marquee-scroll': 'marquee-scroll 40s linear infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },

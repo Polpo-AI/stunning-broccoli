@@ -215,3 +215,126 @@
   content-visibility: auto;
   contain-intrinsic-size: 0 600px;
 }
+/* ============================================================================
+   PolpoAI v2 — Editorial tokens
+   Append the contents of this file to the BOTTOM of app/globals.css.
+   It only adds new utility classes + custom properties — does not override v1.
+   ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,400&display=swap');
+
+:root {
+  /* Spice accents — used 4-5 times across the page, never dominant. */
+  --magenta:        #ff3d8a;
+  --magenta-soft:   #ff7ab0;
+  --amber:          #ffb547;
+
+  /* Display family for editorial titles and stat numbers. */
+  --font-display: var(--font-fraunces, 'Fraunces'), 'Georgia', serif;
+}
+
+/* ─── Editorial type ────────────────────────────────────────────────────── */
+.font-display { font-family: var(--font-display); }
+.h1-editorial {
+  font-family: var(--font-display);
+  font-size: clamp(56px, 7.5vw, 120px);
+  font-weight: 300; line-height: 0.92; letter-spacing: -0.035em;
+  color: #fff;
+}
+.h1-editorial em {
+  font-style: italic; font-weight: 400;
+  background: linear-gradient(105deg, #22d3ee 0%, #818cf8 45%, var(--magenta) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.h2-editorial {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 88px);
+  font-weight: 300; line-height: 0.95; letter-spacing: -0.025em; color: #fff;
+}
+.h2-editorial em {
+  font-style: italic; font-weight: 400;
+  background: linear-gradient(105deg, #22d3ee, var(--magenta));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.h3-editorial {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 400; letter-spacing: -0.015em; color: #fff;
+}
+.h3-editorial em { font-style: italic; }
+
+.section-num-editorial {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 400; font-style: italic;
+  color: var(--magenta); letter-spacing: 0.05em;
+}
+
+/* ─── Underline-mark (highlighter behind text) ──────────────────────────── */
+.underline-mark { position: relative; display: inline-block; }
+.underline-mark::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 8px;
+  height: 8px; background: var(--magenta); opacity: 0.25; border-radius: 4px;
+  transform: skewX(-8deg);
+}
+.text-mark-magenta {
+  display: inline-block; padding: 0 8px;
+  background: linear-gradient(180deg, transparent 60%, rgba(255,61,138,0.30) 60%);
+}
+
+/* ─── Eyebrow (warm) ────────────────────────────────────────────────────── */
+.eyebrow-warm {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 14px; border-radius: 9999px;
+  background: rgba(255,61,138,0.06); border: 1px solid rgba(255,61,138,0.20);
+  color: var(--magenta-soft); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.eyebrow-warm::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--magenta);
+  animation: pulse-magenta 2s ease-in-out infinite;
+}
+@keyframes pulse-magenta {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; box-shadow: 0 0 12px var(--magenta); }
+}
+
+/* ─── Magenta CTA ───────────────────────────────────────────────────────── */
+.btn-magenta {
+  padding: 16px 28px; border-radius: 9999px; font-weight: 600; font-size: 15px;
+  background: linear-gradient(135deg, var(--magenta) 0%, #ff5b9e 100%);
+  color: #fff; border: 0; cursor: pointer;
+  box-shadow: 0 8px 32px rgba(255,61,138,0.30);
+  display: inline-flex; align-items: center; gap: 10px;
+  transition: all 250ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.btn-magenta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(255,61,138,0.45);
+}
+
+/* ─── Tentacle SVG strokes ──────────────────────────────────────────────── */
+.tentacle { position: absolute; pointer-events: none; }
+.tentacle path {
+  fill: none; stroke-linecap: round;
+  stroke: url(#polpo-tentacle-cyan); stroke-width: 2;
+  filter: drop-shadow(0 0 6px rgba(6,182,212,0.4));
+}
+.tentacle.warm path {
+  stroke: url(#polpo-tentacle-magenta);
+  filter: drop-shadow(0 0 6px rgba(255,61,138,0.35));
+}
+.sucker { fill: rgba(6,182,212,0.6); }
+.sucker.warm { fill: rgba(255,61,138,0.55); }
+
+/* ─── Marquee ───────────────────────────────────────────────────────────── */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex; gap: 48px; white-space: nowrap;
+  animation: marquee-scroll 40s linear infinite;
+  font-family: var(--font-display);
+  font-size: 28px; font-style: italic; font-weight: 300;
+  color: rgba(255,255,255,0.35);
+}

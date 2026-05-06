@@ -1,6 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Fraunces } from 'next/font/google';
 import SmoothScroll from '@/components/landing/SmoothScroll';
 import Navbar from '@/components/landing/Navbar';
 import Footer from '@/components/landing/Footer';
@@ -12,6 +12,14 @@ const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
+});
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-fraunces',
+  display: 'swap',
+  weight: ['300', '400', '600'],
+  style: ['normal', 'italic'],
 });
 
 export const metadata: Metadata = {
@@ -49,7 +57,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="it" className={inter.variable}>
+    <html lang="it" className={`${inter.variable} ${fraunces.variable}`}>
       <body className={inter.className}>
         {/*
           Persistent background: always mounted, never re-renders during navigation.
