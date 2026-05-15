@@ -2,6 +2,8 @@ import './globals.css';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import SmoothScroll from '@/components/landing/SmoothScroll';
 import Navbar from '@/components/landing/Navbar';
 import Footer from '@/components/landing/Footer';
@@ -240,6 +242,8 @@ export default function RootLayout({
           </SmoothScroll>
         </div>
         <BottomNav />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

@@ -3,7 +3,13 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  images: { unoptimized: true },
+  // Image optimization Next.js: serve AVIF/WebP responsive automaticamente
+  // (su Vercel è incluso; su Netlify serve @netlify/plugin-nextjs già presente).
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [375, 640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 64, 96, 128, 256],
+  },
   experimental: {
     serverComponentsExternalPackages: ['@supabase/supabase-js', '@supabase/realtime-js'],
   },
