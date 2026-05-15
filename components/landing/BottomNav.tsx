@@ -9,7 +9,7 @@ import { Home, Globe, MessageSquare, Bot } from 'lucide-react';
 const NAV_ITEMS = [
   { label: 'Home',     href: '/',                              icon: Home,         accent: '#22d3ee' },
   { label: 'Siti Web', href: '/creazione-siti-web',            icon: Globe,        accent: '#38bdf8' },
-  { label: 'Chatbot',  href: '/chatbot-whatsapp-prenotazioni', icon: MessageSquare, accent: '#34d399' },
+  { label: 'Chatbot',  href: '/chatbot-whatsapp-prenotazioni', icon: MessageSquare, accent: '#10b981' },
   { label: 'AI Agent', href: '/agenti-ai',                     icon: Bot,          accent: '#a78bfa' },
 ];
 
@@ -175,12 +175,11 @@ export default function BottomNav() {
   const accentColor = NAV_ITEMS.find(({ href }) => href === activeHref)?.accent ?? '#22d3ee';
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-4 pb-5 pointer-events-none">
-      <motion.nav
-        initial={{ y: 90, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, delay: 0.4, ease: [0.23, 1, 0.32, 1] }}
-        className="pointer-events-auto"
+    <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none"
+      style={{ paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))' }}
+    >
+      <nav
+        className="pointer-events-auto animate-bottomnav-in"
         aria-label="Navigazione rapida"
       >
         {/* Outer gradient ring — changes color with active section */}
@@ -213,7 +212,7 @@ export default function BottomNav() {
             ))}
           </div>
         </motion.div>
-      </motion.nav>
+      </nav>
     </div>
   );
 }
