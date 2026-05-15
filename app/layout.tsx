@@ -1,5 +1,5 @@
 import './globals.css';
-import type { Metadata, Viewport } from 'next';
+import type { Metadata } from 'next';
 import Script from 'next/script';
 import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
 import SmoothScroll from '@/components/landing/SmoothScroll';
@@ -85,12 +85,8 @@ export const metadata: Metadata = {
       'Automatizza prenotazioni e customer care con chatbot WhatsApp e agenti AI. Siti web vetrina per PMI italiane.',
     images: ['/polpo.png'],
   },
-};
-
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  viewportFit: 'cover',
+  // Next.js 13.5 supporta viewport e themeColor direttamente sul metadata
+  viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
   themeColor: '#0B1228',
 };
 
