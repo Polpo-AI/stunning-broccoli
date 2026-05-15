@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { useContext, useRef } from 'react';
 import { LayoutRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime';
@@ -29,17 +29,17 @@ export default function GlobalTransition({
 }) {
   const pathname = usePathname();
 
-  const pageVariants = {
+  const pageVariants: Variants = {
     initial: { opacity: 0, y: 8 },
     animate: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.35, ease: [0.23, 1, 0.32, 1] },
+      transition: { duration: 0.35, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] },
     },
     exit: {
       opacity: 0,
       y: -8,
-      transition: { duration: 0.2, ease: [0.4, 0, 1, 1] },
+      transition: { duration: 0.2, ease: [0.4, 0, 1, 1] as [number, number, number, number] },
     },
   };
 
