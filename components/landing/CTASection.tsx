@@ -41,15 +41,8 @@ export default function CTASection() {
   };
 
   return (
-    <section id="contatti" className="relative py-28 md:py-36 bg-[var(--bg-surface)] border-t border-white/5">
-      {/* Glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden
-        style={{
-          background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(6,182,212,0.05) 0%, transparent 70%)',
-        }}
-      />
+    <section id="contatti" className="relative py-28 md:py-36 overflow-hidden">
+      {/* No section-local orbs — bg unico dal layout */}
 
       <div className="relative max-w-5xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
@@ -94,15 +87,31 @@ export default function CTASection() {
             transition={{ duration: 0.7, delay: 0.15, ease: [0.23, 1, 0.32, 1] }}
           >
             {status === 'success' ? (
-              <div className="rounded-2xl border border-cyan-500/25 bg-white/[0.03] p-10 flex flex-col items-center gap-4 text-center">
-                <div className="w-14 h-14 rounded-full bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+              <div
+                className="relative rounded-2xl border border-cyan-500/30 p-10 flex flex-col items-center gap-4 text-center overflow-hidden"
+                style={{
+                  background:
+                    'linear-gradient(160deg, rgba(20,28,55,0.92) 0%, rgba(14,21,46,0.96) 50%, rgba(11,17,40,0.98) 100%)',
+                  backdropFilter: 'blur(20px) saturate(1.4)',
+                  WebkitBackdropFilter: 'blur(20px) saturate(1.4)',
+                  boxShadow:
+                    '0 20px 60px -16px rgba(6,182,212,0.30), 0 10px 32px rgba(0,0,0,0.5), 0 2px 0 rgba(255,255,255,0.06) inset',
+                }}
+              >
+                <div
+                  className="pointer-events-none absolute inset-x-0 top-0 h-px"
+                  style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.20) 50%, transparent)' }}
+                />
+                <div className="w-14 h-14 rounded-full bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center"
+                  style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 12px rgba(0,0,0,0.3)' }}
+                >
                   <CheckCircle className="w-7 h-7 text-cyan-400" />
                 </div>
                 <h3 className="text-xl font-bold text-white">Messaggio inviato!</h3>
-                <p className="text-slate-400 text-sm">Ti contatteremo entro 24 ore.</p>
+                <p className="text-slate-300/85 text-sm">Ti contatteremo entro 24 ore.</p>
                 <button
                   onClick={() => setStatus('idle')}
-                  className="mt-2 text-sm text-cyan-400 hover:text-cyan-300 underline"
+                  className="mt-2 text-sm text-cyan-300 hover:text-cyan-200 underline"
                 >
                   Invia un altro messaggio
                 </button>
@@ -110,9 +119,22 @@ export default function CTASection() {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="rounded-2xl border border-white/8 bg-white/[0.025] backdrop-blur-xl p-8 flex flex-col gap-5 shadow-xl"
+                className="relative rounded-2xl border border-white/[0.10] p-8 flex flex-col gap-5 overflow-hidden"
+                style={{
+                  background:
+                    'linear-gradient(160deg, rgba(20,28,55,0.92) 0%, rgba(14,21,46,0.96) 50%, rgba(11,17,40,0.98) 100%)',
+                  backdropFilter: 'blur(20px) saturate(1.4)',
+                  WebkitBackdropFilter: 'blur(20px) saturate(1.4)',
+                  boxShadow:
+                    '0 20px 60px -16px rgba(0,0,0,0.6), 0 10px 32px rgba(0,0,0,0.5), 0 2px 0 rgba(255,255,255,0.06) inset',
+                }}
                 noValidate
               >
+                {/* Highlight 3D superiore */}
+                <div
+                  className="pointer-events-none absolute inset-x-0 top-0 h-px"
+                  style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.20) 50%, transparent)' }}
+                />
                 {/* Nome */}
                 <div>
                   <label className="text-xs font-semibold text-slate-400 mb-1.5 block uppercase tracking-wide">

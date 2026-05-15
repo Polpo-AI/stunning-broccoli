@@ -36,16 +36,8 @@ const services = [
 
 export default function ServicesSection() {
   return (
-    <section id="servizi" className="relative py-28 md:py-36 bg-[var(--bg-base)]">
-      {/* Subtle background accent */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden
-        style={{
-          background:
-            'radial-gradient(ellipse 60% 40% at 50% 50%, rgba(6,182,212,0.025) 0%, transparent 70%)',
-        }}
-      />
+    <section id="servizi" className="relative py-28 md:py-36">
+      {/* No section-local orbs — il bg colore arriva da layout body */}
 
       <div className="relative max-w-6xl mx-auto px-6">
         {/* Header */}

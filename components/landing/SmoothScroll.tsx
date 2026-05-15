@@ -1,15 +1,31 @@
 'use client';
 
 import { ReactLenis } from 'lenis/react';
+import { useEffect, useState } from 'react';
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
-    return (
-        <ReactLenis root options={{
-            lerp: 0.1,
-            duration: 1.5,
-            smoothWheel: true,
-        }}>
-            {children}
-        </ReactLenis>
-    );
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Su SSR e prima dell'hydration, rendi i children senza wrapper Lenis
+  // per evitare mismatch DOM tra server e client.
+  if (!mounted) {
+    return <>{children}</>;
+  }
+
+  return (
+    <ReactLenis
+      root
+      options={{
+        lerp: 0.1,
+        duration: 1.5,
+        smoothWheel: true,
+      }}
+    >
+      {children}
+    </ReactLenis>
+  );
 }

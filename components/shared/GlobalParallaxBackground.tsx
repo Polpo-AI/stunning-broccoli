@@ -5,57 +5,127 @@ import { useEffect, useState } from 'react';
 
 export default function GlobalParallaxBackground() {
   const reduced = useReducedMotion();
-  const [isMobile, setIsMobile] = useState(true); // default true for safety
+  const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile(); // run once
+    checkMobile();
+    setMounted(true);
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Global scroll progress
   const { scrollYProgress } = useScroll();
+  const leftY  = useTransform(scrollYProgress, [0, 1], ['0%', '12%']);
+  const rightY = useTransform(scrollYProgress, [0, 1], ['0%', '-10%']);
+  const midY   = useTransform(scrollYProgress, [0, 1], ['0%', '6%']);
 
-  // Slow movement for the left floating shape (moves down up to 10%)
-  const leftY = useTransform(scrollYProgress, [0, 1], ['0%', '10%']);
-  
-  // Faster movement for the right floating shape (moves up up to -8%)
-  const rightY = useTransform(scrollYProgress, [0, 1], ['0%', '-8%']);
+  // Render nulla su SSR e prima dell'hydration per evitare mismatch.
+  if (!mounted || reduced) return null;
 
-  if (isMobile || reduced) {
-    return null; // Don't render complex global parallax on mobile/reduced motion
+  // Mobile: orbs statici CSS-animated, più luminosi
+  if (isMobile) {
+    return (
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden>
+        <div
+          className="absolute animate-orb-a"
+          style={{
+            top: '12%',
+            left: '-100px',
+            width: '340px',
+            height: '340px',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(34,211,238,0.32) 0%, transparent 70%)',
+            filter: 'blur(45px)',
+          }}
+        />
+        <div
+          className="absolute animate-orb-b"
+          style={{
+            top: '50%',
+            right: '-120px',
+            width: '380px',
+            height: '380px',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(167,139,250,0.28) 0%, transparent 70%)',
+            filter: 'blur(55px)',
+          }}
+        />
+        <div
+          className="absolute animate-orb-a"
+          style={{
+            bottom: '8%',
+            left: '20%',
+            width: '260px',
+            height: '260px',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(52,211,153,0.20) 0%, transparent 70%)',
+            filter: 'blur(40px)',
+            animationDelay: '-7s',
+          }}
+        />
+      </div>
+    );
   }
 
+  // Desktop: parallax + 4 orbs luminosi multi-colore
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
-      {/* Left subtle tentacle hint */}
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden>
       <motion.div
-        className="absolute w-[300px] h-[500px]"
+        className="absolute"
         style={{
-          top: '20%',
-          left: '-100px',
+          top: '6%',
+          left: '-140px',
           y: leftY,
-          opacity: 0.05,
-          background: 'radial-gradient(ellipse at center, rgba(6,182,212,0.8) 0%, transparent 70%)',
-          filter: 'blur(30px)',
-          borderRadius: '50% 20% 50% 40% / 40% 60% 40% 60%',
-          transform: 'rotate(-15deg)',
+          width: '480px',
+          height: '660px',
+          background: 'radial-gradient(ellipse at center, rgba(34,211,238,0.38) 0%, transparent 68%)',
+          filter: 'blur(55px)',
+          borderRadius: '50% 30% 50% 40% / 40% 60% 40% 60%',
+          willChange: 'transform',
         }}
       />
-      
-      {/* Right subtle tentacle hint */}
       <motion.div
-        className="absolute w-[400px] h-[600px]"
+        className="absolute"
         style={{
-          bottom: '-10%',
-          right: '-150px',
+          top: '30%',
+          right: '-160px',
           y: rightY,
-          opacity: 0.03,
-          background: 'radial-gradient(ellipse at center, rgba(139,92,246,0.8) 0%, transparent 70%)',
-          filter: 'blur(40px)',
-          borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%',
-          transform: 'rotate(25deg)',
+          width: '520px',
+          height: '700px',
+          background: 'radial-gradient(ellipse at center, rgba(167,139,250,0.32) 0%, transparent 68%)',
+          filter: 'blur(60px)',
+          borderRadius: '40% 60% 70% 30% / 50% 60% 40% 50%',
+          willChange: 'transform',
+        }}
+      />
+      <motion.div
+        className="absolute"
+        style={{
+          bottom: '-8%',
+          left: '38%',
+          y: midY,
+          width: '440px',
+          height: '440px',
+          background: 'radial-gradient(circle at center, rgba(52,211,153,0.24) 0%, transparent 70%)',
+          filter: 'blur(55px)',
+          borderRadius: '50%',
+          willChange: 'transform',
+        }}
+      />
+      <motion.div
+        className="absolute"
+        style={{
+          top: '55%',
+          left: '8%',
+          y: leftY,
+          width: '320px',
+          height: '320px',
+          background: 'radial-gradient(circle at center, rgba(96,165,250,0.22) 0%, transparent 70%)',
+          filter: 'blur(45px)',
+          borderRadius: '50%',
+          willChange: 'transform',
         }}
       />
     </div>
