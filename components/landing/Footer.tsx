@@ -28,8 +28,13 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1 flex flex-col gap-5">
             <Link href="/" className="flex items-center gap-2.5 group w-fit">
-              <div className="relative w-8 h-8 rounded-lg overflow-hidden">
-                <Image src="/logo a.jpg" alt="PolpoAI logo" fill className="object-contain" />
+              <div className="relative w-8 h-8 rounded-full overflow-hidden ring-1 ring-white/10">
+                <Image
+                  src="/logo a.jpg"
+                  alt="PolpoAI logo"
+                  fill
+                  className="object-cover scale-[1.18]"
+                />
               </div>
               <span className="text-base font-bold text-white tracking-tight">
                 Polpo<span className="text-cyan-400 group-hover:text-cyan-300 transition-colors">AI</span>

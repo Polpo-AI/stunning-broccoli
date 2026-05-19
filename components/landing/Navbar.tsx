@@ -47,8 +47,14 @@ export default function Navbar() {
 
         {/* ── Logo ── */}
         <Link href="/" prefetch={true} className="flex items-center gap-2.5 group flex-shrink-0">
-          <div className="relative w-8 h-8 rounded-lg overflow-hidden">
-            <Image src="/logo a.jpg" alt="PolpoAI logo" fill className="object-contain" />
+          <div className="relative w-8 h-8 rounded-full overflow-hidden ring-1 ring-white/10">
+            <Image
+              src="/logo a.jpg"
+              alt="PolpoAI logo"
+              fill
+              className="object-cover scale-[1.18]"
+              priority
+            />
           </div>
           <span
             className="text-[1.15rem] font-extrabold text-white tracking-tight"

@@ -123,8 +123,9 @@ export default function CleanHero() {
                 border: '1px solid rgba(255,255,255,0.10)',
                 background: 'transparent',
               }}
+              initial={{ rotate: 0 }}
               animate={{ rotate: 360 }}
-              transition={{ duration: 70, repeat: Infinity, ease: 'linear' }}
+              transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
               aria-hidden
             >
               {/* Pallino 1 — sky-blue (Siti Web) — 0° = top
