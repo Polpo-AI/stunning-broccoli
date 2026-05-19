@@ -309,6 +309,11 @@ h1, h2, h3, h4, h5, h6 {
   to   { transform: translate3d(0, 0, 0);    opacity: 1; }
 }
 
+@keyframes spin-orbit {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
 @keyframes btn-shine {
   0%   { transform: translateX(-120%) skewX(-12deg); }
   60%  { transform: translateX(220%)  skewX(-12deg); }
@@ -346,6 +351,11 @@ h1, h2, h3, h4, h5, h6 {
   .animate-bottomnav-in {
     animation: bottomnav-slide-in 0.7s cubic-bezier(0.23,1,0.32,1) 0.4s both;
     will-change: transform;
+  }
+  .animate-orbit {
+    animation: spin-orbit 25s linear infinite;
+    will-change: transform;
+    transform-origin: center center;
   }
 
   /* ── Gradient text ── */

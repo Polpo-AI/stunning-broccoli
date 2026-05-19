@@ -116,16 +116,13 @@ export default function CleanHero() {
             />
             {/* Cerchio orbit esterno con 3 pallini = 3 servizi.
                Posizionati matematicamente sul perimetro a 0°/120°/240°.
-               Ogni pallino è centrato sulla circonferenza via translate(-50%,-50%). */}
-            <motion.div
-              className="absolute w-[260px] h-[260px] sm:w-[330px] sm:h-[330px] lg:w-[380px] lg:h-[380px] rounded-full pointer-events-none"
+               Usa CSS animation (più affidabile di framer-motion al primo idratamento) */}
+            <div
+              className="animate-orbit absolute w-[260px] h-[260px] sm:w-[330px] sm:h-[330px] lg:w-[380px] lg:h-[380px] rounded-full pointer-events-none"
               style={{
                 border: '1px solid rgba(255,255,255,0.10)',
                 background: 'transparent',
               }}
-              initial={{ rotate: 0 }}
-              animate={{ rotate: 360 }}
-              transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
               aria-hidden
             >
               {/* Pallino 1 — sky-blue (Siti Web) — 0° = top
@@ -169,7 +166,7 @@ export default function CleanHero() {
                     '0 0 12px rgba(139,92,246,0.9), 0 0 24px rgba(139,92,246,0.4), inset 0 1px 0 rgba(255,255,255,0.4)',
                 }}
               />
-            </motion.div>
+            </div>
 
             {/* Mascotte */}
             <div
