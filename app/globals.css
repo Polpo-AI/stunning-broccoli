@@ -32,6 +32,11 @@
   --rose-400:     #fb7185;
   --amber-400:    #fbbf24;
 
+  /* Magenta — accent editoriale "spice" (usato 4-5 volte al massimo) */
+  --magenta:      #ff3d8a;
+  --magenta-soft: #ff7ab0;
+  --amber:        #ffb547;
+
   /* ─── TEXT ─────────────────────────────────────────────────────────────── */
   --text-primary:   #f8fafc;
   --text-secondary: #cbd5e1;
@@ -82,8 +87,11 @@
   --ease-quart:    cubic-bezier(0.25, 1, 0.5, 1);
 
   /* ─── TYPE SYSTEM ──────────────────────────────────────────────────────── */
-  --font-display: var(--font-jakarta), 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
-  --font-sans:    var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Display: Fraunces (serif editoriale) — italic per accenti gradient.
+     Headings standard: Plus Jakarta Sans. Body: Inter. */
+  --font-editorial: var(--font-fraunces), 'Fraunces', 'Georgia', serif;
+  --font-display:   var(--font-jakarta), 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+  --font-sans:      var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
   --fw-regular:   400;
   --fw-medium:    500;
@@ -498,6 +506,230 @@ h1, h2, h3, h4, h5, h6 {
     pointer-events: none;
     z-index: -1;
   }
+}
+
+/* ============================================================================
+   EDITORIAL TYPE — Fraunces serif + italic gradient accents (v2 style)
+   ============================================================================ */
+.font-editorial { font-family: var(--font-editorial); }
+
+/* H1 editoriale — serif light, italic gradient su `<em>` */
+.h1-editorial {
+  font-family: var(--font-editorial);
+  font-size: clamp(2.75rem, 7vw, 6rem);
+  font-weight: 300;
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+.h1-editorial em {
+  font-style: italic;
+  font-weight: 400;
+  /* Gradient cyan → magenta diretto: transizione liscia senza stop visibile */
+  background: linear-gradient(100deg, #67e8f9 0%, var(--magenta) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* H2 editoriale */
+.h2-editorial {
+  font-family: var(--font-editorial);
+  font-size: clamp(2rem, 4.5vw, 4.5rem);
+  font-weight: 300;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+.h2-editorial em {
+  font-style: italic;
+  font-weight: 400;
+  background: linear-gradient(100deg, #67e8f9 0%, var(--magenta) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Varianti em per pagine servizio — gradient omogeneo del color brand */
+.em-siti em,
+.h1-editorial.is-siti em,
+.h2-editorial.is-siti em {
+  background: linear-gradient(100deg, #38bdf8 0%, #60a5fa 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.em-chatbot em,
+.h1-editorial.is-chatbot em,
+.h2-editorial.is-chatbot em {
+  background: linear-gradient(100deg, #34d399 0%, #2dd4bf 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.em-agenti em,
+.h1-editorial.is-agenti em,
+.h2-editorial.is-agenti em {
+  background: linear-gradient(100deg, #a78bfa 0%, #c084fc 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.em-padel em,
+.h1-editorial.is-padel em,
+.h2-editorial.is-padel em {
+  background: linear-gradient(100deg, #34d399 0%, #67e8f9 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* H3 editoriale */
+.h3-editorial {
+  font-family: var(--font-editorial);
+  font-size: 1.625rem;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  line-height: 1.15;
+}
+.h3-editorial em { font-style: italic; }
+
+/* Section number "— Cap. 01 / Lavoro" */
+.section-num-editorial {
+  font-family: var(--font-editorial);
+  font-size: 0.875rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--magenta);
+  letter-spacing: 0.05em;
+  display: inline-block;
+}
+
+/* Underline-mark — sottolineatura magenta dietro la parola */
+.underline-mark {
+  position: relative;
+  display: inline-block;
+}
+.underline-mark::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.5em;
+  height: 0.5em;
+  background: var(--magenta);
+  opacity: 0.28;
+  border-radius: 4px;
+  transform: skewX(-8deg);
+  z-index: -1;
+}
+
+/* Text mark — highlighter magenta dietro testo inline */
+.text-mark-magenta {
+  display: inline-block;
+  padding: 0 8px;
+  background: linear-gradient(180deg, transparent 60%, rgba(255,61,138,0.30) 60%);
+}
+
+/* Eyebrow warm — pill magenta pulsante */
+.eyebrow-warm {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: rgba(255,61,138,0.06);
+  border: 1px solid rgba(255,61,138,0.22);
+  color: var(--magenta-soft);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.eyebrow-warm::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--magenta);
+  animation: pulse-magenta 2s ease-in-out infinite;
+}
+
+@keyframes pulse-magenta {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1; box-shadow: 0 0 12px var(--magenta); }
+}
+
+/* Eyebrow variants per pagine servizio */
+.eyebrow-siti {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 14px; border-radius: 9999px;
+  background: rgba(56,189,248,0.06); border: 1px solid rgba(56,189,248,0.25);
+  color: #7dd3fc;
+  font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.eyebrow-siti::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: #38bdf8; box-shadow: 0 0 8px #38bdf8;
+}
+.eyebrow-chatbot {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 14px; border-radius: 9999px;
+  background: rgba(52,211,153,0.06); border: 1px solid rgba(52,211,153,0.28);
+  color: #6ee7b7;
+  font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.eyebrow-chatbot::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: #34d399; box-shadow: 0 0 8px #34d399;
+}
+.eyebrow-agenti {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 14px; border-radius: 9999px;
+  background: rgba(167,139,250,0.06); border: 1px solid rgba(167,139,250,0.28);
+  color: #c4b5fd;
+  font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.eyebrow-agenti::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: #a78bfa; box-shadow: 0 0 8px #a78bfa;
+}
+
+/* Magenta CTA */
+.btn-magenta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 28px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  background: linear-gradient(135deg, var(--magenta) 0%, #ff5b9e 100%);
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(255,61,138,0.30), inset 0 1px 0 rgba(255,255,255,0.18);
+  transition: all 280ms var(--ease-premium);
+}
+.btn-magenta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(255,61,138,0.45), inset 0 1px 0 rgba(255,255,255,0.22);
+}
+.btn-magenta:active { transform: scale(0.97); }
+
+/* Marquee scroll (per liste verticali in scorrimento) */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  gap: 48px;
+  white-space: nowrap;
+  animation: marquee-scroll 40s linear infinite;
+  font-family: var(--font-editorial);
+  font-size: 1.75rem;
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(255,255,255,0.35);
 }
 
 /* ============================================================================

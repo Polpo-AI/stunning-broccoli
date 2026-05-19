@@ -1,13 +1,13 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Shield, Sparkles, TrendingUp, Zap } from 'lucide-react';
+import { Wrench, Layers, Clock, HeartHandshake } from 'lucide-react';
 
 const benefits = [
   {
-    icon: Shield,
-    title: 'Risparmi tempo',
-    desc: 'Le attività ripetitive diventano automatiche. Hai più ore libere ogni giorno per ciò che conta davvero.',
+    icon: Wrench,
+    title: 'Costruito per te',
+    desc: 'Niente modelli già pronti. Partiamo dal tuo lavoro, dai tuoi processi, dal tuo modo di fare le cose — e costruiamo attorno a quello.',
     iconBg: 'bg-cyan-500/10 group-hover:bg-cyan-500/18',
     iconBorder: 'border-cyan-500/20',
     iconColor: 'text-cyan-400',
@@ -15,9 +15,9 @@ const benefits = [
     cardHover: 'hover:border-cyan-500/25',
   },
   {
-    icon: Sparkles,
-    title: 'Non perdi contatti',
-    desc: 'Ogni richiesta riceve una risposta immediata, anche fuori orario e nei weekend. Zero contatti persi.',
+    icon: Layers,
+    title: 'Insieme o separati',
+    desc: 'Sito, assistente WhatsApp e automazioni sono tre cose indipendenti. Le prendi solo dove ti servono — oppure tutte, e le facciamo parlare tra loro.',
     iconBg: 'bg-violet-500/10 group-hover:bg-violet-500/18',
     iconBorder: 'border-violet-500/20',
     iconColor: 'text-violet-400',
@@ -25,9 +25,9 @@ const benefits = [
     cardHover: 'hover:border-violet-500/25',
   },
   {
-    icon: TrendingUp,
-    title: 'Processi più ordinati',
-    desc: 'Il tuo lavoro diventa strutturato. Meno caos, meno errori, meno stress — più chiarezza.',
+    icon: Clock,
+    title: 'Si parte in fretta',
+    desc: 'Primi risultati visibili in 7-30 giorni, a seconda del servizio. Procediamo a tappe: vedi i progressi reali ogni settimana, non a fine progetto.',
     iconBg: 'bg-emerald-500/10 group-hover:bg-emerald-500/18',
     iconBorder: 'border-emerald-500/20',
     iconColor: 'text-emerald-400',
@@ -35,9 +35,9 @@ const benefits = [
     cardHover: 'hover:border-emerald-500/25',
   },
   {
-    icon: Zap,
-    title: 'Focus sulla crescita',
-    desc: 'Smetti di rincorrere le cose. Inizia a costruire il business che vuoi davvero.',
+    icon: HeartHandshake,
+    title: 'Restiamo dopo il lancio',
+    desc: 'Non scompariamo dopo la fattura. Siamo a disposizione per aggiornamenti, modifiche e miglioramenti — il tuo strumento cresce con te.',
     iconBg: 'bg-sky-500/10 group-hover:bg-sky-500/18',
     iconBorder: 'border-sky-500/20',
     iconColor: 'text-sky-400',
@@ -70,9 +70,8 @@ export default function BenefitsSection() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
         >
-          <span className="section-label">Vantaggi concreti</span>
-          <h2 className="section-title">
-            Cosa cambia davvero.
+          <h2 className="h2-editorial">
+            Cosa cambia <em>davvero</em>.
           </h2>
         </motion.div>
 

@@ -65,21 +65,15 @@ export default function VerticalChatbotPage({
               variants={staggerContainer}
               className="relative z-10 text-center lg:text-left"
             >
-              <motion.div
-                variants={fadeUpVariants}
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/8 text-emerald-300 text-sm font-semibold mb-6 backdrop-blur-sm"
-              >
-                <span className="text-lg">{emoji}</span>
-                Soluzione per {settore}
-              </motion.div>
+              <motion.span variants={fadeUpVariants} className="eyebrow-chatbot mb-6">
+                {emoji} Soluzione per {settore}
+              </motion.span>
 
               <motion.h1
                 variants={fadeUpVariants}
-                className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-6 tracking-[-0.02em] leading-[1.08] capitalize"
-                style={{ fontFamily: 'var(--font-display)' }}
+                className="h1-editorial is-chatbot mt-6 mb-6 capitalize"
               >
-                Il tuo{' '}
-                <span className="gradient-text-chatbot">Chatbot WhatsApp</span>{' '}
+                Il tuo <em>Chatbot WhatsApp</em><br />
                 per {settore.toLowerCase()}.
               </motion.h1>
 

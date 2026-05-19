@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Globe } from 'lucide-react';
 import { staggerContainer, fadeUpVariants } from '@/components/shared/animations';
 import CountUp from '@/components/shared/CountUp';
 
@@ -64,33 +63,21 @@ export default function SitiHero() {
           variants={staggerContainer}
           className="flex flex-col items-center"
         >
-          <motion.div
-            variants={fadeUpVariants}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-sky-400/30 bg-sky-400/8 text-sky-300 text-sm font-semibold mb-7 backdrop-blur-sm"
-          >
-            <motion.div animate={{ rotate: [0, 360], transition: { duration: 22, repeat: Infinity, ease: 'linear' } }}>
-              <Globe className="w-3.5 h-3.5" />
-            </motion.div>
-            <span className="tracking-wide">Digital Presence</span>
-          </motion.div>
+          <motion.span variants={fadeUpVariants} className="eyebrow-siti mb-7">
+            Il tuo sito vetrina
+          </motion.span>
 
-          <motion.h1
-            variants={fadeUpVariants}
-            className="text-[clamp(2.25rem,5vw,4rem)] font-extrabold mb-6 tracking-[-0.025em] leading-[1.06]"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
-            Il tuo{' '}
-            <span className="gradient-text-siti">sito web</span>{' '}
-            pronto<br className="hidden sm:block" />
-            ad attrarre nuovi clienti.
+          <motion.h1 variants={fadeUpVariants} className="h1-editorial is-siti mb-6">
+            Il tuo <em>sito web</em><br />
+            pronto a portare clienti.
           </motion.h1>
 
           <motion.p
             variants={fadeUpVariants}
             className="text-lg md:text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
-            Non una semplice vetrina, ma una macchina per generare contatti.
-            Veloce, perfetto su mobile, ottimizzato per farti trovare su Google.
+            Non un sito qualsiasi, ma un sito <strong className="text-white font-medium">costruito attorno al tuo lavoro</strong>.
+            Veloce sul telefono, trovabile su Google, scritto in italiano semplice — pensato per portare richieste vere.
           </motion.p>
 
           <motion.div
@@ -98,9 +85,9 @@ export default function SitiHero() {
             className="flex flex-wrap justify-center gap-x-10 gap-y-4 mt-2"
           >
             {[
-              { value: '< 3s',  label: 'caricamento medio', delay: 0 },
-              { value: '100%',  label: 'mobile friendly',   delay: 150 },
-              { value: 'Top 10', label: 'su Google con SEO', delay: 300 },
+              { value: '15-30 gg', label: 'tempo medio di consegna',     delay: 0 },
+              { value: '100%',     label: 'pensato per il telefono',     delay: 150 },
+              { value: 'Google',   label: 'trovabile dal primo giorno',  delay: 300 },
             ].map(({ value, label, delay }) => (
               <div key={label} className="text-center">
                 <div className="text-3xl font-extrabold gradient-text-siti" style={{ fontFamily: 'var(--font-display)' }}>

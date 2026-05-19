@@ -7,9 +7,9 @@ import { usePathname } from 'next/navigation';
 import { ChevronDown, Globe, MessageSquare, Bot, X, Menu } from 'lucide-react';
 
 const serviziLinks = [
-  { label: 'Siti Web Vetrina', href: '/creazione-siti-web',            icon: Globe,         color: 'text-sky-400' },
-  { label: 'Chatbot WhatsApp', href: '/chatbot-whatsapp-prenotazioni', icon: MessageSquare, color: 'text-emerald-400' },
-  { label: 'Agenti AI',        href: '/agenti-ai',                     icon: Bot,           color: 'text-violet-400' },
+  { label: 'Siti Web Vetrina',  href: '/creazione-siti-web',            icon: Globe,         color: 'text-sky-400' },
+  { label: 'Assistente WhatsApp', href: '/chatbot-whatsapp-prenotazioni', icon: MessageSquare, color: 'text-emerald-400' },
+  { label: 'Agenti AI',         href: '/agenti-ai',                     icon: Bot,           color: 'text-violet-400' },
 ];
 
 const isServiziActive = (pathname: string) =>

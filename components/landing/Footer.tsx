@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { Mail } from 'lucide-react';
 
 const servicesLinks = [
-  { label: 'Siti Web Vetrina', href: '/creazione-siti-web' },
-  { label: 'Chatbot WhatsApp', href: '/chatbot-whatsapp-prenotazioni' },
-  { label: 'Agenti AI', href: '/agenti-ai' },
+  { label: 'Siti Web Vetrina',    href: '/creazione-siti-web' },
+  { label: 'Assistente WhatsApp', href: '/chatbot-whatsapp-prenotazioni' },
+  { label: 'Agenti AI',           href: '/agenti-ai' },
 ];
 
 const industriesLinks = [
@@ -19,7 +19,7 @@ const industriesLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#070B14] border-t border-white/[0.05]">
+    <footer className="relative border-t border-white/[0.05] backdrop-blur-md bg-[#0B1228]/60">
       <div className="max-w-7xl mx-auto px-6 pt-16 pb-8">
 
         {/* Grid principale */}
@@ -66,7 +66,7 @@ export default function Footer() {
 
           {/* Settori */}
           <div>
-            <h4 className="text-white text-sm font-semibold mb-5">Chatbot per Settore</h4>
+            <h4 className="text-white text-sm font-semibold mb-5">Assistenti per Settore</h4>
             <ul className="flex flex-col gap-3">
               {industriesLinks.map((link) => (
                 <li key={link.href}>

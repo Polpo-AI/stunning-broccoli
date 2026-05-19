@@ -1,14 +1,16 @@
 import type { Metadata } from 'next';
+import { Briefcase, Store, Palette, Building2 } from 'lucide-react';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 import SectionCTA from '@/components/shared/SectionCTA';
 import FAQAccordion from '@/components/shared/FAQAccordion';
 import SitiHero from '@/components/pages/SitiHero';
 import SitiFeatures from '@/components/pages/SitiFeatures';
+import WhoIsItFor from '@/components/shared/WhoIsItFor';
 
 export const metadata: Metadata = {
   title: 'Creazione Siti Web Professionali per PMI',
   description:
-    'Realizziamo siti web vetrina veloci, ottimizzati per mobile e per Google. Pensati per convertire visitatori in clienti, non per vincere premi di design.',
+    'Siti web vetrina veloci, mobile-first e ottimizzati SEO per PMI italiane. Pensati per convertire visitatori in clienti reali, non per vincere premi di design.',
   keywords: [
     'creazione siti web',
     'sito web vetrina',
@@ -85,6 +87,38 @@ export default function CreazioneSitiWebPage() {
         <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Creazione Siti Web' }]} />
       </div>
       <SitiHero />
+      <WhoIsItFor
+        variant="siti"
+        title={<>Per chi è <em>questo servizio</em>?</>}
+        subtitle="Un sito vetrina è la base per chiunque voglia presentarsi online in modo serio. Ecco alcuni esempi tipici — ma vale anche se non ti riconosci esattamente in nessuno."
+        items={[
+          {
+            icon: <Briefcase className="w-7 h-7 md:w-8 md:h-8" strokeWidth={1.6} />,
+            title: 'Liberi professionisti',
+            desc: 'Avvocati, commercialisti, consulenti, architetti — chi ha bisogno di una vetrina credibile dove farsi trovare.',
+            example: 'Avvocato civilista che vuole essere trovato su Google con le keyword giuste.',
+          },
+          {
+            icon: <Store className="w-7 h-7 md:w-8 md:h-8" strokeWidth={1.6} />,
+            title: 'Piccole attività locali',
+            desc: 'Negozi, botteghe, studi, locali — chi vuole essere trovato online da chi cerca nei dintorni.',
+            example: 'Pasticceria di quartiere che vuole farsi trovare cercando "pasticceria + città".',
+          },
+          {
+            icon: <Palette className="w-7 h-7 md:w-8 md:h-8" strokeWidth={1.6} />,
+            title: 'Freelance e creativi',
+            desc: 'Fotografi, designer, artigiani, formatori — chi ha un portfolio o servizi da mostrare in modo ordinato.',
+            example: 'Fotografo di matrimonio che vuole un portfolio veloce e mobile-friendly.',
+          },
+          {
+            icon: <Building2 className="w-7 h-7 md:w-8 md:h-8" strokeWidth={1.6} />,
+            title: 'Piccole aziende',
+            desc: 'Chi ha un sito vecchio, fatto male o nessun sito — e vuole presentarsi al mercato con una vetrina moderna.',
+            example: 'Azienda di import-export che ha un sito del 2010 e vuole rinnovarlo.',
+          },
+        ]}
+        footnote="Se la tua attività non rientra in questi profili, parliamone lo stesso — un sito vetrina è utile a chiunque debba essere trovato su Google."
+      />
       <SitiFeatures />
       <section className="py-24 max-w-3xl mx-auto px-6">
         <h2

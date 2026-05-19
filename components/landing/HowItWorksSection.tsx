@@ -1,15 +1,16 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { MessageCircle, Wrench, Rocket, ArrowRight } from 'lucide-react';
+import { MessageCircle, FileText, Wrench, Rocket, ArrowRight } from 'lucide-react';
 import { staggerContainer, fadeUpVariants } from '@/components/shared/animations';
 
 const steps = [
   {
     n: '01',
     icon: MessageCircle,
-    title: 'Parliamo del tuo business',
-    desc: 'Capiamo i tuoi obiettivi, il tuo settore e le attività che ti rubano tempo ogni giorno.',
+    title: 'Prima chiamata',
+    duration: '15-30 min',
+    desc: 'Una chiacchierata gratuita per capire il tuo lavoro, le difficoltà di ogni giorno e cosa vorresti migliorare. Senza impegno, senza vendita aggressiva.',
     iconColor: 'text-cyan-400',
     borderHover: 'group-hover:border-cyan-500/40',
     bgHover: 'group-hover:bg-cyan-500/5',
@@ -19,9 +20,10 @@ const steps = [
   },
   {
     n: '02',
-    icon: Wrench,
-    title: 'Costruiamo la soluzione',
-    desc: 'Progettiamo e sviluppiamo tutto su misura: niente template, niente soluzioni preconfezionate.',
+    icon: FileText,
+    title: 'Proposta scritta',
+    duration: '3-5 giorni',
+    desc: 'Ti mandiamo un piano chiaro: cosa costruiamo, in quanto tempo, a quanto costa. Niente sorprese, niente lettere piccole.',
     iconColor: 'text-violet-400',
     borderHover: 'group-hover:border-violet-500/40',
     bgHover: 'group-hover:bg-violet-500/5',
@@ -31,15 +33,29 @@ const steps = [
   },
   {
     n: '03',
-    icon: Rocket,
-    title: 'Vai live. Cresci.',
-    desc: 'In pochi giorni sei operativo. Siamo con te anche dopo il lancio per ogni aggiornamento.',
+    icon: Wrench,
+    title: 'Costruzione',
+    duration: '1-4 settimane',
+    desc: 'Costruiamo, proviamo, ti facciamo vedere in anteprima. Procediamo a tappe: vedi i progressi reali ogni settimana, non al buio.',
     iconColor: 'text-emerald-400',
     borderHover: 'group-hover:border-emerald-500/40',
     bgHover: 'group-hover:bg-emerald-500/5',
     badgeBorder: 'border-emerald-500/40',
     badgeText: 'text-emerald-400',
     titleHover: 'group-hover:text-emerald-300',
+  },
+  {
+    n: '04',
+    icon: Rocket,
+    title: 'Lancio + supporto',
+    duration: 'continuativo',
+    desc: 'Si parte. Restiamo a disposizione per aggiornamenti, modifiche e miglioramenti — non scompariamo dopo la fattura.',
+    iconColor: 'text-sky-400',
+    borderHover: 'group-hover:border-sky-500/40',
+    bgHover: 'group-hover:bg-sky-500/5',
+    badgeBorder: 'border-sky-500/40',
+    badgeText: 'text-sky-400',
+    titleHover: 'group-hover:text-sky-300',
   },
 ];
 
@@ -56,30 +72,27 @@ export default function HowItWorksSection() {
           viewport={{ once: true, margin: '-60px' }}
           variants={staggerContainer}
         >
-          <motion.span variants={fadeUpVariants} className="section-label">
-            Come funziona
-          </motion.span>
-          <motion.h2 variants={fadeUpVariants} className="section-title mb-4">
-            Dal primo incontro al go-live.
+          <motion.h2 variants={fadeUpVariants} className="h2-editorial mb-5">
+            Dal primo <em>incontro</em><br />al lancio.
           </motion.h2>
-          <motion.p variants={fadeUpVariants} className="section-subtitle max-w-md mx-auto">
-            Un processo snello, trasparente e veloce. Di solito si va live in meno di 30 giorni.
+          <motion.p variants={fadeUpVariants} className="text-base md:text-[17px] text-slate-300/85 leading-relaxed max-w-md mx-auto">
+            Quattro passi semplici. Di solito si parte in meno di 30 giorni.
           </motion.p>
         </motion.div>
 
         {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative">
           {/* Multi-color connector (desktop) */}
           <div
-            className="hidden md:block absolute top-12 left-[calc(16.67%+2rem)] right-[calc(16.67%+2rem)] h-px pointer-events-none"
+            className="hidden lg:block absolute top-12 left-[12.5%] right-[12.5%] h-px pointer-events-none"
             aria-hidden
             style={{
               background:
-                'linear-gradient(to right, rgba(6,182,212,0.35) 0%, rgba(139,92,246,0.35) 50%, rgba(16,185,129,0.35) 100%)',
+                'linear-gradient(to right, rgba(6,182,212,0.35) 0%, rgba(139,92,246,0.35) 33%, rgba(16,185,129,0.35) 66%, rgba(56,189,248,0.35) 100%)',
             }}
           />
 
-          {steps.map(({ n, icon: Icon, title, desc, iconColor, borderHover, bgHover, badgeBorder, badgeText, titleHover }, idx) => (
+          {steps.map(({ n, icon: Icon, title, duration, desc, iconColor, borderHover, bgHover, badgeBorder, badgeText, titleHover }, idx) => (
             <motion.div
               key={n}
               initial={{ opacity: 0, y: 30 }}
@@ -127,10 +140,13 @@ export default function HowItWorksSection() {
                 </motion.span>
               </motion.div>
 
-              <h3 className={`text-lg font-bold text-white mb-3 transition-colors duration-200 ${titleHover}`}>
+              <h3 className={`text-lg font-bold text-white mb-1 transition-colors duration-200 ${titleHover}`}>
                 {title}
               </h3>
-              <p className="text-slate-400 text-sm leading-relaxed max-w-[220px] mx-auto">
+              <span className={`text-xs ${badgeText} mb-3 uppercase tracking-wider font-semibold opacity-80`}>
+                {duration}
+              </span>
+              <p className="text-slate-300/80 text-sm leading-relaxed max-w-[240px] mx-auto mt-1">
                 {desc}
               </p>
             </motion.div>

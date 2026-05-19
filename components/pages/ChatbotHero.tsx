@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { MessageSquare } from 'lucide-react';
 import { staggerContainer, fadeUpVariants } from '@/components/shared/animations';
 import CountUp from '@/components/shared/CountUp';
 
@@ -62,33 +61,21 @@ export default function ChatbotHero() {
           variants={staggerContainer}
           className="flex flex-col items-center"
         >
-          <motion.div
-            variants={fadeUpVariants}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/8 text-emerald-300 text-sm font-semibold mb-7 backdrop-blur-sm"
-          >
-            <motion.div animate={{ scale: [1, 1.2, 1], transition: { duration: 2, repeat: Infinity, ease: 'easeInOut' } }}>
-              <MessageSquare className="w-3.5 h-3.5" />
-            </motion.div>
-            <span className="tracking-wide">WhatsApp Automation</span>
-          </motion.div>
+          <motion.span variants={fadeUpVariants} className="eyebrow-chatbot mb-7">
+            Assistente WhatsApp
+          </motion.span>
 
-          <motion.h1
-            variants={fadeUpVariants}
-            className="text-[clamp(2.25rem,5vw,4rem)] font-extrabold mb-6 tracking-[-0.025em] leading-[1.06]"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
-            Il tuo{' '}
-            <span className="gradient-text-chatbot">Chatbot WhatsApp</span>{' '}
-            per la<br className="hidden sm:block" />
-            gestione delle prenotazioni.
+          <motion.h1 variants={fadeUpVariants} className="h1-editorial is-chatbot mb-6">
+            Risponde su <em>WhatsApp</em><br />
+            al posto tuo.
           </motion.h1>
 
           <motion.p
             variants={fadeUpVariants}
             className="text-lg md:text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
-            Trasforma WhatsApp nel tuo miglior venditore. Un assistente virtuale operativo al 100%
-            che fissa appuntamenti, risponde ai clienti e lavora 24 ore su 24.
+            <strong className="text-white font-medium">Prende prenotazioni, fissa appuntamenti, gestisce richieste</strong> — 24 ore su 24, sul numero WhatsApp del tuo locale.
+            Tu controlli tutto da un pannello semplice. Si adatta a qualunque attività che riceve prenotazioni.
           </motion.p>
 
           <motion.div
@@ -96,9 +83,9 @@ export default function ChatbotHero() {
             className="flex flex-wrap justify-center gap-x-10 gap-y-4 mt-2"
           >
             {[
-              { value: '24/7', label: 'sempre operativo',  delay: 0 },
-              { value: '< 3s', label: 'tempo di risposta', delay: 150 },
-              { value: '0',    label: 'chiamate perse',    delay: 300 },
+              { value: '7-15 gg',  label: 'tempo medio di avvio',         delay: 0 },
+              { value: '24/7',     label: 'risponde anche di notte',      delay: 150 },
+              { value: 'Pannello', label: 'di controllo sempre incluso',  delay: 300 },
             ].map(({ value, label, delay }) => (
               <div key={label} className="text-center">
                 <div className="text-3xl font-extrabold gradient-text-chatbot" style={{ fontFamily: 'var(--font-display)' }}>

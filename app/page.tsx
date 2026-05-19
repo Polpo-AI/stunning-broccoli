@@ -8,10 +8,11 @@ export default function Home() {
   return (
     <div className="relative -mt-[72px]">
       <CleanHero />
-      <ServicesSection />
-      <HowItWorksSection />
-      <BenefitsSection />
-      <CTASection />
+      {/* below-fold: il browser salta rendering finché non vicino al viewport */}
+      <div className="below-fold"><ServicesSection /></div>
+      <div className="below-fold"><HowItWorksSection /></div>
+      <div className="below-fold"><BenefitsSection /></div>
+      <div className="below-fold"><CTASection /></div>
     </div>
   );
 }

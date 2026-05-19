@@ -6,7 +6,7 @@ const URL = 'https://polpo-ai.com/chatbot-whatsapp-prenotazioni-padel';
 export const metadata: Metadata = {
   title: 'Assistente WhatsApp per Circoli Padel — Gestione Partite Automatica',
   description:
-    'Assistente WhatsApp Business per circoli padel: risponde ai giocatori, invita profili compatibili, gestisce conferme e liste d\'attesa. La segreteria mantiene il controllo dalla dashboard.',
+    'Assistente WhatsApp per circoli padel: invita giocatori compatibili, gestisce conferme e liste d\'attesa quando manca il quarto. Demo gratuita.',
   keywords: [
     'chatbot padel',
     'chatbot whatsapp padel',

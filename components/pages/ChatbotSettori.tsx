@@ -17,10 +17,14 @@ export default function ChatbotSettori({ sectors }: { sectors: Sector[] }) {
     <section className="py-24 text-center">
       <div className="max-w-7xl mx-auto px-6">
         <FadeUp className="mb-14">
-          <span className="section-label">Soluzioni verticali</span>
-          <h2 className="section-title mb-4">Soluzioni per ogni business.</h2>
-          <p className="section-subtitle max-w-2xl mx-auto">
-            Scegli il tuo settore per scoprire come il nostro chatbot può essere personalizzato per le tue esigenze specifiche.
+          <span className="eyebrow-chatbot mb-5">Scegli il tuo settore</span>
+          <h2 className="h2-editorial is-chatbot mt-4 mb-5">
+            Una soluzione, <em>tanti settori</em>.
+          </h2>
+          <p className="text-base md:text-[17px] text-slate-300/85 leading-relaxed max-w-2xl mx-auto">
+            Clicca sul tuo settore per vedere come funziona nel concreto, con esempi reali.
+            <strong className="text-white font-medium"> Se il tuo lavoro non è in lista</strong>, parliamone lo stesso:
+            l&apos;assistente si adatta a qualsiasi attività che riceve prenotazioni.
           </p>
         </FadeUp>
 

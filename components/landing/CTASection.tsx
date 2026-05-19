@@ -68,11 +68,9 @@ export default function CTASection() {
               />
             </div>
 
-            <span className="section-label">Parliamo del tuo progetto</span>
-
-            <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-[1.1] tracking-tight mb-5">
+            <h2 className="h2-editorial mb-5">
               Fai lavorare il tuo business{' '}
-              <span className="gradient-text">anche quando non ci sei.</span>
+              <em>anche quando non ci sei.</em>
             </h2>
             <p className="section-subtitle max-w-sm mx-auto lg:mx-0">
               Raccontaci il tuo business. Ti mostriamo come l&apos;AI può aiutarti in modo concreto, senza impegno.
