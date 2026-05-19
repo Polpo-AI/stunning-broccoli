@@ -7,7 +7,8 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { Home, Globe, MessageSquare, Bot } from 'lucide-react';
 
 const NAV_ITEMS = [
-  { label: 'Home',     href: '/',                              icon: Home,         accent: '#22d3ee' },
+  // Home: magenta — distinta dalle 3 icone servizio (sky/emerald/violet)
+  { label: 'Home',     href: '/',                              icon: Home,         accent: '#ff3d8a' },
   { label: 'Siti Web', href: '/creazione-siti-web',            icon: Globe,        accent: '#38bdf8' },
   { label: 'Chatbot',  href: '/chatbot-whatsapp-prenotazioni', icon: MessageSquare, accent: '#10b981' },
   { label: 'AI Agent', href: '/agenti-ai',                     icon: Bot,          accent: '#a78bfa' },

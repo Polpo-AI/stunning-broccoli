@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { Mail } from 'lucide-react';
 
 const servicesLinks = [
-  { label: 'Siti Web Vetrina', href: '/creazione-siti-web' },
-  { label: 'Chatbot WhatsApp', href: '/chatbot-whatsapp-prenotazioni' },
-  { label: 'Agenti AI', href: '/agenti-ai' },
+  { label: 'Siti Web Vetrina',    href: '/creazione-siti-web' },
+  { label: 'Assistente WhatsApp', href: '/chatbot-whatsapp-prenotazioni' },
+  { label: 'Agenti AI',           href: '/agenti-ai' },
 ];
 
 const industriesLinks = [
@@ -19,7 +19,7 @@ const industriesLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#070B14] border-t border-white/[0.05]">
+    <footer className="relative border-t border-white/[0.05] backdrop-blur-md bg-[#0B1228]/60">
       <div className="max-w-7xl mx-auto px-6 pt-16 pb-8">
 
         {/* Grid principale */}
@@ -28,8 +28,13 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1 flex flex-col gap-5">
             <Link href="/" className="flex items-center gap-2.5 group w-fit">
-              <div className="relative w-8 h-8 rounded-lg overflow-hidden">
-                <Image src="/logo a.jpg" alt="PolpoAI logo" fill className="object-contain" />
+              <div className="relative w-8 h-8 rounded-full overflow-hidden ring-1 ring-white/10">
+                <Image
+                  src="/logo a.jpg"
+                  alt="PolpoAI logo"
+                  fill
+                  className="object-cover scale-[1.18]"
+                />
               </div>
               <span className="text-base font-bold text-white tracking-tight">
                 Polpo<span className="text-cyan-400 group-hover:text-cyan-300 transition-colors">AI</span>
@@ -66,7 +71,7 @@ export default function Footer() {
 
           {/* Settori */}
           <div>
-            <h4 className="text-white text-sm font-semibold mb-5">Chatbot per Settore</h4>
+            <h4 className="text-white text-sm font-semibold mb-5">Assistenti per Settore</h4>
             <ul className="flex flex-col gap-3">
               {industriesLinks.map((link) => (
                 <li key={link.href}>

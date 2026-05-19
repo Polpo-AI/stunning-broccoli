@@ -2,16 +2,14 @@
 
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { useContext, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { LayoutRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 function FrozenRouter({ children }: { children: React.ReactNode }) {
   const context = useContext(LayoutRouterContext);
   const frozen = useRef(context).current;
 
-  if (!frozen) {
-    return <>{children}</>;
-  }
+  if (!frozen) return <>{children}</>;
 
   return (
     <LayoutRouterContext.Provider value={frozen}>
@@ -22,12 +20,11 @@ function FrozenRouter({ children }: { children: React.ReactNode }) {
 
 const EASE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
-/* Solo fade — niente translate Y per evitare flicker / layout shift su mobile.
-   La durata è breve per non rendere il cambio pagina lento. */
+/* Desktop: leggero fade. Mobile: nessuna transition per evitare flicker. */
 const pageVariants: Variants = {
   initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.22, ease: EASE } },
-  exit:    { opacity: 0, transition: { duration: 0.12, ease: EASE } },
+  animate: { opacity: 1, transition: { duration: 0.18, ease: EASE } },
+  exit:    { opacity: 0, transition: { duration: 0.08, ease: EASE } },
 };
 
 export default function GlobalTransition({
@@ -38,7 +35,26 @@ export default function GlobalTransition({
   onExitComplete?: () => void;
 }) {
   const pathname = usePathname();
+  /* `null` = SSR/non ancora montato → rendiamo direttamente i children
+     senza wrapping per evitare qualsiasi flicker durante l'idratazione.
+     Dopo il mount sappiamo se siamo su mobile (no transition) o desktop. */
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener?.('change', update);
+    return () => mq.removeEventListener?.('change', update);
+  }, []);
+
+  /* Render diretto su SSR/prima del mount E su mobile: zero animazione,
+     zero unmount/remount, scroll-to-top gestito comunque da PageWrapper. */
+  if (isMobile === null || isMobile) {
+    return <>{children}</>;
+  }
+
+  /* Desktop: fade pulito. */
   return (
     <AnimatePresence mode="wait" initial={false} onExitComplete={onExitComplete}>
       <motion.div

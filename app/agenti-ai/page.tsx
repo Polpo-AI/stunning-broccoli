@@ -1,14 +1,16 @@
 import type { Metadata } from 'next';
+import { FileText, Mail, Workflow, BarChart3 } from 'lucide-react';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 import SectionCTA from '@/components/shared/SectionCTA';
 import FAQAccordion from '@/components/shared/FAQAccordion';
 import AgentiHero from '@/components/pages/AgentiHero';
 import AgentiFeatures from '@/components/pages/AgentiFeatures';
+import WhoIsItFor from '@/components/shared/WhoIsItFor';
 
 export const metadata: Metadata = {
   title: 'Agenti AI e Automazione Aziendale per PMI',
   description:
-    'Agenti AI autonomi su misura per automatizzare data-entry, email, report e workflow ripetitivi. Risparmia oltre 20 ore a settimana senza assumere personale extra.',
+    'Agenti AI autonomi che automatizzano data-entry, email, report e workflow ripetitivi. Risparmia 20+ ore a settimana senza assumere personale extra.',
   keywords: [
     'agenti ai',
     'automazione aziendale ai',
@@ -85,6 +87,38 @@ export default function AgentiAIPage() {
         <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Agenti AI' }]} />
       </div>
       <AgentiHero />
+      <WhoIsItFor
+        variant="agenti"
+        title={<>Per chi sono <em>le automazioni</em>?</>}
+        subtitle="Per chi passa tempo su attività ripetitive al computer. Definiamo insieme cosa ha più senso automatizzare nel tuo caso — senza forzare la tecnologia dove non serve."
+        items={[
+          {
+            icon: <FileText className="w-7 h-7 md:w-8 md:h-8" strokeWidth={1.6} />,
+            title: 'Chi gestisce molte fatture e preventivi',
+            desc: 'Generazione automatica, invio, archiviazione — partendo dai dati che già hai nel gestionale o nel foglio Excel.',
+            example: 'Studio di consulenza che genera 50+ fatture al mese a clienti ricorrenti.',
+          },
+          {
+            icon: <Mail className="w-7 h-7 md:w-8 md:h-8" strokeWidth={1.6} />,
+            title: 'Chi smaltisce tante email',
+            desc: 'Smistamento automatico, risposte standard, riassunti giornalieri — più tempo per le email che contano davvero.',
+            example: 'E-commerce che riceve 100+ richieste/giorno e vuole rispondere alle FAQ in automatico.',
+          },
+          {
+            icon: <Workflow className="w-7 h-7 md:w-8 md:h-8" strokeWidth={1.6} />,
+            title: 'Chi usa più programmi che non parlano tra loro',
+            desc: 'Trasferimento automatico di dati tra gestionale, CRM, foglio Excel — niente più copia-incolla a mano.',
+            example: 'Azienda con ordini su Shopify che devono finire nel gestionale fatture e nel magazzino.',
+          },
+          {
+            icon: <BarChart3 className="w-7 h-7 md:w-8 md:h-8" strokeWidth={1.6} />,
+            title: 'Chi prepara report ripetitivi',
+            desc: 'Estrazione dati, aggregazione, formattazione — un report che prima richiedeva ore, pronto in pochi minuti.',
+            example: 'Manager che ogni lunedì raccoglie i dati di vendita da 3 fonti diverse per il report settimanale.',
+          },
+        ]}
+        footnote="Il servizio è in continua evoluzione: capiamo insieme se la tua attività ripetitiva è automatizzabile in modo sensato."
+      />
       <AgentiFeatures />
       <section className="py-24 max-w-3xl mx-auto px-6">
         <h2

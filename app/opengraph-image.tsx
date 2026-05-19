@@ -30,22 +30,16 @@ export default async function OGImage() {
       >
         {/* Top: logo + brand */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <div
+          <img
+            src={`https://polpo-ai.com/polpo-icon.jpg`}
+            width={64}
+            height={64}
             style={{
-              width: '64px',
-              height: '64px',
               borderRadius: '16px',
-              background: 'linear-gradient(135deg, #22d3ee, #a78bfa)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '32px',
-              fontWeight: 800,
-              color: '#0B1228',
+              boxShadow: '0 0 24px rgba(34,211,238,0.4)',
             }}
-          >
-            🐙
-          </div>
+            alt="PolpoAI logo"
+          />
           <div
             style={{
               fontSize: '36px',

@@ -6,7 +6,7 @@ const URL = 'https://polpo-ai.com/chatbot-whatsapp-prenotazioni-studi-medici';
 export const metadata: Metadata = {
   title: 'Segretaria Virtuale e Chatbot WhatsApp per Studi Medici',
   description:
-    'Chatbot WhatsApp per studi medici: pre-qualifica i pazienti, gestisce appuntamenti, risponde alle FAQ e libera la segreteria. Conforme GDPR.',
+    'Segretaria virtuale WhatsApp per studi medici: pre-qualifica pazienti, gestisce appuntamenti, libera la segreteria dalle FAQ. Conforme GDPR.',
   keywords: [
     'chatbot whatsapp studi medici',
     'segretaria virtuale medico',

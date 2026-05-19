@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Bot } from 'lucide-react';
 import { staggerContainer, fadeUpVariants } from '@/components/shared/animations';
 import CountUp from '@/components/shared/CountUp';
 
@@ -62,32 +61,22 @@ export default function AgentiHero() {
           variants={staggerContainer}
           className="flex flex-col items-center"
         >
-          <motion.div
-            variants={fadeUpVariants}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-violet-400/30 bg-violet-400/8 text-violet-300 text-sm font-semibold mb-7 backdrop-blur-sm"
-          >
-            <motion.div animate={{ rotate: [0, 10, -10, 0], transition: { duration: 3, repeat: Infinity, ease: 'easeInOut' } }}>
-              <Bot className="w-3.5 h-3.5" />
-            </motion.div>
-            <span className="tracking-wide">AI Automation</span>
-          </motion.div>
+          <motion.span variants={fadeUpVariants} className="eyebrow-agenti mb-7">
+            Automazioni Intelligenti
+          </motion.span>
 
-          <motion.h1
-            variants={fadeUpVariants}
-            className="text-[clamp(2.25rem,5vw,4rem)] font-extrabold mb-6 tracking-[-0.025em] leading-[1.06]"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
-            Lavora meglio,<br />
-            grazie agli{' '}
-            <span className="gradient-text-agenti">Agenti Autonomi</span>.
+          <motion.h1 variants={fadeUpVariants} className="h1-editorial is-agenti mb-6">
+            Le attività di tutti i giorni,<br />
+            <em>fatte al posto tuo</em>.
           </motion.h1>
 
           <motion.p
             variants={fadeUpVariants}
             className="text-lg md:text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
-            Elimina il data-entry, automatizza compiti noiosi e gestisci flussi complessi.
-            L&apos;Intelligenza Artificiale che lavora per te come un dipendente instancabile.
+            <strong className="text-white font-medium">Fatture, preventivi, email, trasferimento dati</strong> tra i programmi che già usi.
+            Capiamo insieme cosa ha più senso automatizzare nel tuo caso e costruiamo l&apos;assistente che lo fa al posto tuo.
+            Il tuo controllo resta sempre al primo posto.
           </motion.p>
 
           <motion.div
@@ -95,9 +84,9 @@ export default function AgentiHero() {
             className="flex flex-wrap justify-center gap-x-10 gap-y-4 mt-2"
           >
             {[
-              { value: '20h+', label: 'risparmiate / settimana', delay: 0 },
-              { value: '24/7',  label: 'operativo senza sosta',  delay: 150 },
-              { value: '0',     label: 'errori umani',           delay: 300 },
+              { value: '10-30 gg',     label: 'tempo medio di sviluppo',     delay: 0 },
+              { value: 'fino a 12h',   label: 'risparmiate ogni settimana',  delay: 150 },
+              { value: 'Controllo',    label: 'umano sempre incluso',        delay: 300 },
             ].map(({ value, label, delay }) => (
               <div key={label} className="text-center">
                 <div className="text-3xl font-extrabold gradient-text-agenti" style={{ fontFamily: 'var(--font-display)' }}>

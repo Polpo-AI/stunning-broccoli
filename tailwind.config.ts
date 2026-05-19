@@ -19,7 +19,23 @@ const config: Config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      fontFamily: {
+        editorial: ['var(--font-fraunces)', 'Fraunces', 'Georgia', 'serif'],
+        display:   ['var(--font-jakarta)', 'Plus Jakarta Sans', 'Inter', 'sans-serif'],
+      },
       colors: {
+        magenta: {
+          DEFAULT: '#ff3d8a',
+          soft:    '#ff7ab0',
+          50:      '#fff1f6',
+          100:     '#ffe4ee',
+          400:     '#ff7ab0',
+          500:     '#ff3d8a',
+          600:     '#e6246e',
+        },
+        amber: {
+          DEFAULT: '#ffb547',
+        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

@@ -9,7 +9,7 @@ import ChatbotSettori from '@/components/pages/ChatbotSettori';
 export const metadata: Metadata = {
   title: 'Chatbot WhatsApp per Prenotazioni Automatiche',
   description:
-    'Chatbot WhatsApp intelligenti per ristoranti, centri estetici, studi medici, palestre, hotel e padel. Risponde 24/7, qualifica i contatti e fissa appuntamenti in automatico.',
+    'Chatbot WhatsApp per ristoranti, estetici, studi medici, palestre, hotel e padel. Risponde 24/7, gestisce prenotazioni e qualifica contatti in automatico.',
   keywords: [
     'chatbot whatsapp',
     'chatbot prenotazioni',

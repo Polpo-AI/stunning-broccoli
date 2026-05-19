@@ -6,7 +6,7 @@ const URL = 'https://polpo-ai.com/chatbot-whatsapp-prenotazioni-hotel-bb';
 export const metadata: Metadata = {
   title: 'Chatbot WhatsApp per Hotel, B&B e Strutture Ricettive',
   description:
-    'Chatbot WhatsApp per hotel e B&B: aumenta le prenotazioni dirette, riduce le commissioni OTA, gestisce check-in e domande degli ospiti in più lingue.',
+    'Chatbot WhatsApp per hotel e B&B: prenotazioni dirette, concierge multilingua 24/7, self check-in. Riduci le commissioni Booking e Airbnb.',
   keywords: [
     'chatbot whatsapp hotel',
     'chatbot bnb',

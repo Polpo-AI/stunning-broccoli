@@ -6,7 +6,7 @@ const URL = 'https://polpo-ai.com/chatbot-whatsapp-prenotazioni-palestre';
 export const metadata: Metadata = {
   title: 'Chatbot WhatsApp per Palestre e Centri Fitness',
   description:
-    'Chatbot WhatsApp per palestre: gestisce prove gratuite, vende abbonamenti, manda promemoria di rinnovo e risponde su orari e corsi 24/7.',
+    'Chatbot WhatsApp per palestre: prove gratuite, vendita abbonamenti, promemoria rinnovo automatici. Risponde su orari e corsi 24/7.',
   keywords: [
     'chatbot whatsapp palestre',
     'gestione abbonamenti palestra',

@@ -6,7 +6,7 @@ const URL = 'https://polpo-ai.com/chatbot-whatsapp-prenotazioni-centri-estetici'
 export const metadata: Metadata = {
   title: 'Chatbot WhatsApp per Centri Estetici e Saloni di Bellezza',
   description:
-    'Chatbot WhatsApp per centri estetici: fissa appuntamenti in automatico anche di notte, riduce i no-show con promemoria automatici e libera le tue mani dal telefono.',
+    'Chatbot WhatsApp per centri estetici: appuntamenti fissati anche di notte, promemoria automatici contro i no-show, agenda piena senza telefonate.',
   keywords: [
     'chatbot whatsapp centri estetici',
     'prenotazioni estetista automatiche',

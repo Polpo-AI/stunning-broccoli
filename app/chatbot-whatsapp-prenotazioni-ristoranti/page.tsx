@@ -6,7 +6,7 @@ const URL = 'https://polpo-ai.com/chatbot-whatsapp-prenotazioni-ristoranti';
 export const metadata: Metadata = {
   title: 'Chatbot WhatsApp Prenotazioni per Ristoranti',
   description:
-    'Chatbot WhatsApp per ristoranti: gestisce prenotazioni tavoli 24/7, invia menù digitale e risponde a clienti senza interrompere il servizio in sala.',
+    'Chatbot WhatsApp per ristoranti: prenotazioni tavoli automatiche 24/7, menù digitale in chat, zero telefono che squilla in sala.',
   keywords: [
     'chatbot whatsapp ristoranti',
     'prenotazioni tavoli automatiche',

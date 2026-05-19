@@ -307,17 +307,12 @@ export default function PadelChatbotPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/8 text-emerald-300 text-sm font-semibold mb-6 backdrop-blur-sm">
-                <span className="text-lg">🎾</span>
-                Assistente WhatsApp per circoli padel
-              </div>
+              <span className="eyebrow-chatbot mb-6">
+                🎾 Assistente WhatsApp per circoli padel
+              </span>
 
-              <h1
-                className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-[1.06] tracking-[-0.025em] mb-6"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
-                Il tuo{' '}
-                <span className="gradient-text-chatbot">assistente WhatsApp</span>{' '}
+              <h1 className="h1-editorial is-padel mt-6 mb-6">
+                Il tuo <em>assistente WhatsApp</em><br />
                 per gestire le partite di padel.
               </h1>
 
