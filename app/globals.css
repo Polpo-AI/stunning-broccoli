@@ -353,7 +353,7 @@ h1, h2, h3, h4, h5, h6 {
     will-change: transform;
   }
   .animate-orbit {
-    animation: spin-orbit 25s linear infinite;
+    animation: spin-orbit 25s linear infinite !important;
     will-change: transform;
     transform-origin: center center;
   }
