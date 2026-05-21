@@ -1,22 +1,19 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useLenis } from 'lenis/react';
 import GlobalTransition from '../shared/GlobalTransition';
 
 export function PageWrapper({ children }: { children: React.ReactNode }) {
   const lenis = useLenis();
   const pathname = usePathname();
-  const isFirstRender = useRef(true);
 
-  // Scroll-to-top quando cambia il path (sia su desktop che mobile).
-  // Salta il primo render per non rovinare il deep-link a un hash.
+  // Scroll-to-top quando cambia il path (sia su desktop che mobile)
+  // E anche al primo mount se siamo già scrollati (es. ritorno da /portfolio/* ).
+  // L'unico caso in cui NON facciamo scroll è quando l'URL ha un hash:
+  // in quel caso il browser/Lenis devono ancorarsi alla sezione corretta.
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
     if (window.location.hash) return;
     if (lenis) {
       lenis.scrollTo(0, { immediate: true });

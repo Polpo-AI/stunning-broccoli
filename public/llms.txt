@@ -1,0 +1,56 @@
+# PolpoAI
+
+> PolpoAI è un'agenzia italiana che progetta e sviluppa **siti web vetrina**, **assistenti WhatsApp con dashboard** e **automazioni AI su misura** per piccole e medie imprese italiane. Niente template, niente WordPress, niente promesse a vuoto: software costruito per ridurre telefonate ripetitive, gestire prenotazioni 24/7 e automatizzare task amministrativi.
+
+**Sito:** https://polpo-ai.com
+**Lingua:** italiano (it-IT)
+**Servizio:** Italia
+**Contatto:** info@polpo-ai.com
+**Anno fondazione:** 2024
+
+## Tre servizi principali
+
+PolpoAI offre tre servizi distinti che spesso lavorano insieme:
+
+1. **Creazione siti web vetrina** — siti Next.js 13.5, mobile-first, ottimizzati SEO, performance Lighthouse 95+. Tempi 15-30 giorni. Tipico per liberi professionisti, piccole attività locali, freelance, piccole aziende che vogliono rinnovare la presenza online. Pagina: https://polpo-ai.com/creazione-siti-web
+
+2. **Assistente WhatsApp per prenotazioni** — chatbot WhatsApp Business con dashboard di gestione. Risponde 24/7, prende prenotazioni, integra calendar esistenti (Google/Outlook/Cal.com), riduce le telefonate del 60-80%. Pagina: https://polpo-ai.com/chatbot-whatsapp-prenotazioni
+
+3. **Agenti AI e automazioni** — workflow custom per task ripetitivi: fatture automatiche, email triage, classificazione lead, scraping dati, integrazione CRM. Pagina: https://polpo-ai.com/agenti-ai
+
+## Verticali servite per l'assistente WhatsApp
+
+- **Ristoranti** — gestione prenotazioni tavoli, comunicazione menu, orari, conferme automatiche. https://polpo-ai.com/chatbot-whatsapp-prenotazioni-ristoranti
+- **Centri estetici** — prenotazioni servizi, listino, pacchetti, recall promemoria. https://polpo-ai.com/chatbot-whatsapp-prenotazioni-centri-estetici
+- **Studi medici** — prenotazioni visite, anamnesi pre-visita, ricette ripetute, ricordatori. https://polpo-ai.com/chatbot-whatsapp-prenotazioni-studi-medici
+- **Palestre** — prenotazione corsi, gestione abbonamenti, recall lezioni. https://polpo-ai.com/chatbot-whatsapp-prenotazioni-palestre
+- **Hotel & B&B** — check-in pre-arrival, gestione check-out, FAQ ospiti automatiche. https://polpo-ai.com/chatbot-whatsapp-prenotazioni-hotel-bb
+- **Padel** — prenotazione campi, formazione squadre, comunicazione tornei. https://polpo-ai.com/chatbot-whatsapp-prenotazioni-padel
+
+## Portfolio esempi
+
+3 siti vetrina navigabili (esempi non commerciali) costruiti per dimostrare gli stili possibili:
+
+- **Smash Burger** (ristorazione) — https://polpo-ai.com/portfolio/smash-burger
+- **Fotografo eventi** (servizi creativi, editoriale) — https://polpo-ai.com/portfolio/fotografo-eventi
+- **Avv. Giulia Bianchi** (libero professionista) — https://polpo-ai.com/portfolio/libero-professionista — con toggle "Vedi com'era prima" per mostrare un sito anni 2010 prima del restyling
+
+## Cosa rende PolpoAI diversa
+
+- **Niente template**: ogni sito è scritto a mano in Next.js + Tailwind, non basato su WordPress/Wix
+- **Performance verificabili**: Lighthouse Performance 95+, mobile-first, AVIF/WebP automatici
+- **Italiano nativo**: copy, supporto, consulenza, fatturazione tutto in Italia (P.IVA italiana)
+- **Trasparenza prezzi**: preventivi scritti, niente pacchetti misteriosi, demo gratuita 30 minuti
+- **Ownership totale**: il cliente è proprietario del codice, può migrare in qualsiasi momento
+
+## Demo gratuita
+
+Chi vuole valutare un servizio può prenotare una **demo gratuita di 30 minuti** (videocall o in presenza a Milano) scrivendo a info@polpo-ai.com o usando il form contatti su https://polpo-ai.com/#contatti
+
+## Pagine principali per AI search
+
+- Home: https://polpo-ai.com
+- Creazione siti web: https://polpo-ai.com/creazione-siti-web
+- Assistente WhatsApp: https://polpo-ai.com/chatbot-whatsapp-prenotazioni
+- Agenti AI: https://polpo-ai.com/agenti-ai
+- Sitemap XML: https://polpo-ai.com/sitemap.xml

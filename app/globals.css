@@ -761,3 +761,32 @@ h1, h2, h3, h4, h5, h6 {
   content-visibility: auto;
   contain-intrinsic-size: 0 600px;
 }
+
+/* ============================================================================
+   PORTFOLIO SCOPE — Reset polpo dark-theme defaults
+   I siti esempio in /portfolio/* hanno tema proprio (white/cream/dark con
+   bg per-sezione). Il CSS polpo globale forza `color: var(--text-primary)`
+   (slate-50 light) su h1-h6 e `color: var(--text-secondary)` (slate-300) su
+   tutti i <p>, rendendo invisibili i testi sui background chiari delle
+   sezioni portfolio. Qui annulliamo tutti i color globali in modo che
+   ereditino dal wrapper della singola pagina portfolio.
+   ============================================================================ */
+.portfolio-scope,
+.portfolio-scope .body,
+.portfolio-scope .body-lg,
+.portfolio-scope .body-sm,
+.portfolio-scope .lead,
+.portfolio-scope .meta,
+.portfolio-scope .caption,
+.portfolio-scope p,
+.portfolio-scope h1,
+.portfolio-scope h2,
+.portfolio-scope h3,
+.portfolio-scope h4,
+.portfolio-scope h5,
+.portfolio-scope h6,
+.portfolio-scope li,
+.portfolio-scope blockquote,
+.portfolio-scope figcaption {
+  color: inherit;
+}

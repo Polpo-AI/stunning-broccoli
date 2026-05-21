@@ -2,8 +2,10 @@
 
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function GlobalParallaxBackground() {
+  const pathname = usePathname();
   const reduced = useReducedMotion();
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
@@ -23,6 +25,9 @@ export default function GlobalParallaxBackground() {
 
   // Render nulla su SSR e prima dell'hydration per evitare mismatch.
   if (!mounted || reduced) return null;
+
+  // Nasconde gli orbs polpo sui siti esempio del portfolio
+  if (pathname?.startsWith('/portfolio')) return null;
 
   // Mobile: orbs statici CSS-animated, più luminosi
   if (isMobile) {
