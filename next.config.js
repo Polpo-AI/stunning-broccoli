@@ -9,6 +9,13 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [375, 640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 64, 96, 128, 256],
+    // Domini esterni autorizzati per next/image (utilizzati nei siti esempio portfolio)
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
   },
   experimental: {
     serverComponentsExternalPackages: ['@supabase/supabase-js', '@supabase/realtime-js'],

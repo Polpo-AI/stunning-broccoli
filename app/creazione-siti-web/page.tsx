@@ -6,6 +6,7 @@ import FAQAccordion from '@/components/shared/FAQAccordion';
 import SitiHero from '@/components/pages/SitiHero';
 import SitiFeatures from '@/components/pages/SitiFeatures';
 import WhoIsItFor from '@/components/shared/WhoIsItFor';
+import PortfolioShowcase from '@/components/portfolio/PortfolioShowcase';
 
 export const metadata: Metadata = {
   title: 'Creazione Siti Web Professionali per PMI',
@@ -50,23 +51,95 @@ export default function CreazioneSitiWebPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: 'Creazione Siti Web Professionali',
-    provider: { '@type': 'Organization', name: 'PolpoAI', url: 'https://polpo-ai.com' },
+    '@id': 'https://polpo-ai.com/creazione-siti-web#service',
+    name: 'Creazione Siti Web Vetrina Professionali per PMI',
+    provider: {
+      '@type': 'Organization',
+      '@id': 'https://polpo-ai.com/#organization',
+      name: 'PolpoAI',
+      url: 'https://polpo-ai.com',
+    },
     serviceType: 'Web Development',
+    category: 'Web Design & Development',
     description:
-      'Sviluppo di siti web vetrina su misura per PMI italiane, ottimizzati per mobile, performance e SEO.',
+      'Sviluppo di siti web vetrina su misura per PMI italiane, scritti a mano in Next.js 13.5 (no template, no WordPress). Mobile-first, performance Lighthouse 95+, SEO tecnica inclusa. Tempi 15-30 giorni lavorativi.',
+    url: 'https://polpo-ai.com/creazione-siti-web',
     areaServed: { '@type': 'Country', name: 'Italy' },
-    audience: { '@type': 'BusinessAudience', audienceType: 'PMI italiane' },
+    audience: { '@type': 'BusinessAudience', audienceType: 'PMI italiane, liberi professionisti, piccole attività locali' },
+    availableLanguage: 'Italian',
+    termsOfService: 'https://polpo-ai.com',
+    offers: {
+      '@type': 'Offer',
+      availability: 'https://schema.org/InStock',
+      priceCurrency: 'EUR',
+      priceSpecification: {
+        '@type': 'PriceSpecification',
+        priceCurrency: 'EUR',
+        description: 'Preventivo personalizzato dopo consulenza gratuita di 30 minuti',
+      },
+      areaServed: { '@type': 'Country', name: 'Italy' },
+    },
+  };
+
+  // HowTo: AI engines amano i processi step-by-step
+  const howToJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'Come si crea un sito web vetrina con PolpoAI',
+    description: 'Il processo PolpoAI in 4 step per realizzare un sito web vetrina su misura, dal primo contatto al go-live.',
+    totalTime: 'P30D',
+    estimatedCost: { '@type': 'MonetaryAmount', currency: 'EUR', value: '1500' },
+    supply: [
+      { '@type': 'HowToSupply', name: 'Brand asset (logo, foto, colori)' },
+      { '@type': 'HowToSupply', name: 'Contenuti testuali (chi siete, servizi)' },
+    ],
+    tool: [
+      { '@type': 'HowToTool', name: 'Next.js 13.5' },
+      { '@type': 'HowToTool', name: 'Tailwind CSS' },
+      { '@type': 'HowToTool', name: 'Vercel (hosting)' },
+    ],
+    step: [
+      {
+        '@type': 'HowToStep',
+        position: 1,
+        name: 'Consulenza gratuita',
+        text: 'Call di 30 minuti per capire il tuo business, gli obiettivi del sito, i clienti target. Output: brief scritto.',
+        url: 'https://polpo-ai.com/creazione-siti-web#step-1',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 2,
+        name: 'Design + wireframe',
+        text: 'Sviluppo mockup delle pagine principali in Figma, scelta tipografia, palette, struttura informativa. 7-10 giorni.',
+        url: 'https://polpo-ai.com/creazione-siti-web#step-2',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 3,
+        name: 'Sviluppo Next.js',
+        text: 'Implementazione codice in Next.js + Tailwind, ottimizzazione immagini AVIF/WebP, SEO tecnica, schema JSON-LD. 10-15 giorni.',
+        url: 'https://polpo-ai.com/creazione-siti-web#step-3',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 4,
+        name: 'Test + go-live',
+        text: 'Test su dispositivi reali, Lighthouse audit, deploy su Vercel con dominio. Training cliente per CMS. Garanzia 90 giorni inclusi.',
+        url: 'https://polpo-ai.com/creazione-siti-web#step-4',
+      },
+    ],
   };
 
   const faqJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
+    '@id': 'https://polpo-ai.com/creazione-siti-web#faq',
     mainEntity: faqItems.map(({ q, a }) => ({
       '@type': 'Question',
       name: q,
       acceptedAnswer: { '@type': 'Answer', text: a },
     })),
+    inLanguage: 'it-IT',
   };
 
   const breadcrumbJsonLd = {
@@ -81,12 +154,14 @@ export default function CreazioneSitiWebPage() {
   return (
     <div className="min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <div className="max-w-7xl mx-auto px-6 pt-8 pb-4">
         <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Creazione Siti Web' }]} />
       </div>
       <SitiHero />
+      <PortfolioShowcase />
       <WhoIsItFor
         variant="siti"
         title={<>Per chi è <em>questo servizio</em>?</>}

@@ -1,5 +1,8 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Mail } from 'lucide-react';
 
 const servicesLinks = [
@@ -18,6 +21,11 @@ const industriesLinks = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  // Nasconde il footer polpo sui siti esempio del portfolio
+  if (pathname?.startsWith('/portfolio')) return null;
+
   return (
     <footer className="relative border-t border-white/[0.05] backdrop-blur-md bg-[#0B1228]/60">
       <div className="max-w-7xl mx-auto px-6 pt-16 pb-8">

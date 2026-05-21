@@ -29,6 +29,13 @@ export default function Navbar() {
 
   useEffect(() => { setMenuOpen(false); setServiziOpen(false); }, [pathname]);
 
+  // Nasconde la navbar polpo sui siti esempio del portfolio
+  // (così il visitatore vede il sito esempio "puro", senza il chrome del nostro sito).
+  // IMPORTANTE: questo `return null` DEVE stare DOPO tutte le chiamate a hooks
+  // altrimenti React lancia "Rendered fewer/more hooks" quando si naviga tra
+  // /portfolio/* ↔ il resto del sito (il numero di hooks cambierebbe tra render).
+  if (pathname?.startsWith('/portfolio')) return null;
+
   const activeLink = 'text-white font-semibold';
   const baseLink   = 'text-sm text-slate-400 hover:text-white transition-colors duration-200 font-medium relative group';
 

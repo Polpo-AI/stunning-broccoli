@@ -172,6 +172,10 @@ function NavItem({ label, href, icon: Icon, accent, active }: {
 
 export default function BottomNav() {
   const pathname = usePathname();
+
+  // Nasconde la BottomNav polpo sui siti esempio del portfolio
+  if (pathname?.startsWith('/portfolio')) return null;
+
   const activeHref = NAV_ITEMS.find(({ href }) => isActive(pathname, href))?.href ?? '/';
   const accentColor = NAV_ITEMS.find(({ href }) => href === activeHref)?.accent ?? '#22d3ee';
 
