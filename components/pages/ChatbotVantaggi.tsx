@@ -15,8 +15,8 @@ export default function ChatbotVantaggi() {
     <section className="py-24 bg-[#0A0F1C] border-y border-white/5">
       <div className="max-w-7xl mx-auto px-6">
         <FadeUp className="text-center mb-14">
-          <span className="section-label">I vantaggi</span>
-          <h2 className="section-title">Perché usare un chatbot WhatsApp?</h2>
+          <h2 className="section-title mb-4">WhatsApp: il canale su cui sono già i tuoi clienti.</h2>
+          <p className="text-slate-400 text-sm max-w-lg mx-auto">Nessuna app nuova da installare. Nessuna password da ricordare. Solo messaggi.</p>
         </FadeUp>
 
         <motion.div
@@ -35,7 +35,7 @@ export default function ChatbotVantaggi() {
             >
               <motion.div
                 whileHover={{ scale: 1.15 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
                 className="w-14 h-14 rounded-full bg-teal-500/10 border border-teal-500/20 flex items-center justify-center mb-5 group-hover:bg-teal-500/20 transition-colors duration-300"
               >
                 <Icon className="w-7 h-7 text-teal-400" strokeWidth={1.5} />

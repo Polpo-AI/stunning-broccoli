@@ -47,7 +47,7 @@ export default function SitiFeatures() {
             >
               <motion.div
                 whileHover={{ scale: 1.15, rotate: -8 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
                 className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-6 group-hover:bg-cyan-500/20 transition-colors duration-300"
               >
                 <Icon className="w-6 h-6 text-cyan-400" strokeWidth={1.5} />

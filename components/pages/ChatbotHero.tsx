@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { staggerContainer, fadeUpVariants } from '@/components/shared/animations';
-import CountUp from '@/components/shared/CountUp';
+import { CheckCircle2 } from 'lucide-react';
 
 export default function ChatbotHero() {
   return (
@@ -78,23 +78,21 @@ export default function ChatbotHero() {
             Tu controlli tutto da un pannello semplice. Si adatta a qualunque attività che riceve prenotazioni.
           </motion.p>
 
-          <motion.div
+          <motion.ul
             variants={fadeUpVariants}
-            className="flex flex-wrap justify-center gap-x-10 gap-y-4 mt-2"
+            className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 mt-2"
           >
             {[
-              { value: '7-15 gg',  label: 'tempo medio di avvio',         delay: 0 },
-              { value: '24/7',     label: 'risponde anche di notte',      delay: 150 },
-              { value: 'Pannello', label: 'di controllo sempre incluso',  delay: 300 },
-            ].map(({ value, label, delay }) => (
-              <div key={label} className="text-center">
-                <div className="text-3xl font-extrabold gradient-text-chatbot" style={{ fontFamily: 'var(--font-display)' }}>
-                  <CountUp delay={delay}>{value}</CountUp>
-                </div>
-                <div className="text-xs text-slate-500 mt-1 tracking-wide uppercase">{label}</div>
-              </div>
+              'Attivo in 7–15 giorni',
+              'Risponde H24 su WhatsApp',
+              'Pannello di controllo incluso',
+            ].map((item) => (
+              <li key={item} className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/[0.08] text-sm text-slate-300" style={{ background: 'rgba(255,255,255,0.025)' }}>
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" strokeWidth={1.8} />
+                {item}
+              </li>
             ))}
-          </motion.div>
+          </motion.ul>
         </motion.div>
       </div>
     </section>

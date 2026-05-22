@@ -30,8 +30,8 @@ export default function AgentiFeatures() {
     <section className="py-24 bg-[#0A0F1C] border-y border-white/5">
       <div className="max-w-7xl mx-auto px-6">
         <FadeUp className="text-center mb-14">
-          <span className="section-label">Cosa automatizza</span>
-          <h2 className="section-title">Tre aree di impatto principale.</h2>
+          <h2 className="section-title mb-4">Dove agisce un agente AI.</h2>
+          <p className="text-slate-400 text-sm max-w-lg mx-auto">Tre aree su cui i nostri clienti ci chiedono di intervenire più spesso.</p>
         </FadeUp>
 
         <motion.div
@@ -50,7 +50,7 @@ export default function AgentiFeatures() {
             >
               <motion.div
                 whileHover={{ scale: 1.12, rotate: -5 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
                 className="w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mb-6 group-hover:bg-violet-500/20 transition-colors duration-300"
               >
                 <Icon className="w-6 h-6 text-violet-400" strokeWidth={1.5} />

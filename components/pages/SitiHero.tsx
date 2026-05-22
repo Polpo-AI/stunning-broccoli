@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { staggerContainer, fadeUpVariants } from '@/components/shared/animations';
-import CountUp from '@/components/shared/CountUp';
+import { CheckCircle2 } from 'lucide-react';
 
 export default function SitiHero() {
   return (
@@ -80,23 +80,21 @@ export default function SitiHero() {
             Veloce sul telefono, trovabile su Google, scritto in italiano semplice — pensato per portare richieste vere.
           </motion.p>
 
-          <motion.div
+          <motion.ul
             variants={fadeUpVariants}
-            className="flex flex-wrap justify-center gap-x-10 gap-y-4 mt-2"
+            className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 mt-2"
           >
             {[
-              { value: '15-30 gg', label: 'tempo medio di consegna',     delay: 0 },
-              { value: '100%',     label: 'pensato per il telefono',     delay: 150 },
-              { value: 'Google',   label: 'trovabile dal primo giorno',  delay: 300 },
-            ].map(({ value, label, delay }) => (
-              <div key={label} className="text-center">
-                <div className="text-3xl font-extrabold gradient-text-siti" style={{ fontFamily: 'var(--font-display)' }}>
-                  <CountUp delay={delay}>{value}</CountUp>
-                </div>
-                <div className="text-xs text-slate-500 mt-1 tracking-wide uppercase">{label}</div>
-              </div>
+              'Consegnato in 15–30 giorni',
+              'Ottimizzato per mobile e Google',
+              'Copy scritto per convertire',
+            ].map((item) => (
+              <li key={item} className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/[0.08] text-sm text-slate-300" style={{ background: 'rgba(255,255,255,0.025)' }}>
+                <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0" strokeWidth={1.8} />
+                {item}
+              </li>
             ))}
-          </motion.div>
+          </motion.ul>
         </motion.div>
       </div>
     </section>

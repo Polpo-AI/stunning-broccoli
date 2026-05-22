@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { staggerContainer, fadeUpVariants } from '@/components/shared/animations';
-import CountUp from '@/components/shared/CountUp';
+import { CheckCircle2 } from 'lucide-react';
 
 export default function AgentiHero() {
   return (
@@ -79,23 +79,21 @@ export default function AgentiHero() {
             Il tuo controllo resta sempre al primo posto.
           </motion.p>
 
-          <motion.div
+          <motion.ul
             variants={fadeUpVariants}
-            className="flex flex-wrap justify-center gap-x-10 gap-y-4 mt-2"
+            className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 mt-2"
           >
             {[
-              { value: '10-30 gg',     label: 'tempo medio di sviluppo',     delay: 0 },
-              { value: 'fino a 12h',   label: 'risparmiate ogni settimana',  delay: 150 },
-              { value: 'Controllo',    label: 'umano sempre incluso',        delay: 300 },
-            ].map(({ value, label, delay }) => (
-              <div key={label} className="text-center">
-                <div className="text-3xl font-extrabold gradient-text-agenti" style={{ fontFamily: 'var(--font-display)' }}>
-                  <CountUp delay={delay}>{value}</CountUp>
-                </div>
-                <div className="text-xs text-slate-500 mt-1 tracking-wide uppercase">{label}</div>
-              </div>
+              'Sviluppato in 10–30 giorni',
+              'Integra i tool che usi già',
+              'Il controllo resta sempre tuo',
+            ].map((item) => (
+              <li key={item} className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/[0.08] text-sm text-slate-300" style={{ background: 'rgba(255,255,255,0.025)' }}>
+                <CheckCircle2 className="w-4 h-4 text-violet-400 shrink-0" strokeWidth={1.8} />
+                {item}
+              </li>
             ))}
-          </motion.div>
+          </motion.ul>
         </motion.div>
       </div>
     </section>
