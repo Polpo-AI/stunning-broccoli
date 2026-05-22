@@ -61,7 +61,7 @@ export default function CTASection() {
             >
               <Image
                 src="/polpo.png"
-                alt="PolpoAI mascot"
+                alt="Il polpo di PolpoAI — i tuoi strumenti digitali su misura"
                 width={140}
                 height={140}
                 className="object-contain select-none animate-float"
@@ -88,12 +88,8 @@ export default function CTASection() {
               <div
                 className="relative rounded-2xl border border-cyan-500/30 p-10 flex flex-col items-center gap-4 text-center overflow-hidden"
                 style={{
-                  background:
-                    'linear-gradient(160deg, rgba(20,28,55,0.92) 0%, rgba(14,21,46,0.96) 50%, rgba(11,17,40,0.98) 100%)',
-                  backdropFilter: 'blur(20px) saturate(1.4)',
-                  WebkitBackdropFilter: 'blur(20px) saturate(1.4)',
-                  boxShadow:
-                    '0 20px 60px -16px rgba(6,182,212,0.30), 0 10px 32px rgba(0,0,0,0.5), 0 2px 0 rgba(255,255,255,0.06) inset',
+                  background: 'linear-gradient(160deg, var(--bg-elevated) 0%, var(--bg-raised) 100%)',
+                  boxShadow: '0 20px 60px -16px rgba(6,182,212,0.25), 0 4px 20px rgba(0,0,0,0.4)',
                 }}
               >
                 <div
@@ -119,12 +115,8 @@ export default function CTASection() {
                 onSubmit={handleSubmit}
                 className="relative rounded-2xl border border-white/[0.10] p-8 flex flex-col gap-5 overflow-hidden"
                 style={{
-                  background:
-                    'linear-gradient(160deg, rgba(20,28,55,0.92) 0%, rgba(14,21,46,0.96) 50%, rgba(11,17,40,0.98) 100%)',
-                  backdropFilter: 'blur(20px) saturate(1.4)',
-                  WebkitBackdropFilter: 'blur(20px) saturate(1.4)',
-                  boxShadow:
-                    '0 20px 60px -16px rgba(0,0,0,0.6), 0 10px 32px rgba(0,0,0,0.5), 0 2px 0 rgba(255,255,255,0.06) inset',
+                  background: 'linear-gradient(160deg, var(--bg-elevated) 0%, var(--bg-raised) 100%)',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03)',
                 }}
                 noValidate
               >

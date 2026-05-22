@@ -177,7 +177,7 @@ export default function CleanHero() {
             >
               <Image
                 src="/polpo.png"
-                alt="PolpoAI mascotte"
+                alt="Il polpo di PolpoAI — siti web, assistente WhatsApp e automazioni per PMI italiane"
                 width={300}
                 height={300}
                 priority

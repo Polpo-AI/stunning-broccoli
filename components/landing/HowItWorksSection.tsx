@@ -105,7 +105,7 @@ export default function HowItWorksSection() {
               <motion.div
                 className="relative mb-8"
                 whileHover={{ scale: 1.05 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
               >
                 <div
                   className={[
