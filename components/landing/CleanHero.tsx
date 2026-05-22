@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useRef } from 'react';
-import CountUp from '@/components/shared/CountUp';
 
 export default function CleanHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -188,37 +187,30 @@ export default function CleanHero() {
           </motion.div>
         </div>
 
-        {/* Stats — Fraunces light italic con colori (senza striscia) */}
+        {/* Verticali — prova di specificità invece dei soliti hero metrics */}
         <motion.div
-          className="mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-3 gap-y-10 gap-x-8"
-          initial={{ opacity: 0, y: 16 }}
+          className="mt-12 md:mt-16"
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          {[
-            { num: '30', suffix: ' gg',  label: 'tempo medio dal primo incontro al lancio',  color: 'text-cyan-400' },
-            { num: '3',  suffix: '',     label: 'servizi indipendenti o combinati tra loro', color: 'text-magenta' },
-            { num: '100', suffix: '%',   label: 'costruito su misura, niente modelli standard', color: 'text-cyan-400' },
-          ].map((s, i) => (
-            <motion.div
-              key={i}
-              initial={{ y: 14, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.08 }}
-              className="flex flex-col gap-2 text-center sm:text-left"
-            >
-              <div
-                className="font-editorial leading-[0.92] tracking-[-0.04em] text-white text-5xl sm:text-6xl md:text-7xl"
+          <p className="text-[11px] text-slate-500 uppercase tracking-[0.16em] mb-3 text-center lg:text-left">
+            Settori
+          </p>
+          <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+            {[
+              'Ristoranti', 'Centri estetici', 'Studi medici',
+              'Palestre', 'Hotel e B&B', 'Circoli padel', 'Liberi professionisti',
+            ].map((v) => (
+              <span
+                key={v}
+                className="px-3 py-1.5 text-xs text-slate-400 border border-white/[0.08] rounded-full"
+                style={{ background: 'rgba(255,255,255,0.025)' }}
               >
-                <em className={`italic font-normal not-italic-no ${s.color}`} style={{ fontStyle: 'italic' }}>{s.num}</em>
-                <span className="text-2xl sm:text-3xl align-super opacity-60 font-normal font-sans">{s.suffix}</span>
-              </div>
-              <div className="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-[240px] mx-auto sm:mx-0">
-                {s.label}
-              </div>
-            </motion.div>
-          ))}
+                {v}
+              </span>
+            ))}
+          </div>
         </motion.div>
       </motion.div>
 

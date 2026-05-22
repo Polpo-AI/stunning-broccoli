@@ -1,7 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { Inter, Plus_Jakarta_Sans, Fraunces } from 'next/font/google';
+import { Bricolage_Grotesque, Figtree } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Navbar from '@/components/landing/Navbar';
@@ -10,25 +10,18 @@ import GlobalParallaxBackground from '@/components/shared/GlobalParallaxBackgrou
 import PersistentBackground from '@/components/shared/PersistentBackground';
 import PageChrome from '@/components/landing/PageChrome';
 
-const inter = Inter({
+const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-display',
+  weight: ['300', '400', '500', '600', '700', '800'],
 });
 
-const jakarta = Plus_Jakarta_Sans({
+const figtree = Figtree({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-jakarta',
+  variable: '--font-sans',
   weight: ['400', '500', '600', '700', '800'],
-});
-
-const fraunces = Fraunces({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-fraunces',
-  weight: ['300', '400', '600'],
-  style: ['normal', 'italic'],
 });
 
 export const metadata: Metadata = {
@@ -293,8 +286,8 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="it" className={`${inter.variable} ${jakarta.variable} ${fraunces.variable}`}>
-      <body className={inter.className}>
+    <html lang="it" className={`${bricolage.variable} ${figtree.variable}`}>
+      <body className={figtree.className}>
         <Script
           id="ld-graph"
           type="application/ld+json"

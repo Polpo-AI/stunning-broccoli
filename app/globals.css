@@ -83,15 +83,14 @@
   /* ─── EASINGS ──────────────────────────────────────────────────────────── */
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
   --ease-premium:  cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-quart:    cubic-bezier(0.25, 1, 0.5, 1);
 
   /* ─── TYPE SYSTEM ──────────────────────────────────────────────────────── */
-  /* Display: Fraunces (serif editoriale) — italic per accenti gradient.
-     Headings standard: Plus Jakarta Sans. Body: Inter. */
-  --font-editorial: var(--font-fraunces), 'Fraunces', 'Georgia', serif;
-  --font-display:   var(--font-jakarta), 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
-  --font-sans:      var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Display: Bricolage Grotesque (grotesque variable) — italic per accenti colore.
+     Body: Figtree (humanist grotesque). */
+  --font-editorial: var(--font-display), 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-display:   var(--font-display), 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-sans:      var(--font-sans), 'Figtree', system-ui, sans-serif;
 
   --fw-regular:   400;
   --fw-medium:    500;
@@ -217,7 +216,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   body {
-    background: #0B1228;
+    background: var(--bg-base);
     color: var(--text-primary);
     font-family: var(--font-sans);
     font-size: var(--fs-body);
@@ -358,30 +357,25 @@ h1, h2, h3, h4, h5, h6 {
     transform-origin: center center;
   }
 
-  /* ── Gradient text ── */
-  .gradient-text {
-    @apply text-transparent bg-clip-text;
-    background-image: linear-gradient(135deg, #22d3ee 0%, #06b6d4 45%, #a78bfa 100%);
-  }
-  .gradient-text-siti    { @apply text-transparent bg-clip-text; background-image: linear-gradient(135deg, #38bdf8 0%, #22d3ee 50%, #60a5fa 100%); }
-  .gradient-text-chatbot { @apply text-transparent bg-clip-text; background-image: linear-gradient(135deg, #10b981 0%, #22d3ee 60%, #14b8a6 100%); }
-  .gradient-text-agenti  { @apply text-transparent bg-clip-text; background-image: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 50%, #22d3ee 100%); }
-  .gradient-text-warm    { @apply text-transparent bg-clip-text; background-image: linear-gradient(135deg, #fb7185 0%, #fbbf24 60%, #22d3ee 100%); }
+  /* ── Accent text (solid colors — no gradient clip) ── */
+  .gradient-text         { color: var(--cyan-400); }
+  .gradient-text-siti    { color: var(--siti-blue); }
+  .gradient-text-chatbot { color: var(--chatbot-teal); }
+  .gradient-text-agenti  { color: var(--agenti-violet-2); }
+  .gradient-text-warm    { color: var(--magenta); }
 
   /* ── Section label / eyebrow ── */
   .section-label, .eyebrow {
     @apply inline-flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase mb-5;
-    background: linear-gradient(90deg, #22d3ee 0%, #a78bfa 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--cyan-400);
   }
   .section-label::before, .eyebrow::before {
     content: '';
     display: inline-block;
     width: 28px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--cyan-400));
+    background: var(--cyan-400);
+    opacity: 0.5;
   }
 
   .section-title {
@@ -523,7 +517,7 @@ h1, h2, h3, h4, h5, h6 {
    ============================================================================ */
 .font-editorial { font-family: var(--font-editorial); }
 
-/* H1 editoriale — serif light, italic gradient su `<em>` */
+/* H1 editoriale — grotesque variable light, italic accent colore solido su `<em>` */
 .h1-editorial {
   font-family: var(--font-editorial);
   font-size: clamp(2.75rem, 7vw, 6rem);
@@ -536,11 +530,7 @@ h1, h2, h3, h4, h5, h6 {
 .h1-editorial em {
   font-style: italic;
   font-weight: 400;
-  /* Gradient cyan → magenta diretto: transizione liscia senza stop visibile */
-  background: linear-gradient(100deg, #67e8f9 0%, var(--magenta) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--magenta);
 }
 
 /* H2 editoriale */
@@ -556,37 +546,25 @@ h1, h2, h3, h4, h5, h6 {
 .h2-editorial em {
   font-style: italic;
   font-weight: 400;
-  background: linear-gradient(100deg, #67e8f9 0%, var(--magenta) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--magenta);
 }
 
-/* Varianti em per pagine servizio — gradient omogeneo del color brand */
+/* Varianti em per pagine servizio — colore solido brand */
 .em-siti em,
 .h1-editorial.is-siti em,
-.h2-editorial.is-siti em {
-  background: linear-gradient(100deg, #38bdf8 0%, #60a5fa 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
+.h2-editorial.is-siti em { color: var(--siti-blue); }
+
 .em-chatbot em,
 .h1-editorial.is-chatbot em,
-.h2-editorial.is-chatbot em {
-  background: linear-gradient(100deg, #34d399 0%, #2dd4bf 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
+.h2-editorial.is-chatbot em { color: var(--chatbot-emerald); }
+
 .em-agenti em,
 .h1-editorial.is-agenti em,
-.h2-editorial.is-agenti em {
-  background: linear-gradient(100deg, #a78bfa 0%, #c084fc 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
+.h2-editorial.is-agenti em { color: var(--agenti-violet-2); }
+
 .em-padel em,
 .h1-editorial.is-padel em,
-.h2-editorial.is-padel em {
-  background: linear-gradient(100deg, #34d399 0%, #67e8f9 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
+.h2-editorial.is-padel em { color: var(--chatbot-teal); }
 
 /* H3 editoriale */
 .h3-editorial {
