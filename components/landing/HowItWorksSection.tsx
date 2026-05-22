@@ -114,10 +114,8 @@ export default function HowItWorksSection() {
                     borderHover, bgHover,
                   ].join(' ')}
                   style={{
-                    background:
-                      'linear-gradient(160deg, rgba(20,28,55,0.92) 0%, rgba(14,21,46,0.96) 50%, rgba(11,17,40,0.98) 100%)',
-                    boxShadow:
-                      '0 10px 28px rgba(0,0,0,0.45), 0 2px 0 rgba(255,255,255,0.06) inset, 0 -1px 18px rgba(0,0,0,0.4) inset',
+                    background: 'var(--bg-raised)',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04)',
                   }}
                 >
                   {/* Top highlight 3D */}

@@ -96,12 +96,8 @@ export default function BenefitsSection() {
                   'hover:-translate-y-1.5',
                 ].join(' ')}
                 style={{
-                  background:
-                    'linear-gradient(160deg, rgba(20,28,55,0.92) 0%, rgba(14,21,46,0.96) 50%, rgba(11,17,40,0.98) 100%)',
-                  backdropFilter: 'blur(20px) saturate(1.4)',
-                  WebkitBackdropFilter: 'blur(20px) saturate(1.4)',
-                  boxShadow:
-                    '0 10px 32px rgba(0,0,0,0.45), 0 2px 0 rgba(255,255,255,0.05) inset, 0 -1px 24px rgba(0,0,0,0.4) inset',
+                  background: 'linear-gradient(160deg, var(--bg-raised) 0%, var(--bg-surface) 100%)',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.03)',
                 }}
               >
                 {/* Highlight 3D superiore */}

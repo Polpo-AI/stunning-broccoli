@@ -99,15 +99,10 @@ export default function ServiceCard({
                     border border-white/[0.10] ${c.border}
                     overflow-hidden`}
         style={{
-          /* Sfondo card scuro e OPACO per stagliarsi sul background colorato */
-          background:
-            'linear-gradient(160deg, rgba(20,28,55,0.92) 0%, rgba(14,21,46,0.96) 50%, rgba(11,17,40,0.98) 100%)',
-          backdropFilter: 'blur(20px) saturate(1.4)',
-          WebkitBackdropFilter: 'blur(20px) saturate(1.4)',
-          /* Shadow multi-strato per effetto 3D */
+          background: 'linear-gradient(160deg, var(--bg-raised) 0%, var(--bg-surface) 100%)',
           boxShadow: hover
-            ? `${c.shadow}, 0 12px 32px rgba(0,0,0,0.45), 0 2px 0 rgba(255,255,255,0.04) inset, 0 -2px 24px rgba(0,0,0,0.5) inset`
-            : '0 10px 32px rgba(0,0,0,0.45), 0 2px 0 rgba(255,255,255,0.05) inset, 0 -1px 24px rgba(0,0,0,0.4) inset',
+            ? `${c.shadow}, 0 12px 32px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.04)`
+            : '0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.03)',
           transition: 'box-shadow 0.32s var(--ease-premium)',
         }}
       >
