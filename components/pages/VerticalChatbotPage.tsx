@@ -18,14 +18,10 @@ export interface VerticalChatbotPageProps {
   emoji: string;
 }
 
-// Stile glass card 3D condiviso
+// Stile card condiviso
 const cardStyle = {
-  background:
-    'linear-gradient(160deg, rgba(20,28,55,0.92) 0%, rgba(14,21,46,0.96) 50%, rgba(11,17,40,0.98) 100%)',
-  backdropFilter: 'blur(20px) saturate(1.4)',
-  WebkitBackdropFilter: 'blur(20px) saturate(1.4)',
-  boxShadow:
-    '0 10px 32px rgba(0,0,0,0.45), 0 2px 0 rgba(255,255,255,0.05) inset, 0 -1px 24px rgba(0,0,0,0.4) inset',
+  background: 'linear-gradient(160deg, var(--bg-raised) 0%, var(--bg-surface) 100%)',
+  boxShadow: '0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.03)',
 } as const;
 
 export default function VerticalChatbotPage({
@@ -146,11 +142,11 @@ export default function VerticalChatbotPage({
                   className="pointer-events-none absolute inset-x-0 top-0 h-px"
                   style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.18) 50%, transparent)' }}
                 />
-                {/* Numero card 3D (più visibile) */}
+                {/* Numero card */}
                 <span
-                  className="absolute top-5 right-5 text-3xl font-black select-none bg-clip-text text-transparent"
+                  className="absolute top-5 right-5 text-3xl font-black select-none"
                   style={{
-                    backgroundImage: 'linear-gradient(135deg, rgba(244,63,94,0.55), rgba(244,63,94,0.18))',
+                    color: 'rgba(244,63,94,0.50)',
                     fontFamily: 'var(--font-display)',
                   }}
                 >

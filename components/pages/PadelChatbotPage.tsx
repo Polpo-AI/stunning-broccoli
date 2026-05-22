@@ -38,14 +38,10 @@ const waMessages = [
   },
 ];
 
-/* ─── Shared 3D card style ─── */
+/* ─── Shared card style ─── */
 const cardStyle = {
-  background:
-    'linear-gradient(160deg, rgba(20,28,55,0.92) 0%, rgba(14,21,46,0.96) 50%, rgba(11,17,40,0.98) 100%)',
-  backdropFilter: 'blur(20px) saturate(1.4)',
-  WebkitBackdropFilter: 'blur(20px) saturate(1.4)',
-  boxShadow:
-    '0 10px 32px rgba(0,0,0,0.45), 0 2px 0 rgba(255,255,255,0.05) inset, 0 -1px 24px rgba(0,0,0,0.4) inset',
+  background: 'linear-gradient(160deg, var(--bg-raised) 0%, var(--bg-surface) 100%)',
+  boxShadow: '0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.03)',
 } as const;
 
 const topHighlight = {
@@ -58,7 +54,7 @@ const steps = [
     icon: MessageCircle,
     color: 'text-emerald-400',
     iconBg: 'bg-emerald-500/12 border-emerald-500/25',
-    numGradient: 'linear-gradient(135deg, rgba(52,211,153,0.50), rgba(52,211,153,0.18))',
+    numColor: 'rgba(52,211,153,0.50)',
     num: '01',
     title: 'Il giocatore scrive su WhatsApp',
     desc:
@@ -68,7 +64,7 @@ const steps = [
     icon: Brain,
     color: 'text-teal-400',
     iconBg: 'bg-teal-500/12 border-teal-500/25',
-    numGradient: 'linear-gradient(135deg, rgba(45,212,191,0.50), rgba(45,212,191,0.18))',
+    numColor: 'rgba(45,212,191,0.50)',
     num: '02',
     title: 'Il bot capisce la richiesta',
     desc:
@@ -78,7 +74,7 @@ const steps = [
     icon: Users,
     color: 'text-cyan-400',
     iconBg: 'bg-cyan-500/12 border-cyan-500/25',
-    numGradient: 'linear-gradient(135deg, rgba(34,211,238,0.50), rgba(34,211,238,0.18))',
+    numColor: 'rgba(34,211,238,0.50)',
     num: '03',
     title: 'Il sistema propone o crea una partita',
     desc:
@@ -88,7 +84,7 @@ const steps = [
     icon: LayoutDashboard,
     color: 'text-indigo-400',
     iconBg: 'bg-indigo-500/12 border-indigo-500/25',
-    numGradient: 'linear-gradient(135deg, rgba(129,140,248,0.50), rgba(129,140,248,0.18))',
+    numColor: 'rgba(129,140,248,0.50)',
     num: '04',
     title: 'La dashboard si aggiorna',
     desc:
@@ -445,8 +441,8 @@ export default function PadelChatbotPage() {
               >
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-px" style={topHighlight} />
                 <span
-                  className="absolute top-5 right-5 text-3xl font-black select-none bg-clip-text text-transparent"
-                  style={{ backgroundImage: s.numGradient, fontFamily: 'var(--font-display)' }}
+                  className="absolute top-5 right-5 text-3xl font-black select-none"
+                  style={{ color: s.numColor, fontFamily: 'var(--font-display)' }}
                 >
                   {s.num}
                 </span>

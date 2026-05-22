@@ -69,8 +69,7 @@ export default function Navbar() {
           >
             Polpo
             <span
-              className="bg-clip-text text-transparent group-hover:opacity-80 transition-opacity duration-200"
-              style={{ backgroundImage: 'linear-gradient(135deg, #22d3ee, #a78bfa)' }}
+              className="text-cyan-400 group-hover:opacity-80 transition-opacity duration-200"
             >
               AI
             </span>

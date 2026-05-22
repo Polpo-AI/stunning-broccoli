@@ -138,13 +138,8 @@ export default function WhoIsItFor({
               transition={{ duration: 0.32, ease: [0.23, 1, 0.32, 1] }}
               className={`group relative p-6 md:p-7 rounded-2xl border border-white/[0.10] ${v.hoverBorder} overflow-hidden cursor-default`}
               style={{
-                background:
-                  'linear-gradient(160deg, rgba(20,28,55,0.94) 0%, rgba(14,21,46,0.97) 50%, rgba(11,17,40,0.99) 100%)',
-                backdropFilter: 'blur(18px) saturate(1.3)',
-                WebkitBackdropFilter: 'blur(18px) saturate(1.3)',
-                boxShadow: `0 10px 32px rgba(0,0,0,0.45),
-                            0 2px 0 rgba(255,255,255,0.05) inset,
-                            0 -1px 24px rgba(0,0,0,0.4) inset`,
+                background: 'linear-gradient(160deg, var(--bg-raised) 0%, var(--bg-surface) 100%)',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.03)',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.boxShadow = `${v.shadowHover},
