@@ -49,7 +49,7 @@ const steps = [
     icon: Rocket,
     title: 'Lancio + supporto',
     duration: 'continuativo',
-    desc: 'Si parte. Restiamo a disposizione per aggiornamenti, modifiche e miglioramenti — non scompariamo dopo la fattura.',
+    desc: 'Si parte. Restiamo a disposizione per aggiornamenti, modifiche e miglioramenti. Non scompariamo dopo la fattura.',
     iconColor: 'text-sky-400',
     borderHover: 'group-hover:border-sky-500/40',
     bgHover: 'group-hover:bg-sky-500/5',

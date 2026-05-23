@@ -180,7 +180,7 @@ export default function CTASection() {
                   className="btn-primary w-full flex items-center justify-center gap-2 py-4 rounded-xl disabled:opacity-60 disabled:cursor-not-allowed mt-1"
                 >
                   {status === 'loading' && <Loader2 className="w-4 h-4 animate-spin" />}
-                  {status === 'loading' ? 'Invio in corso...' : 'Inizia ora — è gratuito'}
+                  {status === 'loading' ? 'Invio in corso...' : 'Inizia ora, è gratuito'}
                 </button>
               </form>
             )}

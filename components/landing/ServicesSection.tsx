@@ -10,7 +10,7 @@ const services = [
     icon: <Globe className="w-6 h-6" />,
     title: 'Siti Web Vetrina',
     desc:
-      'Un sito costruito attorno al tuo lavoro — non da un modello già pronto. Veloce sul telefono, trovabile su Google, scritto in italiano semplice. Pensato per portare richieste vere, non per vincere premi di design.',
+      'Un sito costruito attorno al tuo lavoro, non da un modello già pronto. Veloce sul telefono, trovabile su Google, scritto in italiano semplice. Pensato per portare richieste vere, non per vincere premi di design.',
     href: '/creazione-siti-web',
     accentColor: 'cyan',
     numberLabel: '01',
@@ -20,7 +20,7 @@ const services = [
     icon: <MessageSquare className="w-6 h-6" />,
     title: 'Assistente WhatsApp',
     desc:
-      'Risponde su WhatsApp al posto tuo: prende prenotazioni, fissa appuntamenti, gestisce richieste 24 ore su 24. Tu controlli tutto da un pannello semplice. Funziona per qualsiasi attività che riceve prenotazioni — estetici, ristoranti, palestre, padel, studi medici, hotel e qualunque altro settore.',
+      'Risponde su WhatsApp al posto tuo: prende prenotazioni, fissa appuntamenti, gestisce richieste 24 ore su 24. Tu controlli tutto da un pannello semplice. Funziona per qualsiasi attività che riceve prenotazioni: estetici, ristoranti, palestre, padel, studi medici, hotel e qualunque altro settore.',
     href: '/chatbot-whatsapp-prenotazioni',
     accentColor: 'green',
     numberLabel: '02',

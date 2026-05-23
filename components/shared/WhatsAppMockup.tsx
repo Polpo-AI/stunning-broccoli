@@ -50,7 +50,7 @@ export default function WhatsAppMockup({ messages }: WhatsAppMockupProps) {
     <div ref={containerRef} className="relative mx-auto w-full max-w-[320px] rounded-[2.5rem] border-[8px] border-[#1f2937] bg-[#ece5dd] shadow-2xl overflow-hidden h-[550px] flex flex-col">
       {/* Notch / Top Bar */}
       <div className="absolute top-0 inset-x-0 h-6 bg-[#1f2937] rounded-b-xl z-20 flex justify-center">
-        <div className="w-20 h-4 bg-black rounded-b-xl" />
+        <div className="w-20 h-4 bg-[#111827] rounded-b-xl" />
       </div>
 
       {/* WhatsApp Header */}

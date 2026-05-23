@@ -74,7 +74,7 @@ export default function ChatbotHero() {
             variants={fadeUpVariants}
             className="text-lg md:text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
-            <strong className="text-white font-medium">Prende prenotazioni, fissa appuntamenti, gestisce richieste</strong> — 24 ore su 24, sul numero WhatsApp del tuo locale.
+            <strong className="text-white font-medium">Prende prenotazioni, fissa appuntamenti, gestisce richieste</strong> 24 ore su 24, sul numero WhatsApp del tuo locale.
             Tu controlli tutto da un pannello semplice. Si adatta a qualunque attività che riceve prenotazioni.
           </motion.p>
 

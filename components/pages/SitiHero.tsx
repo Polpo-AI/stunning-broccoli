@@ -77,7 +77,7 @@ export default function SitiHero() {
             className="text-lg md:text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
             Non un sito qualsiasi, ma un sito <strong className="text-white font-medium">costruito attorno al tuo lavoro</strong>.
-            Veloce sul telefono, trovabile su Google, scritto in italiano semplice — pensato per portare richieste vere.
+            Veloce sul telefono, trovabile su Google, scritto in italiano semplice. Pensato per portare richieste vere.
           </motion.p>
 
           <motion.ul
