@@ -1,0 +1,546 @@
+{
+  "layouts": [
+    {
+      "route": "/soluzioni",
+      "width": 320,
+      "scroll": 320,
+      "h1": 1,
+      "clipped": [],
+      "title": "Soluzioni di automazione AI per le PMI | Polpo AI",
+      "canonical": "https://polpo-ai.com/soluzioni"
+    },
+    {
+      "route": "/soluzioni",
+      "width": 390,
+      "scroll": 390,
+      "h1": 1,
+      "clipped": [],
+      "title": "Soluzioni di automazione AI per le PMI | Polpo AI",
+      "canonical": "https://polpo-ai.com/soluzioni"
+    },
+    {
+      "route": "/soluzioni",
+      "width": 768,
+      "scroll": 768,
+      "h1": 1,
+      "clipped": [],
+      "title": "Soluzioni di automazione AI per le PMI | Polpo AI",
+      "canonical": "https://polpo-ai.com/soluzioni"
+    },
+    {
+      "route": "/soluzioni",
+      "width": 1024,
+      "scroll": 1024,
+      "h1": 1,
+      "clipped": [],
+      "title": "Soluzioni di automazione AI per le PMI | Polpo AI",
+      "canonical": "https://polpo-ai.com/soluzioni"
+    },
+    {
+      "route": "/soluzioni",
+      "width": 1440,
+      "scroll": 1440,
+      "h1": 1,
+      "clipped": [],
+      "title": "Soluzioni di automazione AI per le PMI | Polpo AI",
+      "canonical": "https://polpo-ai.com/soluzioni"
+    },
+    {
+      "route": "/settori",
+      "width": 320,
+      "scroll": 320,
+      "h1": 1,
+      "clipped": [],
+      "title": "Automazioni AI per i tuoi settori — I mondi Polpo | Polpo AI",
+      "canonical": "https://polpo-ai.com/settori"
+    },
+    {
+      "route": "/settori",
+      "width": 390,
+      "scroll": 390,
+      "h1": 1,
+      "clipped": [],
+      "title": "Automazioni AI per i tuoi settori — I mondi Polpo | Polpo AI",
+      "canonical": "https://polpo-ai.com/settori"
+    },
+    {
+      "route": "/settori",
+      "width": 768,
+      "scroll": 768,
+      "h1": 1,
+      "clipped": [],
+      "title": "Automazioni AI per i tuoi settori — I mondi Polpo | Polpo AI",
+      "canonical": "https://polpo-ai.com/settori"
+    },
+    {
+      "route": "/settori",
+      "width": 1024,
+      "scroll": 1024,
+      "h1": 1,
+      "clipped": [],
+      "title": "Automazioni AI per i tuoi settori — I mondi Polpo | Polpo AI",
+      "canonical": "https://polpo-ai.com/settori"
+    },
+    {
+      "route": "/settori",
+      "width": 1440,
+      "scroll": 1440,
+      "h1": 1,
+      "clipped": [],
+      "title": "Automazioni AI per i tuoi settori — I mondi Polpo | Polpo AI",
+      "canonical": "https://polpo-ai.com/settori"
+    },
+    {
+      "route": "/metodo",
+      "width": 320,
+      "scroll": 320,
+      "h1": 1,
+      "clipped": [],
+      "title": "Il metodo Polpo AI — Dal tuo lavoro al tuo sistema | Polpo AI",
+      "canonical": "https://polpo-ai.com/metodo"
+    },
+    {
+      "route": "/metodo",
+      "width": 390,
+      "scroll": 390,
+      "h1": 1,
+      "clipped": [],
+      "title": "Il metodo Polpo AI — Dal tuo lavoro al tuo sistema | Polpo AI",
+      "canonical": "https://polpo-ai.com/metodo"
+    },
+    {
+      "route": "/metodo",
+      "width": 768,
+      "scroll": 768,
+      "h1": 1,
+      "clipped": [],
+      "title": "Il metodo Polpo AI — Dal tuo lavoro al tuo sistema | Polpo AI",
+      "canonical": "https://polpo-ai.com/metodo"
+    },
+    {
+      "route": "/metodo",
+      "width": 1024,
+      "scroll": 1024,
+      "h1": 1,
+      "clipped": [],
+      "title": "Il metodo Polpo AI — Dal tuo lavoro al tuo sistema | Polpo AI",
+      "canonical": "https://polpo-ai.com/metodo"
+    },
+    {
+      "route": "/metodo",
+      "width": 1440,
+      "scroll": 1440,
+      "h1": 1,
+      "clipped": [],
+      "title": "Il metodo Polpo AI — Dal tuo lavoro al tuo sistema | Polpo AI",
+      "canonical": "https://polpo-ai.com/metodo"
+    },
+    {
+      "route": "/contatti",
+      "width": 320,
+      "scroll": 320,
+      "h1": 1,
+      "clipped": [],
+      "title": "Contatti — Richiedi la tua analisi gratuita | Polpo AI",
+      "canonical": "https://polpo-ai.com/contatti"
+    },
+    {
+      "route": "/contatti",
+      "width": 390,
+      "scroll": 390,
+      "h1": 1,
+      "clipped": [],
+      "title": "Contatti — Richiedi la tua analisi gratuita | Polpo AI",
+      "canonical": "https://polpo-ai.com/contatti"
+    },
+    {
+      "route": "/contatti",
+      "width": 768,
+      "scroll": 768,
+      "h1": 1,
+      "clipped": [],
+      "title": "Contatti — Richiedi la tua analisi gratuita | Polpo AI",
+      "canonical": "https://polpo-ai.com/contatti"
+    },
+    {
+      "route": "/contatti",
+      "width": 1024,
+      "scroll": 1024,
+      "h1": 1,
+      "clipped": [],
+      "title": "Contatti — Richiedi la tua analisi gratuita | Polpo AI",
+      "canonical": "https://polpo-ai.com/contatti"
+    },
+    {
+      "route": "/contatti",
+      "width": 1440,
+      "scroll": 1440,
+      "h1": 1,
+      "clipped": [],
+      "title": "Contatti — Richiedi la tua analisi gratuita | Polpo AI",
+      "canonical": "https://polpo-ai.com/contatti"
+    },
+    {
+      "route": "/agenti-ai",
+      "width": 320,
+      "scroll": 320,
+      "h1": 1,
+      "clipped": [],
+      "title": "Agenti AI e automazione dei processi per le PMI | Polpo AI",
+      "canonical": "https://polpo-ai.com/agenti-ai"
+    },
+    {
+      "route": "/agenti-ai",
+      "width": 390,
+      "scroll": 390,
+      "h1": 1,
+      "clipped": [],
+      "title": "Agenti AI e automazione dei processi per le PMI | Polpo AI",
+      "canonical": "https://polpo-ai.com/agenti-ai"
+    },
+    {
+      "route": "/agenti-ai",
+      "width": 768,
+      "scroll": 768,
+      "h1": 1,
+      "clipped": [],
+      "title": "Agenti AI e automazione dei processi per le PMI | Polpo AI",
+      "canonical": "https://polpo-ai.com/agenti-ai"
+    },
+    {
+      "route": "/agenti-ai",
+      "width": 1024,
+      "scroll": 1024,
+      "h1": 1,
+      "clipped": [],
+      "title": "Agenti AI e automazione dei processi per le PMI | Polpo AI",
+      "canonical": "https://polpo-ai.com/agenti-ai"
+    },
+    {
+      "route": "/agenti-ai",
+      "width": 1440,
+      "scroll": 1440,
+      "h1": 1,
+      "clipped": [],
+      "title": "Agenti AI e automazione dei processi per le PMI | Polpo AI",
+      "canonical": "https://polpo-ai.com/agenti-ai"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni",
+      "width": 320,
+      "scroll": 320,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistenti WhatsApp per richieste e prenotazioni | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni",
+      "width": 390,
+      "scroll": 390,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistenti WhatsApp per richieste e prenotazioni | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni",
+      "width": 768,
+      "scroll": 768,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistenti WhatsApp per richieste e prenotazioni | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni",
+      "width": 1024,
+      "scroll": 1024,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistenti WhatsApp per richieste e prenotazioni | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni",
+      "width": 1440,
+      "scroll": 1440,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistenti WhatsApp per richieste e prenotazioni | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-padel",
+      "width": 320,
+      "scroll": 320,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per circoli padel | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-padel"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-padel",
+      "width": 390,
+      "scroll": 390,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per circoli padel | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-padel"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-padel",
+      "width": 768,
+      "scroll": 768,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per circoli padel | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-padel"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-padel",
+      "width": 1024,
+      "scroll": 1024,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per circoli padel | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-padel"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-padel",
+      "width": 1440,
+      "scroll": 1440,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per circoli padel | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-padel"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-centri-estetici",
+      "width": 320,
+      "scroll": 320,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per centri estetici e saloni | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-centri-estetici"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-centri-estetici",
+      "width": 390,
+      "scroll": 390,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per centri estetici e saloni | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-centri-estetici"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-centri-estetici",
+      "width": 768,
+      "scroll": 768,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per centri estetici e saloni | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-centri-estetici"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-centri-estetici",
+      "width": 1024,
+      "scroll": 1024,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per centri estetici e saloni | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-centri-estetici"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-centri-estetici",
+      "width": 1440,
+      "scroll": 1440,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per centri estetici e saloni | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-centri-estetici"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-ristoranti",
+      "width": 320,
+      "scroll": 320,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per ristoranti | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-ristoranti"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-ristoranti",
+      "width": 390,
+      "scroll": 390,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per ristoranti | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-ristoranti"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-ristoranti",
+      "width": 768,
+      "scroll": 768,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per ristoranti | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-ristoranti"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-ristoranti",
+      "width": 1024,
+      "scroll": 1024,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per ristoranti | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-ristoranti"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-ristoranti",
+      "width": 1440,
+      "scroll": 1440,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per ristoranti | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-ristoranti"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-hotel-bb",
+      "width": 320,
+      "scroll": 320,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per hotel e B&B | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-hotel-bb"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-hotel-bb",
+      "width": 390,
+      "scroll": 390,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per hotel e B&B | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-hotel-bb"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-hotel-bb",
+      "width": 768,
+      "scroll": 768,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per hotel e B&B | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-hotel-bb"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-hotel-bb",
+      "width": 1024,
+      "scroll": 1024,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per hotel e B&B | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-hotel-bb"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-hotel-bb",
+      "width": 1440,
+      "scroll": 1440,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per hotel e B&B | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-hotel-bb"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-studi-medici",
+      "width": 320,
+      "scroll": 320,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per la segreteria degli studi medici | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-studi-medici"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-studi-medici",
+      "width": 390,
+      "scroll": 390,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per la segreteria degli studi medici | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-studi-medici"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-studi-medici",
+      "width": 768,
+      "scroll": 768,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per la segreteria degli studi medici | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-studi-medici"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-studi-medici",
+      "width": 1024,
+      "scroll": 1024,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per la segreteria degli studi medici | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-studi-medici"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-studi-medici",
+      "width": 1440,
+      "scroll": 1440,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per la segreteria degli studi medici | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-studi-medici"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-palestre",
+      "width": 320,
+      "scroll": 320,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per palestre e centri fitness | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-palestre"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-palestre",
+      "width": 390,
+      "scroll": 390,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per palestre e centri fitness | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-palestre"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-palestre",
+      "width": 768,
+      "scroll": 768,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per palestre e centri fitness | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-palestre"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-palestre",
+      "width": 1024,
+      "scroll": 1024,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per palestre e centri fitness | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-palestre"
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-palestre",
+      "width": 1440,
+      "scroll": 1440,
+      "h1": 1,
+      "clipped": [],
+      "title": "Assistente WhatsApp per palestre e centri fitness | Polpo AI",
+      "canonical": "https://polpo-ai.com/chatbot-whatsapp-prenotazioni-palestre"
+    }
+  ],
+  "errors": [],
+  "interactions": "FAQ keyboard, mobile route navigation, world selection and reduced motion passed"
+}

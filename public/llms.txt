@@ -16,4 +16,8 @@ Sport (padel, tennis, calcetto), beauty, ristorazione, studi professionali, hosp
 ## Contatti
 Richiedi la tua analisi gratuita: info@polpo-ai.com
 Homepage: https://polpo-ai.com
-Soluzioni: https://polpo-ai.com/#soluzioni
+Soluzioni: https://polpo-ai.com/soluzioni
+
+Settori: https://polpo-ai.com/settori
+Metodo: https://polpo-ai.com/metodo
+Contatti: https://polpo-ai.com/contatti

@@ -13,11 +13,12 @@ const worlds = [
   { id: 'hospitality', name: 'Hospitality', icon: 'hospitality', color: '#88d4ff', light: '136,212,255', title: 'L’accoglienza comincia prima dell’arrivo.', copy: 'Ospiti, richieste, soggiorno. Colleghiamo informazioni e conversazioni, per accompagnare le persone prima e durante la loro esperienza.', details: ['Ospiti', 'Richieste', 'Soggiorno'], href: '/chatbot-whatsapp-prenotazioni-hotel-bb', link: 'Esplora le soluzioni per l’hospitality', note: 'DALLA PRIMA DOMANDA. AL SOGGIORNO.' },
 ] as const;
 
-export default function WorldExplorer() {
+export default function WorldExplorer({ asPage = false }: { asPage?: boolean }) {
   const [active, setActive] = useState(0);
   const buttons = useRef<(HTMLButtonElement | null)[]>([]);
   const start = useRef<{ x: number; y: number } | null>(null);
   const world = worlds[active];
+  const Heading = asPage ? 'h1' : 'h2';
 
   function select(index: number, focus = false) {
     const next = (index + worlds.length) % worlds.length;
@@ -44,7 +45,7 @@ export default function WorldExplorer() {
   }
 
   return <section id="settori" className="world-explorer" aria-labelledby="worlds-title" style={{ '--world-color': world.color, '--world-light': world.light } as CSSProperties}>
-    <div className="world-heading"><div><p className="a-eyebrow">ESPLORA I MONDI POLPO</p><h2 id="worlds-title">Il tuo mondo.<br /><em>La nostra connessione.</em></h2></div><p>La stessa intelligenza, un ritmo diverso.<br />Scegli la tua attività e guarda cosa cambia.</p></div>
+    <div className="world-heading"><div><p className="a-eyebrow">ESPLORA I MONDI POLPO</p><Heading id="worlds-title">Il tuo mondo.<br /><em>La nostra connessione.</em></Heading></div><p>La stessa intelligenza, un ritmo diverso.<br />Scegli la tua attività e guarda cosa cambia.</p></div>
     <div className="world-tabs" role="tablist" aria-label="Scegli il tuo settore">{worlds.map((item, index) => <button key={item.id} ref={element => { buttons.current[index] = element; }} type="button" id={`world-tab-${item.id}`} role="tab" aria-selected={index === active} aria-controls={`world-panel-${item.id}`} tabIndex={index === active ? 0 : -1} onClick={() => select(index)} onKeyDown={event => navigate(event, index)}><PolpoIcon name={item.icon} /><span>{item.name}</span><i aria-hidden="true" /></button>)}</div>
     <div className="world-stage" data-world={world.id} onTouchStart={swipeStart} onTouchEnd={swipeEnd} onTouchCancel={() => { start.current = null; }}>
       <div className="world-art" aria-hidden="true"><Image src="/worlds-stage.webp" alt="" fill sizes="(max-width:760px) 150vw, 100vw" quality={85} /></div>
