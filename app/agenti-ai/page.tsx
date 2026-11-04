@@ -10,7 +10,7 @@ import WhoIsItFor from '@/components/shared/WhoIsItFor';
 export const metadata: Metadata = {
   title: 'Agenti AI e Automazione Aziendale per PMI',
   description:
-    'Agenti AI autonomi che automatizzano data-entry, email, report e workflow ripetitivi. Risparmia 20+ ore a settimana senza assumere personale extra.',
+    'Agenti AI autonomi che automatizzano data-entry, email, report e workflow ripetitivi. Individuiamo insieme le attività da semplificare e le integrazioni da verificare.',
   keywords: [
     'agenti ai',
     'automazione aziendale ai',
@@ -41,9 +41,9 @@ export const metadata: Metadata = {
 };
 
 const faqItems = [
-  { q: 'Cosa fa esattamente un Agente AI?', a: 'Un agente prende decisioni basate su dati e regole predefinite, completando azioni come l\'invio di email, l\'aggiornamento di CRM, e l\'analisi di PDF, in totale autonomia.' },
-  { q: 'È sicuro affidare dati a un AI?', a: 'Utilizziamo i più alti standard di sicurezza e crittografia. Non addestriamo modelli pubblici sui tuoi dati proprietari.' },
-  { q: 'Qual è il ROI previsto?', a: 'In media i nostri clienti vedono un risparmio di oltre 20 ore a settimana in attività manuali, scalabili senza aumentare l\'organico.' },
+  { q: 'Cosa fa esattamente un Agente AI?', a: 'Un agente prende decisioni basate su dati e regole predefinite, completando azioni come l\'invio di email, l\'aggiornamento di CRM, e l\'analisi di PDF, con regole e punti di controllo da definire insieme.' },
+  { q: 'È sicuro affidare dati a un AI?', a: 'Definiamo dati trattati, accessi, fornitori e misure di protezione prima di attivare un flusso. Le condizioni dipendono dagli strumenti scelti.' },
+  { q: 'Qual è il ROI previsto?', a: 'Il beneficio va stimato sul tuo processo e misurato dopo una prova. Non promettiamo un risparmio standard.' },
 ];
 
 export default function AgentiAIPage() {

@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 };
 
 const faqItems = [
-  { q: 'Si collega al mio Channel Manager?', a: 'Sì, se il tuo Channel Manager dispone di API pubbliche, il bot può leggere le disponibilità in tempo reale.' },
+  { q: 'Si collega al mio Channel Manager?', a: 'La fattibilità dipende dalle API, dagli accessi e dalle condizioni del Channel Manager. Va verificata prima di progettare il collegamento.' },
   { q: 'Il bot capisce lingue diverse?',     a: 'Assolutamente. Il nostro AI agent può tradurre e conversare nella lingua dell\'utente (Inglese, Tedesco, Spagnolo, etc.).' },
   { q: 'Posso gestire il Self Check-in?',    a: 'Sì, possiamo configurare il bot per inviare i codici della struttura dopo la ricezione dei documenti.' },
 ];
