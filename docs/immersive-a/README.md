@@ -1,5 +1,7 @@
 # A — Polpo immersive universe
 
+Update, 4 November 2026: A is the selected homepage direction. The sector list has been replaced by a single interactive world explorer and the homepage/shared chrome controls now use custom SVGs. Current design decision, final image prompts, asset sizes and validation are in [../worlds/README.md](../worlds/README.md). The updated homepage first-load JavaScript is 95.5 KB; earlier figures below describe the initial A delivery.
+
 Independent alternative created directly from main `8930d8bfa79941af5c87c4281c2476e79e9de0d6`, branch `feat/polpo-immersive-a`. This branch does not descend from alternative B or the previous immersive redesign.
 
 ## Art direction

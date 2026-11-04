@@ -1,5 +1,6 @@
 import './globals.css';
 import './immersive.css';
+import './world-explorer.css';
 import type { Metadata } from 'next';
 import { Inter, Plus_Jakarta_Sans, Fraunces } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
