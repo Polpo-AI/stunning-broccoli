@@ -1,0 +1,8 @@
+import { InnerHero, InnerChapters, InnerFinale, pageMetadata } from '@/components/inner/InnerPages';
+export const metadata = pageMetadata('Il metodo Polpo AI — Dal tuo lavoro al tuo sistema','Ascolto, verifica, prima soluzione e prova: come progettiamo automazioni AI intorno alla tua attività e ai tuoi strumenti.','metodo');
+export default function MetodoPage(){return <div className="inner-page"><InnerHero eyebrow="IL METODO POLPO" lead="Prima ascoltiamo." emphasis="Poi connettiamo." intro="La tecnologia viene dopo il tuo lavoro. Partiamo dalle persone, dagli strumenti e dai passaggi reali, per costruire qualcosa che abbia senso nel quotidiano." world="studio" solution trail={{label:"Metodo",href:"/metodo"}}/><InnerChapters label="DAL PRIMO RACCONTO. ALLA PRIMA PROVA." chapters={[
+ {label:'ASCOLTO',title:'Ci racconti come funziona davvero.',text:'Quali richieste arrivano, chi le segue e dove il lavoro si interrompe. Ricostruiamo il percorso insieme, senza partire da una soluzione già decisa.'},
+ {label:'VERIFICA',title:'Troviamo un punto da cui partire.',text:'Valutiamo strumenti, accessi, dati e vincoli. Individuiamo un flusso concreto da provare e rendiamo esplicito ciò che richiede una verifica.'},
+ {label:'PROGETTO',title:'Definiamo regole e responsabilità.',text:'Concordiamo cosa può fare l’automazione, quando deve fermarsi e chi gestisce le eccezioni. Ambito, tempi e condizioni vengono definiti sul progetto.'},
+ {label:'PROVA',title:'La soluzione incontra il lavoro.',text:'Mettiamo alla prova il percorso con casi concordati. Osserviamo i passaggi, correggiamo i punti deboli e valutiamo insieme se estenderlo.'}
+ ]}/><InnerFinale title="Il tuo processo, prima di tutto." emphasis="Cominciamo da lì."/></div>}

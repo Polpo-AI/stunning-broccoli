@@ -1,0 +1,11 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import PolpoIcon from '@/components/landing/PolpoIcon';
+import { InnerHero, InnerFinale, pageMetadata } from '@/components/inner/InnerPages';
+export const metadata = pageMetadata('Soluzioni di automazione AI per le PMI','Assistenti WhatsApp e automazioni dei processi: esplora le soluzioni Polpo AI, progettate intorno al tuo lavoro.','soluzioni');
+export default function SoluzioniPage(){return <div className="inner-page">
+ <InnerHero eyebrow="LE SOLUZIONI POLPO" lead="Dalla conversazione." emphasis="All’azione." intro="Richieste, appuntamenti, documenti. Due percorsi da costruire intorno al tuo lavoro, anche insieme: un assistente per le conversazioni e un filo che collega i processi." world="studio" solution/>
+ <div className="inner-solutions"><section><div className="inner-solution-art" aria-hidden="true"><Image src="/immersive-a-workflow.webp" alt="" fill sizes="100vw" quality={80}/></div><p className="a-eyebrow">01 / CONVERSAZIONI E APPUNTAMENTI</p><h2>Una risposta.{' '}<br/><em>Il prossimo passo.</em></h2><p>Un assistente WhatsApp può raccogliere richieste, dare informazioni approvate e accompagnare le persone verso un appuntamento. Definiamo regole, fonti e passaggi al team.</p><Link className="inner-editorial-link" href="/chatbot-whatsapp-prenotazioni">Esplora gli assistenti WhatsApp<PolpoIcon name="outward"/></Link></section>
+ <section><div className="inner-solution-art" aria-hidden="true"><Image src="/immersive-a-depth.webp" alt="" fill sizes="100vw" quality={80}/></div><p className="a-eyebrow">02 / DOCUMENTI, DATI E STRUMENTI</p><h2>Le attività si parlano.{' '}<br/><em>Il lavoro prosegue.</em></h2><p>Email, documenti e passaggi tra strumenti: individuiamo le attività ripetitive e valutiamo quali collegamenti costruire, con punti di controllo umani.</p><Link className="inner-editorial-link" href="/agenti-ai">Esplora l’automazione dei processi<PolpoIcon name="outward"/></Link></section></div>
+ <nav className="inner-related" aria-label="Continua a esplorare"><p className="a-eyebrow">DENTRO IL TUO LAVORO</p><Link href="/settori">Trova il tuo mondo<PolpoIcon name="outward"/></Link><Link href="/metodo">Scopri come lavoriamo<PolpoIcon name="outward"/></Link></nav><InnerFinale/>
+ </div>}
