@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 };
 
 const faqItems = [
-  { q: 'Può vendere direttamente in chat?',                  a: 'Sì, possiamo integrare link di pagamento (es. Stripe) direttamente nel flusso di conversazione.' },
+  { q: 'Può vendere direttamente in chat?',                  a: 'Un eventuale percorso di pagamento richiede una verifica del fornitore e delle regole del progetto.' },
   { q: 'Se i giorni e gli orari cambiano?',                  a: 'Ti basterà aggiornare il foglio Google o il gestionale collegato, e il bot avrà i dati sempre aggiornati.' },
   { q: 'Posso mandare messaggi motivazionali agli iscritti?', a: 'Certamente, puoi usare il bot per inviare broadcast con promozioni, eventi speciali o messaggi motivazionali ai tuoi iscritti.' },
 ];

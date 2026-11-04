@@ -157,7 +157,7 @@ export async function POST(req: NextRequest) {
                 <tr>
                   <td style="background:#f1f5f9;border-radius:0 0 16px 16px;padding:28px 40px;text-align:center;">
                     <p style="margin:0 0 8px;color:#94a3b8;font-size:13px;font-weight:600;">PolpoAI</p>
-                    <p style="margin:0 0 4px;color:#cbd5e1;font-size:12px;">Siti web, Chatbot e Agenti AI su misura</p>
+                    <p style="margin:0 0 4px;color:#cbd5e1;font-size:12px;">Assistenti AI e automazioni su misura per le PMI</p>
                     <a href="mailto:info@polpo-ai.com" style="color:#06b6d4;font-size:12px;text-decoration:none;">info@polpo-ai.com</a>
                   </td>
                 </tr>

@@ -42,9 +42,9 @@ export const metadata: Metadata = {
 };
 
 const faqItems = [
-  { q: 'Serve avere WhatsApp Business?', a: 'Sì, integriamo il chatbot tramite le API ufficiali di WhatsApp Business per garantirne stabilità e sicurezza.' },
-  { q: 'Quanto ci vuole per configurarlo?', a: 'Di solito in 7-10 giorni il tuo chatbot è pronto, testato e attivo sul tuo numero.' },
-  { q: 'Può rispondere anche sul mio sito?', a: 'Assolutamente sì. Forniamo un widget per il sito che porta gli utenti direttamente nella chat WhatsApp col tuo bot.' },
+  { q: 'Serve avere WhatsApp Business?', a: 'Per un progetto su WhatsApp valutiamo requisiti, account Business e accesso alle API ufficiali prima di proporre il flusso.' },
+  { q: 'Quanto ci vuole per configurarlo?', a: 'I tempi dipendono dal flusso, dagli strumenti e dagli accessi disponibili. Li definiamo dopo la verifica iniziale.' },
+  { q: 'Può rispondere anche sul mio sito?', a: 'Possiamo valutare un accesso alla conversazione dal tuo sito esistente, in base al percorso scelto.' },
 ];
 
 const sectors = [
