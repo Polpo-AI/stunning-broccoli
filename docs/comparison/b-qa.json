@@ -1,0 +1,139 @@
+{
+  "variant": "b",
+  "widths": [
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": [],
+      "brokenImages": []
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "clipped": [],
+      "brokenImages": []
+    },
+    {
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": [],
+      "brokenImages": []
+    },
+    {
+      "width": 1024,
+      "scrollWidth": 1024,
+      "clipped": [],
+      "brokenImages": []
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": [],
+      "brokenImages": []
+    },
+    {
+      "width": 1920,
+      "scrollWidth": 1920,
+      "clipped": [],
+      "brokenImages": []
+    }
+  ],
+  "firstFocus": {
+    "tag": "A",
+    "text": "Vai al contenuto",
+    "href": "#main-content"
+  },
+  "metadata": {
+    "title": "Polpo AI — Automazioni AI per le PMI",
+    "description": "Automazioni AI per le PMI. Polpo AI collega richieste, prenotazioni e processi intorno al tuo modo di lavorare. Richiedi la tua analisi gratuita.",
+    "canonical": "https://polpo-ai.com/",
+    "robots": "noindex, nofollow"
+  },
+  "links": [
+    {
+      "text": "Vai al contenuto",
+      "href": "#main-content"
+    },
+    {
+      "text": "polpoAI✳",
+      "href": "/"
+    },
+    {
+      "text": "Parliamone ↗",
+      "href": "#contatti"
+    },
+    {
+      "text": "Richiedi la tua analisi gratuita↗",
+      "href": "mailto:info@polpo-ai.com?subject=Analisi%20gratuita%20Polpo%20AI&body=Ciao%20Polpo%2C%20vorrei%20capire%20cosa%20possiamo%20automatizzare%20nella%20mia%20attivit%C3%A0.%0A%0AAttivit%C3%A0%3A%0AProcesso%20da%20semplificare%3A%0ARecapito%3A"
+    },
+    {
+      "text": "Assistenti WhatsApp ↗",
+      "href": "/chatbot-whatsapp-prenotazioni"
+    },
+    {
+      "text": "Automazione dei processi ↗",
+      "href": "/agenti-ai"
+    },
+    {
+      "text": "Sport e circoli",
+      "href": "/chatbot-whatsapp-prenotazioni-padel"
+    },
+    {
+      "text": "Beauty",
+      "href": "/chatbot-whatsapp-prenotazioni-centri-estetici"
+    },
+    {
+      "text": "Ristorazione",
+      "href": "/chatbot-whatsapp-prenotazioni-ristoranti"
+    },
+    {
+      "text": "Studi medici",
+      "href": "/chatbot-whatsapp-prenotazioni-studi-medici"
+    },
+    {
+      "text": "Hospitality",
+      "href": "/chatbot-whatsapp-prenotazioni-hotel-bb"
+    },
+    {
+      "text": "info@polpo-ai.com ↗",
+      "href": "mailto:info@polpo-ai.com"
+    }
+  ],
+  "routes": [
+    {
+      "route": "/",
+      "status": 200
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni",
+      "status": 200
+    },
+    {
+      "route": "/agenti-ai",
+      "status": 200
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-padel",
+      "status": 200
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-centri-estetici",
+      "status": 200
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-ristoranti",
+      "status": 200
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-studi-medici",
+      "status": 200
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-hotel-bb",
+      "status": 200
+    }
+  ],
+  "motion": [],
+  "errors": [],
+  "failures": []
+}

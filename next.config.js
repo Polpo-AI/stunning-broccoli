@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  async redirects() { return [{ source: '/creazione-siti-web', destination: '/#soluzioni', permanent: true }, { source: '/portfolio/:path*', destination: '/#soluzioni', permanent: true }]; },
   // Image optimization Next.js: serve AVIF/WebP responsive automaticamente
   // (su Vercel è incluso; su Netlify serve @netlify/plugin-nextjs già presente).
   images: {
