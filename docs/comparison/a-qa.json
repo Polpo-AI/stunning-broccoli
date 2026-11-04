@@ -1,0 +1,179 @@
+{
+  "variant": "a",
+  "widths": [
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "clipped": [],
+      "brokenImages": []
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "clipped": [],
+      "brokenImages": []
+    },
+    {
+      "width": 768,
+      "scrollWidth": 768,
+      "clipped": [],
+      "brokenImages": []
+    },
+    {
+      "width": 1024,
+      "scrollWidth": 1024,
+      "clipped": [],
+      "brokenImages": []
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "clipped": [],
+      "brokenImages": []
+    },
+    {
+      "width": 1920,
+      "scrollWidth": 1920,
+      "clipped": [],
+      "brokenImages": []
+    }
+  ],
+  "firstFocus": {
+    "tag": "A",
+    "text": "Salta al contenuto",
+    "href": "#main-content"
+  },
+  "metadata": {
+    "title": "Polpo AI — Automazioni intelligenti per le PMI",
+    "description": "Polpo AI, specialista di automazioni AI per le PMI. Assistenti intelligenti, prenotazioni e processi connessi, progettati intorno al tuo lavoro. Richiedi la tua analisi gratuita.",
+    "canonical": "https://polpo-ai.com/",
+    "robots": "noindex, nofollow"
+  },
+  "links": [
+    {
+      "text": "Salta al contenuto",
+      "href": "#main-content"
+    },
+    {
+      "text": "PolpoAI",
+      "href": "/"
+    },
+    {
+      "text": "Soluzioni",
+      "href": "/#soluzioni"
+    },
+    {
+      "text": "Il tuo mondo",
+      "href": "/#settori"
+    },
+    {
+      "text": "Come lavoriamo",
+      "href": "/#metodo"
+    },
+    {
+      "text": "Parliamone",
+      "href": "/#contatti"
+    },
+    {
+      "text": "Soluzioni",
+      "href": "/#soluzioni"
+    },
+    {
+      "text": "Il tuo mondo",
+      "href": "/#settori"
+    },
+    {
+      "text": "Come lavoriamo",
+      "href": "/#metodo"
+    },
+    {
+      "text": "Analisi gratuita",
+      "href": "/#contatti"
+    },
+    {
+      "text": "Richiedi la tua analisi gratuita",
+      "href": "mailto:info@polpo-ai.com?subject=Analisi%20gratuita%20Polpo%20AI"
+    },
+    {
+      "text": "Entra nell’universo Polpo",
+      "href": "#soluzioni"
+    },
+    {
+      "text": "Esplora gli assistenti WhatsApp",
+      "href": "/chatbot-whatsapp-prenotazioni"
+    },
+    {
+      "text": "Un’applicazione per i circoli",
+      "href": "/chatbot-whatsapp-prenotazioni-padel"
+    },
+    {
+      "text": "Esplora le automazioni AI",
+      "href": "/agenti-ai"
+    },
+    {
+      "text": "Esplora le soluzioni per i circoli",
+      "href": "/chatbot-whatsapp-prenotazioni-padel"
+    },
+    {
+      "text": "Esplora le soluzioni per il beauty",
+      "href": "/chatbot-whatsapp-prenotazioni-centri-estetici"
+    },
+    {
+      "text": "Esplora le soluzioni per la ristorazione",
+      "href": "/chatbot-whatsapp-prenotazioni-ristoranti"
+    },
+    {
+      "text": "Esplora le automazioni per lo studio",
+      "href": "/agenti-ai"
+    },
+    {
+      "text": "Esplora le soluzioni per l’hospitality",
+      "href": "/chatbot-whatsapp-prenotazioni-hotel-bb"
+    },
+    {
+      "text": "Richiedi la tua analisi gratuita",
+      "href": "mailto:info@polpo-ai.com?subject=Analisi%20gratuita%20Polpo%20AI"
+    },
+    {
+      "text": "PolpoAI",
+      "href": "/"
+    },
+    {
+      "text": "info@polpo-ai.com",
+      "href": "mailto:info@polpo-ai.com"
+    }
+  ],
+  "routes": [
+    {
+      "route": "/",
+      "status": 200
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni",
+      "status": 200
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-padel",
+      "status": 200
+    },
+    {
+      "route": "/agenti-ai",
+      "status": 200
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-centri-estetici",
+      "status": 200
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-ristoranti",
+      "status": 200
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-hotel-bb",
+      "status": 200
+    }
+  ],
+  "motion": [],
+  "errors": [],
+  "failures": []
+}

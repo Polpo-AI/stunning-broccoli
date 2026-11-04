@@ -1,0 +1,436 @@
+{
+  "layouts": [
+    {
+      "id": "sport",
+      "width": 320,
+      "scroll": 320,
+      "clipped": [],
+      "panelHeight": 277.890625,
+      "stageHeight": 785,
+      "headingHeight": 31.625,
+      "color": "#56efe2",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-sport.webp&w=256&q=85"
+    },
+    {
+      "id": "beauty",
+      "width": 320,
+      "scroll": 320,
+      "clipped": [],
+      "panelHeight": 309.515625,
+      "stageHeight": 785,
+      "headingHeight": 63.25,
+      "color": "#ff99db",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-beauty.webp&w=256&q=85"
+    },
+    {
+      "id": "restaurant",
+      "width": 320,
+      "scroll": 320,
+      "clipped": [],
+      "panelHeight": 287.421875,
+      "stageHeight": 785,
+      "headingHeight": 63.25,
+      "color": "#ffc48c",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-restaurant.webp&w=256&q=85"
+    },
+    {
+      "id": "studio",
+      "width": 320,
+      "scroll": 320,
+      "clipped": [],
+      "panelHeight": 309.515625,
+      "stageHeight": 785,
+      "headingHeight": 63.25,
+      "color": "#baabff",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-studio.webp&w=256&q=85"
+    },
+    {
+      "id": "hospitality",
+      "width": 320,
+      "scroll": 320,
+      "clipped": [],
+      "panelHeight": 341.14056396484375,
+      "stageHeight": 785,
+      "headingHeight": 94.87493896484375,
+      "color": "#88d4ff",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-hospitality.webp&w=256&q=85"
+    },
+    {
+      "id": "sport",
+      "width": 390,
+      "scroll": 390,
+      "clipped": [],
+      "panelHeight": 258.0625,
+      "stageHeight": 800,
+      "headingHeight": 33.890625,
+      "color": "#56efe2",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-sport.webp&w=256&q=85"
+    },
+    {
+      "id": "beauty",
+      "width": 390,
+      "scroll": 390,
+      "clipped": [],
+      "panelHeight": 291.95306396484375,
+      "stageHeight": 800,
+      "headingHeight": 67.78125,
+      "color": "#ff99db",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-beauty.webp&w=256&q=85"
+    },
+    {
+      "id": "restaurant",
+      "width": 390,
+      "scroll": 390,
+      "clipped": [],
+      "panelHeight": 291.953125,
+      "stageHeight": 800,
+      "headingHeight": 67.78125,
+      "color": "#ffc48c",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-restaurant.webp&w=256&q=85"
+    },
+    {
+      "id": "studio",
+      "width": 390,
+      "scroll": 390,
+      "clipped": [],
+      "panelHeight": 291.95318603515625,
+      "stageHeight": 800,
+      "headingHeight": 67.78125,
+      "color": "#baabff",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-studio.webp&w=256&q=85"
+    },
+    {
+      "id": "hospitality",
+      "width": 390,
+      "scroll": 390,
+      "clipped": [],
+      "panelHeight": 291.953125,
+      "stageHeight": 800,
+      "headingHeight": 67.78125,
+      "color": "#88d4ff",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-hospitality.webp&w=256&q=85"
+    },
+    {
+      "id": "sport",
+      "width": 700,
+      "scroll": 700,
+      "clipped": [],
+      "panelHeight": 235.96875,
+      "stageHeight": 800,
+      "headingHeight": 33.890625,
+      "color": "#56efe2",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-sport.webp&w=256&q=85"
+    },
+    {
+      "id": "beauty",
+      "width": 700,
+      "scroll": 700,
+      "clipped": [],
+      "panelHeight": 291.953125,
+      "stageHeight": 800,
+      "headingHeight": 67.78125,
+      "color": "#ff99db",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-beauty.webp&w=256&q=85"
+    },
+    {
+      "id": "restaurant",
+      "width": 700,
+      "scroll": 700,
+      "clipped": [],
+      "panelHeight": 269.859375,
+      "stageHeight": 800,
+      "headingHeight": 67.78125,
+      "color": "#ffc48c",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-restaurant.webp&w=256&q=85"
+    },
+    {
+      "id": "studio",
+      "width": 700,
+      "scroll": 700,
+      "clipped": [],
+      "panelHeight": 269.859375,
+      "stageHeight": 800,
+      "headingHeight": 67.78125,
+      "color": "#baabff",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-studio.webp&w=256&q=85"
+    },
+    {
+      "id": "hospitality",
+      "width": 700,
+      "scroll": 700,
+      "clipped": [],
+      "panelHeight": 269.859375,
+      "stageHeight": 800,
+      "headingHeight": 67.78125,
+      "color": "#88d4ff",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-hospitality.webp&w=256&q=85"
+    },
+    {
+      "id": "sport",
+      "width": 768,
+      "scroll": 768,
+      "clipped": [],
+      "panelHeight": 365.921875,
+      "stageHeight": 630,
+      "headingHeight": 65.53125,
+      "color": "#56efe2",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-sport.webp&w=375&q=85"
+    },
+    {
+      "id": "beauty",
+      "width": 768,
+      "scroll": 768,
+      "clipped": [],
+      "panelHeight": 388.671875,
+      "stageHeight": 630,
+      "headingHeight": 65.53125,
+      "color": "#ff99db",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-beauty.webp&w=375&q=85"
+    },
+    {
+      "id": "restaurant",
+      "width": 768,
+      "scroll": 768,
+      "clipped": [],
+      "panelHeight": 340.4218444824219,
+      "stageHeight": 630,
+      "headingHeight": 65.53125,
+      "color": "#ffc48c",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-restaurant.webp&w=375&q=85"
+    },
+    {
+      "id": "studio",
+      "width": 768,
+      "scroll": 768,
+      "clipped": [],
+      "panelHeight": 340.421875,
+      "stageHeight": 630,
+      "headingHeight": 65.53125,
+      "color": "#baabff",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-studio.webp&w=375&q=85"
+    },
+    {
+      "id": "hospitality",
+      "width": 768,
+      "scroll": 768,
+      "clipped": [],
+      "panelHeight": 395.9375,
+      "stageHeight": 630,
+      "headingHeight": 98.296875,
+      "color": "#88d4ff",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-hospitality.webp&w=375&q=85"
+    },
+    {
+      "id": "sport",
+      "width": 1024,
+      "scroll": 1024,
+      "clipped": [],
+      "panelHeight": 284.90625,
+      "stageHeight": 630,
+      "headingHeight": 32.765625,
+      "color": "#56efe2",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-sport.webp&w=375&q=85"
+    },
+    {
+      "id": "beauty",
+      "width": 1024,
+      "scroll": 1024,
+      "clipped": [],
+      "panelHeight": 340.4218444824219,
+      "stageHeight": 630,
+      "headingHeight": 65.53125,
+      "color": "#ff99db",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-beauty.webp&w=375&q=85"
+    },
+    {
+      "id": "restaurant",
+      "width": 1024,
+      "scroll": 1024,
+      "clipped": [],
+      "panelHeight": 317.671875,
+      "stageHeight": 630,
+      "headingHeight": 65.53125,
+      "color": "#ffc48c",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-restaurant.webp&w=375&q=85"
+    },
+    {
+      "id": "studio",
+      "width": 1024,
+      "scroll": 1024,
+      "clipped": [],
+      "panelHeight": 317.671875,
+      "stageHeight": 630,
+      "headingHeight": 65.53125,
+      "color": "#baabff",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-studio.webp&w=375&q=85"
+    },
+    {
+      "id": "hospitality",
+      "width": 1024,
+      "scroll": 1024,
+      "clipped": [],
+      "panelHeight": 317.671875,
+      "stageHeight": 630,
+      "headingHeight": 65.53125,
+      "color": "#88d4ff",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-hospitality.webp&w=375&q=85"
+    },
+    {
+      "id": "sport",
+      "width": 1440,
+      "scroll": 1440,
+      "clipped": [],
+      "panelHeight": 294.4375,
+      "stageHeight": 680,
+      "headingHeight": 42.296875,
+      "color": "#56efe2",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-sport.webp&w=375&q=85"
+    },
+    {
+      "id": "beauty",
+      "width": 1440,
+      "scroll": 1440,
+      "clipped": [],
+      "panelHeight": 336.734375,
+      "stageHeight": 680,
+      "headingHeight": 84.59375,
+      "color": "#ff99db",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-beauty.webp&w=375&q=85"
+    },
+    {
+      "id": "restaurant",
+      "width": 1440,
+      "scroll": 1440,
+      "clipped": [],
+      "panelHeight": 336.734375,
+      "stageHeight": 680,
+      "headingHeight": 84.59375,
+      "color": "#ffc48c",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-restaurant.webp&w=375&q=85"
+    },
+    {
+      "id": "studio",
+      "width": 1440,
+      "scroll": 1440,
+      "clipped": [],
+      "panelHeight": 336.734375,
+      "stageHeight": 680,
+      "headingHeight": 84.59375,
+      "color": "#baabff",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-studio.webp&w=375&q=85"
+    },
+    {
+      "id": "hospitality",
+      "width": 1440,
+      "scroll": 1440,
+      "clipped": [],
+      "panelHeight": 336.73443603515625,
+      "stageHeight": 680,
+      "headingHeight": 84.59375,
+      "color": "#88d4ff",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-hospitality.webp&w=375&q=85"
+    },
+    {
+      "id": "sport",
+      "width": 1920,
+      "scroll": 1920,
+      "clipped": [],
+      "panelHeight": 297.328125,
+      "stageHeight": 680,
+      "headingHeight": 45.1875,
+      "color": "#56efe2",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-sport.webp&w=375&q=85"
+    },
+    {
+      "id": "beauty",
+      "width": 1920,
+      "scroll": 1920,
+      "clipped": [],
+      "panelHeight": 342.515625,
+      "stageHeight": 680,
+      "headingHeight": 90.375,
+      "color": "#ff99db",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-beauty.webp&w=375&q=85"
+    },
+    {
+      "id": "restaurant",
+      "width": 1920,
+      "scroll": 1920,
+      "clipped": [],
+      "panelHeight": 342.515625,
+      "stageHeight": 680,
+      "headingHeight": 90.375,
+      "color": "#ffc48c",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-restaurant.webp&w=375&q=85"
+    },
+    {
+      "id": "studio",
+      "width": 1920,
+      "scroll": 1920,
+      "clipped": [],
+      "panelHeight": 297.328125,
+      "stageHeight": 680,
+      "headingHeight": 45.1875,
+      "color": "#baabff",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-studio.webp&w=375&q=85"
+    },
+    {
+      "id": "hospitality",
+      "width": 1920,
+      "scroll": 1920,
+      "clipped": [],
+      "panelHeight": 342.515625,
+      "stageHeight": 680,
+      "headingHeight": 90.375,
+      "color": "#88d4ff",
+      "image": "http://127.0.0.1:3111/_next/image?url=%2Fworlds-hospitality.webp&w=375&q=85"
+    }
+  ],
+  "keyboard": [
+    {
+      "key": "ArrowRight",
+      "expected": "beauty",
+      "pass": true
+    },
+    {
+      "key": "End",
+      "expected": "hospitality",
+      "pass": true
+    },
+    {
+      "key": "ArrowRight",
+      "expected": "sport",
+      "pass": true
+    },
+    {
+      "key": "ArrowLeft",
+      "expected": "hospitality",
+      "pass": true
+    },
+    {
+      "key": "Home",
+      "expected": "sport",
+      "pass": true
+    }
+  ],
+  "touch": [
+    {
+      "gesture": "swipe left",
+      "expected": "beauty",
+      "pass": true
+    },
+    {
+      "gesture": "swipe right",
+      "expected": "sport",
+      "pass": true
+    },
+    {
+      "gesture": "vertical scroll",
+      "expected": "sport unchanged",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "noJavaScript": "all five descriptions and destination links visible",
+  "reducedMotion": "no explorer animations"
+}

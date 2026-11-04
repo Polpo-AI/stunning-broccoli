@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
 const faqItems = [
   { q: 'Il bot capisce quante persone e a che ora?', a: 'Sì, il bot segue un flusso conversazionale guidato per raccogliere nome, data, orario e numero di persone.' },
-  { q: 'Si collega al mio gestionale?',               a: 'Sì, possiamo integrarlo con sistemi come TheFork, Quandoo o Google Calendar via API.' },
+  { q: 'Si collega al mio gestionale?',               a: 'Valutiamo il gestionale e le API effettivamente disponibili. Nessun collegamento è incluso senza una verifica tecnica.' },
   { q: 'Cosa succede se il cliente fa richieste strane?', a: 'In caso di domande complesse, il bot avvisa che un responsabile umano risponderà al più presto.' },
 ];
 
