@@ -21,7 +21,7 @@ const features = [
     icon: Cpu,
     color: 'violet',
     title: 'Integrazioni',
-    desc: "L'agente si connette via API ai tool che usi già (HubSpot, Stripe, Gmail, Google Sheets).",
+    desc: "Valutiamo le API degli strumenti che usi: ogni collegamento richiede una verifica di fattibilità e degli accessi.",
   },
 ];
 

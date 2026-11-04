@@ -63,7 +63,7 @@ export default function WhatsAppMockup({ messages }: WhatsAppMockupProps) {
             Assistente AI
             <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
           </h4>
-          <p className="text-xs text-white/80">Sempre online</p>
+          <p className="text-xs text-white/80">Conversazione illustrativa — non attiva</p>
         </div>
       </div>
 

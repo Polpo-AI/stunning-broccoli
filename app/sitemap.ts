@@ -5,7 +5,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const routes = [
     '',
-    '/creazione-siti-web',
     '/chatbot-whatsapp-prenotazioni',
     '/agenti-ai',
     '/chatbot-whatsapp-prenotazioni-ristoranti',
