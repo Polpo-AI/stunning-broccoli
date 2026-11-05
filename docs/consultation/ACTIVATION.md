@@ -27,13 +27,15 @@ Con autorizzazione alle prove sul solo contatto sintetico, il connettore ha crea
 
 L'adapter legge hs_legal_basis insieme al contatto e conserva qualunque valore già presente. Se manca, deve ricevere una configurazione esplicita supportata; in caso contrario si ferma prima della scrittura. Non presume consenso, non usa Not applicable e non cambia subscription marketing.
 
-La variabile server `POLPO_HUBSPOT_CONTACT_LEGAL_BASIS` resta da scegliere al lancio dopo la revisione del titolare. Sono supportati gli esatti valori portale `Legitimate interest – prospect/lead` e `Performance of a contract`, secondo la situazione effettiva. Non sono scelte giuridiche automatiche. L'assenza di configurazione impedisce l'invio pubblico. Il worker può completare una richiesta riferita a un contatto che abbia già una base valida registrata, conservandola.
+La variabile server `POLPO_HUBSPOT_CONTACT_LEGAL_BASIS` resta da scegliere al lancio dopo la revisione del titolare. Sono supportati gli esatti valori portale `Legitimate interest – prospect/lead` e `Performance of a contract`, secondo la situazione effettiva. Non sono scelte giuridiche automatiche. L'assenza di configurazione impedisce l'invio pubblico. Anche per le identità con solo telefono si usa una creazione protetta dalla chiave univoca: un conflitto riprende la ricerca, evitando upsert che possano sovrascrivere decisioni CRM non ancora indicizzate.
 
-49 test applicativi e build con lint/typecheck passati, inclusi nuova creazione con base configurata, preservazione del valore dell'operatore e blocco senza configurazione o con esenzione/consenso presunto.
+Il worker può completare una richiesta riferita a un contatto che abbia già una base valida registrata, conservandola.
+
+51 test applicativi e build con lint/typecheck passati, inclusi nuova creazione con base configurata, preservazione del valore dell'operatore e blocco senza configurazione o con esenzione/consenso presunto.
 
 ## Monitor e conservazione
 
-Workflow GitHub attivo e variabile abilitata. Test manuale di errore verificato (run 41998403107); prova di recupero avviata dopo la sincronizzazione. Prima del lancio verificare anche esecuzione automatica effettiva e ricezione degli avvisi: nell'inventario precedente non erano presenti run con evento schedule. Il servizio non ha un SLA.
+Workflow GitHub attivo e variabile abilitata. Test manuale di errore verificato (run 41998403107); recupero manuale riuscito dopo la sincronizzazione ([run 42033036162](https://github.com/Polpo-AI/stunning-broccoli/actions/runs/42033036162)). Prima del lancio verificare anche esecuzione automatica effettiva e ricezione degli avvisi: nell'inventario precedente non erano presenti run con evento schedule. Il servizio non ha un SLA.
 
 Avviso di revisione da 335 giorni; scadenza ordinaria 365 giorni. La cancellazione dall'archivio completato richiede la conferma della gestione del dato nel CRM tramite RPC operatore `polpo_consultation_retention_resolve`. Una scadenza mancata resta un allarme da risolvere, non una conservazione indefinita autorizzata. Il titolare ha confermato che gestirà richieste, avvisi, diritti e scadenze.
 
