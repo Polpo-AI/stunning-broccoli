@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "test:research": "node --test scripts/test-research.cjs",
     "test:consultation": "node --test scripts/test-consultation.cjs"
   },
   "dependencies": {
