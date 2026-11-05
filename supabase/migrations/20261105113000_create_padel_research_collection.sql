@@ -189,7 +189,15 @@ $$;
 revoke all on function public.research_delete_expired() from public, anon, authenticated;
 grant execute on function public.research_delete_expired() to service_role;
 
+-- Purge expired survey, callback, and rate-limit rows daily at 03:17 UTC.
+-- pg_cron is already enabled in the Sito Polpo AI Supabase project.
+select cron.schedule(
+  'padel-research-retention',
+  '17 3 * * *',
+  'select public.research_delete_expired();'
+);
+
 comment on schema research_private is 'Private Polpo padel market research data. Keep out of exposed Supabase API schemas.';
-comment on table research_private.survey_responses is 'Survey responses only. No direct identifiers or contact link. expires_at is 365 days; scheduled purge required.';
-comment on table research_private.survey_contacts is 'Voluntary contact choices, technically separate from survey responses. expires_at is 180 days; scheduled purge required.';
-comment on table research_private.survey_rate_limits is 'HMAC network keys for abuse prevention. expires_at is within 24 hours; scheduled purge and request cleanup apply.';
+comment on table research_private.survey_responses is 'Survey responses only. No direct identifiers or contact link. expires_at is 365 days; daily pg_cron purge is configured.';
+comment on table research_private.survey_contacts is 'Voluntary contact choices, technically separate from survey responses. expires_at is 180 days; daily pg_cron purge is configured.';
+comment on table research_private.survey_rate_limits is 'HMAC network keys for abuse prevention. expires_at is within 24 hours; daily pg_cron purge and request cleanup apply.';

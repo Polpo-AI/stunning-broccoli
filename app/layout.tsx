@@ -5,8 +5,7 @@ import './inner.css';
 import './consultation.css';
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
-import SiteTelemetry from '@/components/research/SiteTelemetry';
-
+import SiteMetrics from '@/components/landing/SiteMetrics';
 import Navbar from '@/components/landing/Navbar';
 import PageChrome from '@/components/landing/PageChrome';
 
@@ -53,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <Navbar />
         <PageChrome>{children}</PageChrome>
-        <SiteTelemetry />
+        <SiteMetrics />
       </body>
     </html>
   );

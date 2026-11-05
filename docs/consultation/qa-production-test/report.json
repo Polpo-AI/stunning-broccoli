@@ -1,0 +1,17 @@
+{
+  "live": false,
+  "base": "http://127.0.0.1:3143",
+  "layouts": [
+    320,
+    390,
+    768,
+    1440
+  ],
+  "errors": [],
+  "publicIntakeBefore": 503,
+  "reference": "3de6e607-2cc1-4b7c-b9be-58a1160a213a",
+  "email": "info+polpo-test-2982fc5b-bc87-46ab-a7f2-facfa3156e70@polpo-ai.com",
+  "syntheticPost": 202,
+  "realDataRejected": 422,
+  "crossOriginRejected": 403
+}

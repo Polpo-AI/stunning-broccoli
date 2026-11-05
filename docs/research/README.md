@@ -38,7 +38,7 @@ Prima della raccolta pubblica restano aperti:
 
 1. Informativa di ricerca approvata: titolare e contatto reali, finalità, basi giuridiche, destinatari/fornitori, eventuali trasferimenti, tempi di conservazione, cancellazione e diritti. Stabilire anche destinatari ammessi ed eventuale gestione dei minori. Non riutilizzare la bozza della mini-consulenza.
 2. Review indipendente di migrazione, RLS, endpoint, rate limit, gestione errori e viste aggregate; collaudo sul database isolato/branch.
-3. Pianificazione e verifica della cancellazione automatica e procedura per richieste individuali. La migrazione include la funzione di purge ma il job non è configurato.
+3. Applicazione della migrazione, verifica del job `padel-research-retention` in `cron.job`, ed esecuzione osservata del purge su record sintetici scaduti; definire la procedura per richieste individuali.
 4. Verifica dei log tecnici di Vercel e Supabase, WAF, retention dei log e accessi ai risultati. Le chiavi anti-abuso HMAC sono separate dalle risposte e scadono entro 24 ore.
 5. Test E2E su deploy protetto con dati sintetici, responsive e accessibilità; autorizzazione esplicita del titolare prima di configurare i gate.
 

@@ -247,6 +247,7 @@ test('SQL migration isolates tables, enables RLS, limits grants, retains data, a
   assert.match(sql, /revoke all on function public\.research_submit_response[\s\S]*from public, anon, authenticated/i);
   assert.match(sql, /interval '365 days'/);
   assert.match(sql, /interval '180 days'/);
+  assert.match(sql, /cron\.schedule\([\s\S]*'padel-research-retention'[\s\S]*'17 3 \* \* \*'[\s\S]*research_delete_expired/i);
   assert.match(sql, /having count\(distinct r\.id\) >= 5/i);
   const contactTable = sql.match(/create table research_private\.survey_contacts \(([\s\S]*?)\n\);/i)?.[1] || '';
   assert.ok(contactTable);

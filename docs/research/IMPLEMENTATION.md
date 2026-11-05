@@ -2,15 +2,15 @@
 
 ## Stato
 
-- **TESTATO LOCALMENTE PRIMA DEGLI AGGIORNAMENTI PRIVACY:** suite ricerca 16 test; suite mini-consulenza 46 test; typecheck, lint e build. Browser Chromium headless: 17 layout sui due percorsi a 320/390/768/1440 px, flussi tastiera/reduced-motion e regressione home/contatti; test attivo con API simulate per retry, risposte mantenute dopo 503, invio senza email e contatto separato. Da rieseguire dopo il nuovo gate età e la rimozione della scelta marketing.
-- **TESTATO LOCALMENTE:** migrazione applicata in un contenitore PostgreSQL 15 usa-e-getta. Verificati RLS/grant anon, accepted/duplicate/conflict, rate limit risposte e contatti, due POST concorrenti con stesso idempotency key (un record, esiti accepted e duplicate).
-- **NON VERIFICATO:** test WCAG/screen reader e dispositivi fisici; test con partecipanti; retention scheduler effettivo; nessun dato reale o fornitore esterno coinvolto nella prova E2E attiva.
+- **TESTATO LOCALMENTE:** 16 test survey e 46 mini-consulenza; typecheck, lint e build dopo le modifiche all’età e al contatto; browser Chromium headless in modalità preview e attiva simulata. Verificati i flussi a 320/390/768/1440 px, retry 503, risposte mantenute, contatto ricerca separato, assenza di invii/telemetria nella preview, 404 delle survey in produzione simulata e regressione di home/contatti.
+- **TESTATO LOCALMENTE:** migrazione applicata in un contenitore PostgreSQL 15 usa-e-getta; RLS/grant anon e service_role verificati; purge di risposte e recapiti sintetici scaduti verificato. Il job cron viene pianificato dalla migrazione. Nessun dato reale o fornitore esterno coinvolto nei test.
+- **NON VERIFICATO:** test WCAG/screen reader e dispositivi fisici; test con partecipanti; esecuzione osservata del job `pg_cron` nel progetto remoto e cancellazione dei record scaduti su remoto.
 - **IMPLEMENTATO:** POST server-side separati per risposte e recapiti; validazione server delle sette domande padel-surveys-v2, dei rami, delle selezioni esclusive, dei campi e dei limiti; tabelle private, RLS, RPC limitate al service role, idempotenza, HMAC anti-abuso, viste aggregate con celle inferiori a 5 escluse.
 - **IMPLEMENTATO:** le risposte non richiedono email. Per iniziare, l’utente conferma di avere almeno 14 anni; il flag è richiesto anche dagli endpoint e non viene conservato con la risposta. Il contatto facoltativo raccoglie solo email e richiesta di ricontatto ricerca, in tabella separata senza foreign key, ID survey o hash condiviso; il backend rifiuta richieste marketing. Nessun adapter HubSpot o invio campagne.
 - **IMPLEMENTATO:** i form mantengono le risposte dopo errori e mostrano la conferma solo dopo il salvataggio confermato.
 - **IMPLEMENTATO:** questionari e API di produzione chiusi per default. La sola pagina informativa può essere consultata anche con raccolta disabilitata e resta chiaramente marcata DRAFT. Per aprire i questionari servono contemporaneamente gate pubblico e raccolta, versione privacy approvata, progetto Supabase atteso e configurazione di conservazione verificata. Preview/dev continua a mostrare la prova senza acquisire dati se il gate è spento.
 - **IN ATTESA DI APPROVAZIONE:** informativa dedicata in PRIVACY-DRAFT.md, con ricognizione delle informative pubbliche Playtomic e MATCHi in COMPETITOR-PRIVACY-REVIEW.md. Il titolare ha confermato nome, sede e contatto anche per questa iniziativa; non è stato indicato un DPO. Restano da verificare basi giuridiche, informativa e requisiti applicabili ai partecipanti 14–17 anni, fornitori/trasferimenti, risposte di minori sotto i 14 e tempi effettivi. L’email dei recapiti non viene collegata alle risposte.
-- **NON IMPLEMENTATO:** sincronizzazione CRM, campagne, dashboard, telemetria di avvio/abbandono, gestione pubblica dei diritti, retention scheduler e flusso di cancellazione individuale basato su identità. La cancellazione automatica è prevista nella migrazione ma deve essere schedulata e verificata.
+- **NON IMPLEMENTATO:** sincronizzazione CRM, campagne, dashboard, telemetria di avvio/abbandono, gestione pubblica dei diritti e flusso di cancellazione individuale basato su identità. La migrazione pianifica il purge giornaliero via `pg_cron`; l’esecuzione e la cancellazione dei record scaduti devono ancora essere osservate prima dell’attivazione.
 - **NON VERIFICATO SU SERVIZI REMOTI:** la migrazione non è stata applicata. Il progetto remoto Sito Polpo AI è stato soltanto ispezionato in lettura. Nessun invio reale, deploy o test su Supabase remoto.
 
 ## Architettura
@@ -19,7 +19,7 @@ POST /api/research/responses accetta audience, versione, risposte, conferma di a
 
 POST /api/research/contacts è separato e richiede email, conferma di almeno 14 anni e richiesta esplicita di ricontatto sulla ricerca; marketing è rifiutato dall’API. La chiave idempotenza e il record sono distinti dalla survey. Il limite è 4 KiB. Gli endpoint controllano Origin, JSON, honeypot e rate limit per finestre di 15 minuti (massimo 8 risposte o 5 recapiti per chiave rete HMAC). Le chiavi scadono entro 24 ore. Non vengono registrati IP raw, user agent, risposte o email nei log applicativi. L’edge/hosting può mantenere i propri log tecnici.
 
-Le tabelle sono nello schema research_private, non esposto al Data API: survey_responses scade dopo 365 giorni; survey_contacts dopo 180; survey_rate_limits entro 24 ore. RLS è attiva e non ci sono policy per anon o authenticated. Accesso alle tabelle, alle RPC e alla vista aggregata concesso a service_role soltanto. La vista response_distribution omette testo libero, contatti, identificativi e conteggi inferiori a cinque. L’analista dovrà comunque evitare di dedurre dati individuali dai gruppi.
+Le tabelle sono nello schema research_private, non esposto al Data API: survey_responses scade dopo 365 giorni; survey_contacts dopo 180; survey_rate_limits entro 24 ore. La migrazione pianifica `research_delete_expired()` ogni giorno alle 03:17 UTC tramite `pg_cron`. RLS è attiva e non ci sono policy per anon o authenticated. Accesso alle tabelle, alle RPC e alla vista aggregata concesso a service_role soltanto. La vista response_distribution omette testo libero, contatti, identificativi e conteggi inferiori a cinque. L’analista dovrà comunque evitare di dedurre dati individuali dai gruppi.
 
 ## Variabili d’ambiente
 
@@ -39,7 +39,20 @@ I flag devono restare non configurati o false fino all’autorizzazione del tito
 
 ## Migrazione, collaudo e rollback
 
-La migrazione supabase/migrations/20261105113000_create_padel_research_collection.sql è versionata e destinata esclusivamente al progetto del sito. Non è stata eseguita sul remoto. Prima di applicarla: revisione SQL indipendente, branch Supabase isolato o stack locale, verifica advisory/RLS, test sintetici concorrenti, e approvazione esplicita del titolare. Non applicare mai al database prodotto Polpo Padel.
+La migrazione supabase/migrations/20261105113000_create_padel_research_collection.sql è versionata e destinata esclusivamente al progetto del sito. Crea il job `padel-research-retention` alle 03:17 UTC ogni giorno. Applicarla solo al progetto `llbqoyucmvuijfobzryj`, mai al database prodotto Polpo Padel. Dopo l’applicazione verificare `cron.job` e osservare una cancellazione sintetica prima di impostare il flag di retention verificata.
+
+### Gestione manuale dei ricontatti
+
+Non esiste dashboard, notifica email o sincronizzazione CRM per le richieste di ricontatto. Una persona autorizzata può controllare i recapiti attivi dal SQL Editor del progetto Supabase del sito:
+
+```sql
+select id, email, acquired_at, expires_at
+from research_private.survey_contacts
+where research_contact = true and expires_at > now()
+order by acquired_at;
+```
+
+Usare l’indirizzo solo per l’approfondimento di ricerca richiesto. Se la persona chiede di non essere ricontattata, eliminare il record identificato tramite `id` dalla stessa tabella. Le risposte della survey non sono collegate a questi recapiti.
 
 Rollback: disabilitare prima RESEARCH_PUBLIC_ENABLED e RESEARCH_COLLECTION_ENABLED; verificare che i percorsi di produzione tornino 404 e i POST 503; esportare solo eventuali dati da conservare secondo decisione del titolare; quindi una migrazione di rollback approvata può rimuovere viste, funzioni, tabelle e schema. Non cancellare dati del progetto operativo o della mini-consulenza.
 

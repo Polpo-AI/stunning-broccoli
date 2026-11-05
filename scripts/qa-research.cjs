@@ -7,7 +7,7 @@ const out = path.resolve('docs/research/qa');
 const report = { layouts: [], flows: [], errors: [], writes: [], telemetry: [] };
 (async () => {
   fs.mkdirSync(out, { recursive: true });
-  const browser = await chromium.launch({ ...(process.env.PLAYWRIGHT_CHANNEL ? { channel: process.env.PLAYWRIGHT_CHANNEL } : {}), headless: true });
+  const browser = await chromium.launch({ ...(process.env.PLAYWRIGHT_EXECUTABLE_PATH ? { executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH } : {}), ...(process.env.PLAYWRIGHT_CHANNEL ? { channel: process.env.PLAYWRIGHT_CHANNEL } : {}), headless: true });
   const context = await browser.newContext({ reducedMotion: 'reduce' });
   const page = await context.newPage();
   page.on('pageerror', error => report.errors.push(error.message));
@@ -81,7 +81,7 @@ const report = { layouts: [], flows: [], errors: [], writes: [], telemetry: [] }
   await choose('aiActions', 'confirm_invite'); await click('Rivedi la prova');
   await click('Prosegui senza invio →');
   assert.equal(await page.locator('input[type=email]:disabled').count(), 1);
-  assert.equal(await page.locator('input[type=checkbox]:disabled').count(), 2);
+  assert.equal(await page.locator('input[type=checkbox]:disabled').count(), 1);
   await click('Termina la prova');
   assert.ok(await page.getByRole('heading', { name: /Grazie per la prova/ }).isVisible());
   report.flows.push('Players: friends-only, Playtomic booking, exclusive AI choices, change to open group, review, disabled separate contact, finish');

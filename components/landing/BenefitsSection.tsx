@@ -91,11 +91,12 @@ export default function BenefitsSection() {
                 variants={itemVariants}
                 className={[
                   'relative p-7 rounded-2xl border border-white/[0.10] group overflow-hidden',
-                  'transition-all duration-400 ease-[cubic-bezier(0.23,1,0.32,1)]',
+                  'transition-all duration-400',
                   b.cardHover,
                   'hover:-translate-y-1.5',
                 ].join(' ')}
                 style={{
+                  transitionTimingFunction: 'cubic-bezier(0.23,1,0.32,1)',
                   background:
                     'linear-gradient(160deg, rgba(20,28,55,0.92) 0%, rgba(14,21,46,0.96) 50%, rgba(11,17,40,0.98) 100%)',
                   backdropFilter: 'blur(20px) saturate(1.4)',
