@@ -1,0 +1,29 @@
+name: Consultation delivery monitor
+on:
+  schedule:
+    - cron: '2-59/5 * * * *'
+  workflow_dispatch:
+    inputs:
+      simulate_failure:
+        description: Test the alert path without changing requests
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: consultation-monitor
+  cancel-in-progress: false
+jobs:
+  monitor:
+    if: ${{ vars.POLPO_CONSULTATION_MONITOR_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Check private health summary
+        env:
+          POLPO_CONSULTATION_MONITOR_SECRET: ${{ secrets.POLPO_CONSULTATION_MONITOR_SECRET }}
+          POLPO_MONITOR_SIMULATE_FAILURE: ${{ inputs.simulate_failure }}
+        run: node scripts/consultation-monitor.cjs
