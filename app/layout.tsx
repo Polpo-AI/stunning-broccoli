@@ -26,8 +26,8 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://polpo-ai.com' },
   ...(process.env.NEXT_PUBLIC_GSC_VERIFICATION ? { verification: { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION } } : {}),
   icons: {
-    icon: [{ url: '/icon', sizes: '192x192', type: 'image/png' }],
-    apple: [{ url: '/apple-icon', sizes: '180x180', type: 'image/png' }],
+    icon: [{ url: '/icon.png', sizes: '192x192', type: 'image/png' }],
+    apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
   },
   openGraph: {
     title: 'La tua attività ha mille cose da fare. Noi le facciamo lavorare insieme.',
