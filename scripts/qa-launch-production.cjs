@@ -48,6 +48,7 @@ if(live){
  const wait=page.waitForResponse(r=>r.url().endsWith('/api/consultation')&&r.request().method()==='POST');await page.getByRole('button',{name:'Invia la richiesta di analisi',exact:true}).click();const sent=await wait;assert.equal(sent.status(),202,await sent.text());const receipt=await sent.json();fixture.consultation={reference:receipt.reference,email,body:sent.request().postDataJSON()};assert.equal(fixture.consultation.body.marketingOptIn,false);await page.locator('.cw-receipt').waitFor();await page.screenshot({path:out+'/consultation-receipt.png',fullPage:true});report.consultation={reference:receipt.reference,status:202};
  const retry=await context.request.post(base+'/api/consultation',{data:fixture.consultation.body,headers:{Origin:base}});assert.equal(retry.status(),202);assert.equal((await retry.json()).reference,receipt.reference);
  assert.equal((await context.request.post(base+'/api/contact',{data:{}})).status(),410);
+ assert.equal((await context.request.get(base+'/api/internal/consultation-delivery-evidence')).status(),401);
  assert.equal((await context.request.get(base+'/contatti/prova')).status(),404);
  fs.writeFileSync(file,JSON.stringify(fixture,null,2),{mode:0o600});
 }

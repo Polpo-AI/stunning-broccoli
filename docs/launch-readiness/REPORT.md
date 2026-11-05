@@ -20,6 +20,8 @@ Il commit d40035a e il branch chore/launch-readiness-privacy non erano nel repos
 
 ## Verifiche locali
 
+Browser locale attivo: retry 503 con risposte conservate, idempotenza frontend, invio senza recapito, recapito separato e nessun overflow a 320/390/768/1440 px.
+
 18 test survey e 54 test mini-consulenza passati; lint, typecheck e build passati. Nessuna dipendenza applicativa aggiunta. Restano avvisi build preesistenti: utility easing Tailwind ambigua e route Edge non prerenderizzabile.
 
 PostgreSQL 15 isolato: migrazione applicata; test SQL con rollback verifica acquisizione, retry, fasce di età nelle prove, scadenze a 90 giorni/24 mesi, revoca di risposte e contatti, prova minima conservata, blocco reinvio dopo revoca, pulizia prove scadute e accesso anonimo negato.
