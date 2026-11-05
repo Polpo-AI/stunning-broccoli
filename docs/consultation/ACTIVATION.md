@@ -1,53 +1,50 @@
-# Attivazione mini-consulenza — stato verificato il 5 novembre 2026
+# Mini-consulenza — stato operativo del 5 novembre 2026
 
-## Stato attuale
+**Invio pubblico disabilitato. Privacy ancora draft.** Il titolare ha rimandato la scelta del piano hosting al lancio. Non aprire il modulo finché i prerequisiti finali non sono completati.
 
-**Invio pubblico disabilitato. Servizio completo non ancora verificato.** Lo scheduler è attivo, ma il test CRM ha fallito. La correzione è nella [PR #23](https://github.com/Polpo-AI/stunning-broccoli/pull/23), in attesa della recensione obbligatoria: il titolare ha scelto di attenderla. Non usare merge amministratore né pubblicare questa correzione prima della recensione.
+## Configurato e verificato
 
-| Componente | Evidenza e limite |
-| --- | --- |
-| Supabase sito | llbqoyucmvuijfobzryj, eu-west-1; URL configurato verificato; nessun collegamento al progetto Padel. |
-| Archivio e accessi | Migrazioni 20261105003702 e 20261105004824 applicate; RLS e RPC riservate al server. Prova atomica acquire/idempotenza/claim/checkpoint/release riuscita con rollback. |
-| Credenziali runtime | Chiavi server inserite dal titolare come Sensitive in Preview e Production; non esportate. Accesso database, account HubSpot e dominio email verificati dal server. |
-| HubSpot | Account 149703632 verificato; 21 proprietà compatibili, inclusi polpo_contact_key unico e telefono in polpo_strumenti. Setup POST disabilitato dopo provisioning. |
-| Automazioni CRM | Il titolare ha disattivato l'associazione/creazione automatica aziende e confermato nessun workflow attivo. Il codice non crea aziende, trattative o iscrizioni marketing. |
-| Scheduler | Supabase pg_cron ogni minuto, pg_net e segreto Vault. enabled=true dopo approvazione esplicita “test e poi servizio operativo”. Heartbeat e chiamata HTTP osservati. Le chiamate recenti rispondono 503: non attestare SCHEDULER_VERIFIED. |
-| Email | Resend ha accettato una sola notifica; ricezione a info@polpo-ai.com confermata dal titolare. Nessuna notifica al recapito del contatto sintetico. |
-| Modulo pubblico | HTTP 503; privacy ancora draft, rilascio ed ENABLED false; analytics del percorso disabilitati. Preview non consegna al CRM. |
-| Monitor esterno | GitHub Actions, segreto dedicato in sola lettura, cadenza circa cinque minuti; esecuzione sana 41953522351 riuscita e allarme reale 41954821821 con DELIVERY_FAILED verificato. Non è un SLA. Ricezione delle notifiche GitHub e recupero ancora da attestare. |
+- Supabase sito `llbqoyucmvuijfobzryj`, eu-west-1; nessun utilizzo del progetto Padel. Migrazioni originali `20261105003702`, `20261105004824` e operativa `20261105084525` applicate. RLS e funzioni riservate al server; gli INFO RLS senza policy sono intenzionali per impedire accesso client.
+- HubSpot account `149703632`, schema di 21 proprietà verificato, chiave identità univoca e opzione telefono configurate. Il titolare ha verificato automazioni disattivate. Setup schema ora disabilitato.
+- Scheduler Supabase autorizzato ogni minuto. Heartbeat e risposte HTTP 200 effettive osservati. La health ora distingue esito HTTP/timeout da semplice heartbeat.
+- Email sintetica ricevuta a info@polpo-ai.com, un solo invio. La ripresa del CRM non ha reinviato la notifica.
+- Invio HTTP pubblico 503; worker senza credenziale 401. Nessuna modifica ai gate per forzare l'apertura.
 
-## Prova sintetica e problema da risolvere
+## Causa CRM individuata e prova riuscita
 
-Richiesta `0fa68b8d-397c-4770-bda1-941274000cf4`, acquisita il 5 novembre 2026 alle 03:13:56 Europe/Rome. Esiste una sola richiesta con il marcatore di test. Il vero scheduler ha avviato la consegna:
+Il payload conteneva già email e nome. Il connettore HubSpot ha identificato una regola aggiuntiva di creazione: **hs_legal_basis obbligatoria**. Non era visibile nel controllo del modulo e la risposta runtime restituiva soltanto VALIDATION_ERROR. Nessuna impostazione del portale è stata rimossa per aggirarla.
 
-- CRM: failed, un tentativo, codice HUBSPOT_HTTP_400, nessun contact ID registrato. Causa specifica ancora da determinare; non assumere che dipenda dal dominio email sintetico.
-- Email: sent, un tentativo, ricezione confermata. Il recupero deve preservare questo esito senza reinviare.
-- Controllo worker: successive esecuzioni 503 worker_unavailable anche senza nuove richieste. La PR #23 gestisce le risposte vuote di successo PostgREST e aggiunge esclusivamente codici HubSpot di validazione riconosciuti, senza dati personali.
+Con autorizzazione alle prove sul solo contatto sintetico, il connettore ha creato il contatto con base `Legitimate interest - other`, per il test interno senza dati cliente reali. Il worker ha poi sincronizzato la richiesta originale sul contatto esistente:
 
-PR #23: 42 test passati, build di produzione con lint/typecheck passata, Vercel Preview riuscita. Merge e pubblicazione sospesi per recensione richiesta. Nessuna modifica delle regole GitHub.
+- Richiesta `0fa68b8d-397c-4770-bda1-941274000cf4`: CRM synced, errore nullo, notification sent, un tentativo email; nessuna azienda associata dal worker.
+- [Contatto sintetico](https://app.hubspot.com/contacts/149703632/record/0-1/913479597264?utm_source=app_12360546_mcp&utm_medium=ai_agent&utm_campaign=fetch): settore sport, prodotto automazioni_ai, problema principale messaggi, problemi messages, strumento whatsapp, origine analisi_gratuita, opt-in richiesta false, associazione manual_review, versione privacy esplicitamente sintetica.
+- Ricerca sul solo recapito sintetico: zero risultati per marketing=true e zero per trattative associate >0. I valori vuoti non sono dichiarati come false numerico.
+- Idempotenza RPC: accepted, duplicate=true, stesso riferimento. Nessuna seconda richiesta creata.
 
-Il test remoto copre acquisizione RPC → scheduler reale → worker → provider. Non è una prova completa di invio dal browser; il blocco HTTP pubblico è verificato separatamente. Prima di dichiarare E2E riuscito servono readback del contatto, assenza effetti indesiderati, prova duplicati e recupero.
+**Limite della prova:** la creazione minima è avvenuta tramite connettore, l'aggiornamento completo tramite worker reale. Non è ancora una prova browser → nuova creazione CRM tramite worker. Non impostare E2E_VERIFIED sulla sola base di questa prova.
 
-## Azioni dopo la recensione
+## Correzione della creazione nel sito
 
-1. Pubblicare la correzione approvata, verificare commit effettivamente in produzione e HTTP 200 dello scheduler a coda vuota.
-2. Riprendere solo il canale CRM della richiesta sintetica con la RPC redrive autorizzata; conservare l'email già inviata. Leggere il codice di validazione e correggere la causa accertata. Se occorre cambiare la fixture, registrare la modifica esplicita e mantenerla soltanto sintetica.
-3. Leggere il contatto HubSpot: cinque classificazioni italiane, tutte le risposte, problema principale, ID richiesta, evidenza privacy marcata sintetica, marketing false. Verificare associazioni e nessuna nuova trattativa/azienda. Rilevazione del 5 novembre dopo il tentativo fallito: zero trattative e una sola azienda preesistente, [HubSpot](https://app.hubspot.com/contacts/149703632/record/0-2/461593454818?utm_source=app_12360546_mcp&utm_medium=ai_agent&utm_campaign=search), creata il 4 novembre. Questa rilevazione non sostituisce la verifica dopo una consegna riuscita.
-4. L’allarme reale è verificato nella [run 41954821821](https://github.com/Polpo-AI/stunning-broccoli/actions/runs/41954821821); verificare ora recupero, ricezione notifica GitHub e destinatario responsabile. Il monitor attuale rileva heartbeat, failed, backlog, lease e retention; non distingue ancora heartbeat recente da HTTP worker 503 con archivio senza errori. Colmare o coprire questa lacuna prima di MONITORING_VERIFIED.
-5. Approvare informativa e procedura privacy descritte sotto; eseguire le prove ancora mancanti. Soltanto dopo aggiornare le attestazioni supportate da evidenze e valutare il rilascio pubblico.
+L'adapter legge hs_legal_basis insieme al contatto e conserva qualunque valore già presente. Se manca, deve ricevere una configurazione esplicita supportata; in caso contrario si ferma prima della scrittura. Non presume consenso, non usa Not applicable e non cambia subscription marketing.
 
-## Privacy e gestione operativa
+La variabile server `POLPO_HUBSPOT_CONTACT_LEGAL_BASIS` resta da scegliere al lancio dopo la revisione del titolare. Sono supportati gli esatti valori portale `Legitimate interest – prospect/lead` e `Performance of a contract`, secondo la situazione effettiva. Non sono scelte giuridiche automatiche. L'assenza di configurazione impedisce l'invio pubblico. Il worker può completare una richiesta riferita a un contatto che abbia già una base valida registrata, conservandola.
 
-Dati confermati: Polpo AI, via Madrid 38, Aprilia (LT), info@polpo-ai.com; durata ordinaria 365 giorni; sola consulenza, nessun marketing. Testo pronto per revisione in [PRIVACY-REVIEW.md](PRIVACY-REVIEW.md), non ancora approvato/pubblicato.
+49 test applicativi e build con lint/typecheck passati, inclusi nuova creazione con base configurata, preservazione del valore dell'operatore e blocco senza configurazione o con esenzione/consenso presunto.
 
-Restano da verificare contratti e trasferimenti dei fornitori, durata effettiva log/backup, procedura diritti e cancellazione coordinata Supabase/HubSpot. La maintenance elimina dal database le richieste completate oltre la retention; non elimina automaticamente contatti HubSpot. Le irrisolte scadute richiedono revisione e chiusura, senza rinnovo indefinito. Definire un responsabile e controlli periodici anche per il CRM. Prima della pubblicazione allineare versione del documento e attestazione ambiente. Non sostituire questi controlli con flag true.
+## Monitor e conservazione
 
-## Sicurezza e manutenzione
+Workflow GitHub attivo e variabile abilitata. Test manuale di errore verificato (run 41998403107); prova di recupero avviata dopo la sincronizzazione. Prima del lancio verificare anche esecuzione automatica effettiva e ricezione degli avvisi: nell'inventario precedente non erano presenti run con evento schedule. Il servizio non ha un SLA.
 
-Next 15.5.29, font inclusi nel progetto, vecchio endpoint email pubblico ritirato con 410. Audit registrato: zero vulnerabilità critiche/alte e otto moderate nella catena strumenti; pianificare gli aggiornamenti senza audit fix --force. Aggiornare Next prima del termine della Maintenance LTS indicato dalle fonti già verificate, 31 gennaio 2027.
+Avviso di revisione da 335 giorni; scadenza ordinaria 365 giorni. La cancellazione dall'archivio completato richiede la conferma della gestione del dato nel CRM tramite RPC operatore `polpo_consultation_retention_resolve`. Una scadenza mancata resta un allarme da risolvere, non una conservazione indefinita autorizzata. Il titolare ha confermato che gestirà richieste, avvisi, diritti e scadenze.
 
-Le chiavi schema di scrittura erano necessarie solo al provisioning: rimuovere lo scope non più necessario dopo aver verificato che lettura schema/identità e scrittura contatti restino funzionanti. Conservare separati segreti worker e monitor; non stamparli nei log.
+Prima di eliminare un contatto esistente, verificare eventuali rapporti distinti e associazioni; documentare nel registro riservato l'eventuale conservazione per diversa finalità, senza dati personali nel repository. I ripristini devono riapplicare le cancellazioni. Backup e ciclo log effettivi del piano devono essere verificati prima dell'apertura.
 
-## Pulizia separata
+## Prerequisiti finali
 
-Un tentativo CLI precedente ha creato per errore il progetto Vercel separato consultation-resend-check. È stato sospeso, il sito principale non è stato modificato da quel tentativo. La cancellazione richiede conferma del titolare nel [pannello Vercel](https://vercel.com/polpo-ai-projects/consultation-resend-check/settings/general#delete-project). Non riattivarlo.
+1. Piano Vercel adatto e accordo dati applicabile: team verificato Hobby; scelta rimandata dal titolare al lancio. Nessun acquisto effettuato.
+2. Revisione del titolare della base giuridica CRM e dell'informativa; versione documento e codice allineati. Testo ancora draft.
+3. Configurazione esplicita del valore legale verificato nel portale; preflight deve confermare l'opzione.
+4. Ricezione avvisi ed esecuzione automatica del monitor, prova completa di nuova acquisizione/creazione tramite il sito, inclusi recuperi e duplicati.
+5. Solo dopo evidenze complete: aggiornare le attestazioni e aprire l'invio con verifica immediata. Nessun marketing al primo avvio.
+
+Fonti: [HubSpot basi giuridiche](https://knowledge.hubspot.com/contacts/how-can-i-track-lawful-basis-of-processing-in-hubspot), [EDPB trattamento lecito](https://www.edpb.europa.eu/sme/be-compliant/process-personal-data-lawfully_en), [Vercel Hobby](https://vercel.com/docs/plans/hobby), [Vercel DPA](https://vercel.com/legal/dpa).

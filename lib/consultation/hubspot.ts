@@ -1,3 +1,4 @@
+import {supportedContactLegalBasis} from './legal-basis';
 import {sectorValues,problemValues,toolValues,commercialProperties} from './crm-mapping';
 import type { ServerConfig } from './server-config';
 import { DeliveryError, type Job } from './store';
@@ -5,7 +6,7 @@ import { DeliveryError, type Job } from './store';
 type CRMRecord={id:string;properties:Record<string,string|null>;associations?:{companies?:{results:{id:string}[]}}};
 const personalDomains=new Set(['gmail.com','googlemail.com','outlook.com','hotmail.com','hotmail.it','live.com','live.it','msn.com','yahoo.com','yahoo.it','icloud.com','me.com','mac.com','libero.it','virgilio.it','alice.it','tin.it','tiscali.it','aol.com','proton.me','protonmail.com','gmx.com','mail.com']);
 export class HubSpotClient{
- constructor(private config:Pick<ServerConfig,'hubspotToken'|'hubspotPortalId'|'companyDomains'>,private fetcher:typeof fetch=fetch){}
+ constructor(private config:Pick<ServerConfig,'hubspotToken'|'hubspotPortalId'|'companyDomains'|'hubspotLegalBasis'>,private fetcher:typeof fetch=fetch){}
  async call<T>(path:string,method='GET',body?:unknown):Promise<T>{
   let res:Response;
   try{res=await this.fetcher(`https://api.hubapi.com${path}`,{method,headers:{Authorization:`Bearer ${this.config.hubspotToken}`,'Content-Type':'application/json'},...(body===undefined?{}:{body:JSON.stringify(body)}),signal:AbortSignal.timeout(4500),cache:'no-store'});}catch{throw new DeliveryError('HUBSPOT_TIMEOUT',true);}
@@ -22,7 +23,7 @@ export class HubSpotClient{
   const {contact}=job.payload;const base='/crm/objects/2026-09';
   let existing:CRMRecord|undefined;
   {
-   const found=await this.call<{results:CRMRecord[]}>(`${base}/contacts/search`,'POST',{filterGroups:[{filters:[{propertyName:contact.email?'email':'polpo_contact_key',operator:'EQ',value:contact.email||job.contact_key}]}],properties:['firstname','phone','company','polpo_received_at','polpo_request_id',...commercialProperties],limit:2});
+   const found=await this.call<{results:CRMRecord[]}>(`${base}/contacts/search`,'POST',{filterGroups:[{filters:[{propertyName:contact.email?'email':'polpo_contact_key',operator:'EQ',value:contact.email||job.contact_key}]}],properties:['firstname','phone','company','hs_legal_basis','polpo_received_at','polpo_request_id',...commercialProperties],limit:2});
    if(!Array.isArray(found.results))throw new DeliveryError('HUBSPOT_INVALID_RESPONSE',true);
    if(found.results.length>1)throw new DeliveryError('CONTACT_AMBIGUOUS',false);
    existing=found.results[0];
@@ -43,6 +44,7 @@ export class HubSpotClient{
   let id=existing?.id;
   const previous=existing?.properties.polpo_received_at||'';const previousTime=Number(previous)||Date.parse(previous);
   if(existing&&(previousTime>Number(received)||(previousTime===Number(received)&&(existing.properties.polpo_request_id||'')>job.id)))return {contactId:existing.id,companyId:null};
+  if(!existing?.properties.hs_legal_basis){if(!supportedContactLegalBasis(this.config.hubspotLegalBasis))throw new DeliveryError('HUBSPOT_LEGAL_BASIS_UNCONFIGURED',false);props.hs_legal_basis=this.config.hubspotLegalBasis;}
   if(id){await this.call(`${base}/contacts/${encodeURIComponent(id)}`,'PATCH',{properties:props});}
   else if(contact.email){
    // A create conflict is retried after search catches up. Unlike an email
