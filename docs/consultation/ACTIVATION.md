@@ -45,3 +45,8 @@ La creazione di legacy private app non è più il percorso corrente: usare Servi
 La UI del browser non si è avviata: non è stato possibile configurare credenziali tramite pannelli. Un tentativo CLI env run ha creato il progetto separato consultation-resend-check invece di eseguire il controllo; è stato immediatamente sospeso. Il progetto principale è rimasto sul deployment 3f420f9 durante l’incidente. La cancellazione del progetto di prova richiede conferma nel pannello Vercel. Nessuna ricezione email è dichiarata verificata.
 
 Fonti: [Supabase scheduling](https://supabase.com/docs/guides/functions/schedule-functions), [Service Keys HubSpot](https://developers.hubspot.com/changelog/legacy-private-app-creation-sunset), [Next support](https://nextjs.org/support-policy).
+
+
+## Verifica server con chiavi Sensitive
+
+Le chiavi Supabase e HubSpot sono state inserite dal titolare per Preview e Production; non sono state lette né esportate. Il controllo health live ha confermato accesso al database con la chiave server. La route riservata consultation-preflight verifica account/schema, storage e dominio Resend senza esporre chiavi o dati cliente. Il POST configura esclusivamente il manifest approvato: autenticazione worker, due attestazioni dedicate e scadenza entro due ore sono obbligatorie. Nessun payload arbitrario o scrittura contatti. Disabilitare il setup e ridistribuire dopo il provisioning.
