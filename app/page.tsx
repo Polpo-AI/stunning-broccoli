@@ -30,7 +30,7 @@ export default function Home() {
       <div className="hero-wake" aria-hidden="true" />
       <div className="a-hero-copy">
         <p className="a-eyebrow"><span />AUTOMAZIONI AI SU MISURA PER LE IMPRESE</p>
-        <h1 id="hero-title"><span className="hero-opening">Otto braccia.</span>{' '}<span className="a-answer">Una sola missione:{' '}<em>liberare le tue.</em></span></h1>
+        <h1 id="hero-title">Otto braccia. Una sola missione: <em>liberare le tue.</em></h1>
         <p className="a-lead">{description}</p>
         <Link className="a-button" href="/contatti">Richiedi la tua analisi gratuita <PolpoIcon name="outward" /></Link>
         <a className="a-text-link" href="#soluzioni">Scopri cosa possiamo automatizzare <PolpoIcon name="down" /></a>
