@@ -1,3 +1,5 @@
+> Documento storico del 5 novembre. Per lo stato corrente vedere `docs/launch-readiness/REPORT.md`, l’informativa `/ricerca/informativa` e [consultazione risultati](RESULTS.md). Le approvazioni privacy successive sono registrate nel report.
+
 # Sistema minimo di raccolta survey
 
 ## Stato
@@ -39,7 +41,7 @@ I flag devono restare non configurati o false fino all’autorizzazione del tito
 
 ## Migrazione, collaudo e rollback
 
-La migrazione supabase/migrations/20261105113000_create_padel_research_collection.sql è versionata e destinata esclusivamente al progetto del sito. È stata applicata al progetto `llbqoyucmvuijfobzryj`, mai al database prodotto Polpo Padel. Il job `padel-research-retention` è attivo alle 03:17 UTC ogni giorno; la prima esecuzione remota e la cancellazione dei record scaduti non sono ancora state osservate. Non impostare il flag di retention verificata finché questa prova non è stata completata in un ambiente isolato.
+La migrazione supabase/migrations/20261105141357_create_padel_research_collection.sql è versionata e destinata esclusivamente al progetto del sito. È stata applicata al progetto `llbqoyucmvuijfobzryj`, mai al database prodotto Polpo Padel. Il job `padel-research-retention` è attivo alle 03:17 UTC ogni giorno; la prima esecuzione remota e la cancellazione dei record scaduti non sono ancora state osservate. Non impostare il flag di retention verificata finché questa prova non è stata completata in un ambiente isolato.
 
 ### Gestione manuale dei ricontatti
 

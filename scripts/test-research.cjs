@@ -137,9 +137,9 @@ test('production collection gate requires project, secrets, privacy and retentio
     RESEARCH_COLLECTION_ENABLED: 'true', RESEARCH_PUBLIC_ENABLED: 'true',
     RESEARCH_PRIVACY_APPROVED_VERSION: 'padel-research-privacy-v1', RESEARCH_RETENTION_JOB_VERIFIED: 'true',
   };
-  assert.equal(serverConfig.readResearchConfig(approved).enabled, false);
+  assert.equal(serverConfig.readResearchConfig(approved).enabled, true);
   assert.equal(serverConfig.readResearchConfig({ ...approved, RESEARCH_LOCAL_ACTIVE_PREVIEW: '1', NODE_ENV: 'development' }).enabled, true);
-  assert.equal(serverConfig.readResearchConfig({ ...approved, RESEARCH_LOCAL_ACTIVE_PREVIEW: '1', NODE_ENV: 'production' }).enabled, false);
+  assert.equal(serverConfig.readResearchConfig({ ...approved, RESEARCH_LOCAL_ACTIVE_PREVIEW: '1', NODE_ENV: 'production' }).enabled, true);
   assert.equal(serverConfig.readResearchConfig({ ...approved, RESEARCH_LOCAL_ACTIVE_PREVIEW: '1', NODE_ENV: 'development', RESEARCH_ALLOWED_ORIGINS: 'https://polpo-ai.com' }).enabled, false);
   assert.equal(serverConfig.readResearchConfig({ ...approved, RESEARCH_SUPABASE_PROJECT_REF: 'polpo-padel-operational' }).enabled, false);
   assert.equal(serverConfig.readResearchConfig({ ...approved, RESEARCH_LOCAL_ACTIVE_PREVIEW: '1', POLPO_PADEL_PROJECT_REF: 'llbqoyucmvuijfobzryj' }).enabled, false);
@@ -152,7 +152,7 @@ test('response API stores seven answers without contact and confirms only after 
     response: async payload => { saved.push(payload); return { code: 'accepted', response_id: '11111111-1111-4111-8111-111111111111' }; },
     contact: async () => { throw new Error('unexpected contact write'); },
   });
-  const body = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), ageConfirmed: true, idempotencyKey: idempotencyKey(), website: '' };
+  const body = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), ageConfirmed: true, ageBand: '18_plus', consentAccepted: true, privacyVersion: 'padel-research-privacy-v1', idempotencyKey: idempotencyKey(), website: '' };
   const response = await service.response(request('https://polpo-ai.com/api/research/responses', body));
   assert.equal(response.status, 202);
   assert.equal((await response.json()).status, 'saved');
@@ -165,7 +165,7 @@ test('response API stores seven answers without contact and confirms only after 
 test('response API rejects origin, body, version, extra fields, incomplete and invalid branches', async () => {
   let calls = 0;
   const service = intake.createResearchIntake(fakeConfig, { response: async () => { calls++; return {}; }, contact: async () => ({}) });
-  const base = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), ageConfirmed: true, idempotencyKey: idempotencyKey(), website: '' };
+  const base = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), ageConfirmed: true, ageBand: '18_plus', consentAccepted: true, privacyVersion: 'padel-research-privacy-v1', idempotencyKey: idempotencyKey(), website: '' };
   assert.equal((await service.response(request('', base, { headers: { Origin: 'https://evil.example' } }))).status, 403);
   assert.equal((await service.response(request('', { ...base, extra: 1 }))).status, 422);
   assert.equal((await service.response(request('', { ...base, surveyVersion: 'padel-surveys-v1' }))).status, 422);
@@ -182,7 +182,7 @@ test('disabled backend never calls storage; storage errors do not report success
   const disabled = intake.createResearchIntake({ ...fakeConfig, enabled: false }, { response: async () => { calls++; return {}; }, contact: async () => ({}) });
   assert.equal((await disabled.response(request('', {}))).status, 503);
   const broken = intake.createResearchIntake(fakeConfig, { response: async () => { throw new Error('synthetic db failure with private payload'); }, contact: async () => ({}) });
-  const body = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), ageConfirmed: true, idempotencyKey: idempotencyKey(), website: '' };
+  const body = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), ageConfirmed: true, ageBand: '18_plus', consentAccepted: true, privacyVersion: 'padel-research-privacy-v1', idempotencyKey: idempotencyKey(), website: '' };
   const result = await broken.response(request('', body));
   assert.equal(result.status, 503);
   assert.equal((await result.text()).includes('synthetic db failure'), false);
@@ -198,7 +198,7 @@ test('duplicate retry is safe and changed payload with the same key is rejected'
     },
     contact: async () => ({}),
   });
-  const body = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), ageConfirmed: true, idempotencyKey: idempotencyKey(), website: '' };
+  const body = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), ageConfirmed: true, ageBand: '18_plus', consentAccepted: true, privacyVersion: 'padel-research-privacy-v1', idempotencyKey: idempotencyKey(), website: '' };
   const a = await service.response(request('', body));
   assert.equal(a.status, 202);
   const changed = { ...body, answers: { ...body.answers, group: ['open'] } };
@@ -212,12 +212,12 @@ test('rate-limit responses are explicit and do not claim a saved receipt', async
     response: async () => ({ code: 'rate_limited' }),
     contact: async () => ({ code: 'rate_limited' }),
   });
-  const responseBody = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), ageConfirmed: true, idempotencyKey: idempotencyKey(), website: '' };
+  const responseBody = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), ageConfirmed: true, ageBand: '18_plus', consentAccepted: true, privacyVersion: 'padel-research-privacy-v1', idempotencyKey: idempotencyKey(), website: '' };
   const limited = await service.response(request('', responseBody));
   assert.equal(limited.status, 429);
   assert.equal(limited.headers.get('retry-after'), '900');
   assert.equal((await limited.json()).status, undefined);
-  const contactBody = { email: 'synthetic@example.test', researchContact: true, marketingOptIn: false, ageConfirmed: true, idempotencyKey: idempotencyKey(), website: '' };
+  const contactBody = { email: 'synthetic@example.test', researchContact: true, marketingOptIn: false, ageConfirmed: true, ageBand: '18_plus', consentAccepted: true, privacyVersion: 'padel-research-privacy-v1', idempotencyKey: idempotencyKey(), website: '' };
   assert.equal((await service.contact(request('', contactBody))).status, 429);
 });
 
@@ -228,7 +228,7 @@ test('contact API requires a valid email and explicit independent purpose, and i
     response: async () => { responseWrites++; return {}; },
     contact: async value => { contactWrites++; purposes.push([value.research_contact, value.marketing_opt_in]); assert.equal(value.privacy_version, 'padel-research-privacy-v1'); return { code: 'accepted', contact_id: '33333333-3333-4333-8333-333333333333' }; },
   });
-  const base = { email: 'research@example.test', researchContact: true, marketingOptIn: false, ageConfirmed: true, idempotencyKey: idempotencyKey(), website: '' };
+  const base = { email: 'research@example.test', researchContact: true, marketingOptIn: false, ageConfirmed: true, ageBand: '18_plus', consentAccepted: true, privacyVersion: 'padel-research-privacy-v1', idempotencyKey: idempotencyKey(), website: '' };
   assert.equal((await service.contact(request('', { ...base, email: 'bad' }))).status, 422);
   assert.equal((await service.contact(request('', { ...base, researchContact: false }))).status, 422);
   assert.equal((await service.contact(request('', base))).status, 202);
@@ -240,7 +240,7 @@ test('contact API requires a valid email and explicit independent purpose, and i
 });
 
 test('SQL migration isolates tables, enables RLS, limits grants, retains data, and suppresses small aggregate cells', () => {
-  const sql = fs.readFileSync('supabase/migrations/20261105113000_create_padel_research_collection.sql', 'utf8');
+  const sql = fs.readFileSync('supabase/migrations/20261105141357_create_padel_research_collection.sql', 'utf8');
   assert.match(sql, /create schema if not exists research_private/);
   assert.match(sql, /alter table research_private\.survey_responses enable row level security/i);
   assert.match(sql, /alter table research_private\.survey_contacts enable row level security/i);
@@ -253,3 +253,29 @@ test('SQL migration isolates tables, enables RLS, limits grants, retains data, a
   assert.ok(contactTable);
   assert.doesNotMatch(contactTable, /foreign key|response_id|survey_response/i);
 });
+
+test('consent, privacy version and supported age bands are required before any write', async () => {
+  const writes = [];
+  const service = intake.createResearchIntake(fakeConfig, {response: async value => { writes.push(value); return {code:'accepted', response_id:'11111111-1111-4111-8111-111111111111'}; }, contact: async () => { throw Error('unexpected'); }});
+  const base = {audience:'giocatori', surveyVersion:q.VERSION, answers:validPlayerAnswers(), ageConfirmed:true, ageBand:'14_17', consentAccepted:true, privacyVersion:'padel-research-privacy-v1', idempotencyKey:idempotencyKey(), website:''};
+  for (const change of [{consentAccepted:false}, {ageBand:'under_14'}, {ageBand:''}, {privacyVersion:'old'}, {ageConfirmed:false}]) assert.equal((await service.response(request('',{...base,...change}))).status,422);
+  assert.equal(writes.length,0);
+  assert.equal((await service.response(request('',base))).status,202);
+  assert.equal(writes[0].age_band,'14_17');
+  assert.equal(writes[0].privacy_version,'padel-research-privacy-v1');
+});
+test('withdrawal validates origin and secret receipt, supports closed collection, and handles storage errors', async () => {
+  const calls=[];
+  const cfg={...fakeConfig, enabled:false};
+  const store={rpc:async (name,body)=>{calls.push({name,body}); return {code:'revoked'};}};
+  assert.equal((await intake.withdrawResearch(request('',{purpose:'response',code:'bad'}),cfg,store)).status,422);
+  assert.equal((await intake.withdrawResearch(request('',{purpose:'response',code:idempotencyKey()},{headers:{Origin:'https://evil.test'}}),cfg,store)).status,403);
+  assert.equal(calls.length,0);
+  assert.equal((await intake.withdrawResearch(request('',{purpose:'response',code:idempotencyKey()}),cfg,store)).status,200);
+  assert.match(calls[0].body.p_subject_hash,/^[0-9a-f]{64}$/);
+  assert.equal(JSON.stringify(calls[0]).includes(idempotencyKey()),false);
+  assert.equal((await intake.withdrawResearch(request('',{purpose:'response',code:idempotencyKey().toUpperCase()}),cfg,store)).status,200);
+  assert.equal(calls[1].body.p_subject_hash,calls[0].body.p_subject_hash);
+  assert.equal((await intake.withdrawResearch(request('',{purpose:'contact',code:idempotencyKey()}),cfg,{rpc:async()=>{throw Error('private');}})).status,503);
+});
+

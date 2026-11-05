@@ -1,3 +1,5 @@
+> Documento storico del 5 novembre. Per lo stato corrente vedere `docs/launch-readiness/REPORT.md`, l’informativa `/ricerca/informativa` e [consultazione risultati](RESULTS.md). Le approvazioni privacy successive sono registrate nel report.
+
 # Informativa privacy — ricerca Padel (DRAFT)
 
 **Bozza per revisione, non approvata e non pubblicabile.** La raccolta pubblica resta disabilitata. Prima dell’uso il titolare deve confermare le informazioni contrassegnate come da verificare e approvare finalità, basi giuridiche, fornitori, conservazione e testo finale. Questa bozza riguarda solo la survey Padel e non sostituisce l’informativa di altri servizi Polpo AI.
