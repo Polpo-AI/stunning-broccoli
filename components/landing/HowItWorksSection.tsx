@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { MessageCircle, FileText, Wrench, Rocket, ArrowRight } from 'lucide-react';
 import { staggerContainer, fadeUpVariants } from '@/components/shared/animations';
@@ -161,13 +162,13 @@ export default function HowItWorksSection() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.6, delay: 0.4, ease: [0.23, 1, 0.32, 1] }}
         >
-          <a
+          <Link
             href="/#contatti"
             className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-400 hover:text-cyan-300 transition-colors duration-200 group"
           >
             Iniziamo a parlare
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

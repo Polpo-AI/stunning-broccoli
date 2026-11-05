@@ -15,9 +15,7 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    serverComponentsExternalPackages: ['@supabase/supabase-js', '@supabase/realtime-js'],
-  },
+  serverExternalPackages: ['@supabase/supabase-js', '@supabase/realtime-js'],
   webpack: (config) => {
     config.module.exprContextCritical = false;
     return config;

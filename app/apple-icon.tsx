@@ -1,4 +1,4 @@
-import { ImageResponse } from '@vercel/og';
+import { ImageResponse } from 'next/og';
 
 /**
  * Apple touch icon dinamica (iOS home screen + iPadOS).
