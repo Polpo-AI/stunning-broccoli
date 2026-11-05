@@ -6,7 +6,7 @@
 
 Il titolare del trattamento è **Polpo AI**, con sede in via Madrid 38, Aprilia (LT), Italia. Per domande sul trattamento o per esercitare i diritti puoi scrivere a **info@polpo-ai.com**.
 
-Questi dati del titolare e questo contatto risultano confermati nei documenti interni della mini-consulenza. Il titolare deve riconfermarli per questa specifica iniziativa prima dell’approvazione. **Verificare se è stato nominato un responsabile della protezione dei dati (DPO); se sì, aggiungere i suoi contatti.**
+La denominazione, la sede e il contatto sono stati confermati dal titolare anche per questa iniziativa. **Verificare se è stato nominato un responsabile della protezione dei dati (DPO); se sì, aggiungere i suoi contatti.**
 
 ## Perché raccogliamo i dati e quali
 
@@ -59,7 +59,7 @@ Bozza di lavoro per la survey Padel, versione **0.2**, 5 novembre 2026. L’info
 
 ## Verifiche necessarie prima dell’approvazione
 
-- Riconfermare per questa iniziativa denominazione del titolare, sede e contatto; verificare lo stato del DPO.
+- Verificare lo stato del DPO e aggiungerne i contatti se nominato.
 - Definire e documentare le basi giuridiche per risposte, sicurezza, ricontatto e marketing; approvare le due scelte e la revoca.
 - Confermare accessi interni, fornitori, contratti, località, sub-responsabili e trasferimenti.
 - Configurare e osservare la cancellazione automatica; verificare log e backup.
