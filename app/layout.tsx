@@ -3,7 +3,7 @@ import './immersive.css';
 import './world-explorer.css';
 import './inner.css';
 import './consultation.css';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter, Plus_Jakarta_Sans, Fraunces } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -35,9 +35,9 @@ export const metadata: Metadata = {
     description, url: 'https://polpo-ai.com', siteName: 'Polpo AI', locale: 'it_IT', type: 'website',
   },
   twitter: { card: 'summary_large_image', title: 'Polpo AI — Automazioni intelligenti per le PMI', description },
-  viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
-  themeColor: '#080e23',
 };
+
+export const viewport:Viewport={width:'device-width',initialScale:1,viewportFit:'cover',themeColor:'#080e23'};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const jsonLd = {

@@ -18,3 +18,8 @@ Progetto Supabase remoto, migrazione remota, scheduler e allarmi reali, identit�
 `scripts/consultation-e2e.cjs` è predisposto per una prova sintetica esplicita dal server, senza aprire l'endpoint pubblico, e con attesa della consegna da worker/scheduler reali. Non è stato eseguito contro servizi reali. Richiede le configurazioni descritte in OPERATIONS.md e non sostituisce le ulteriori prove di errore/recupero e verifica della casella.
 
 Privacy ancora draft; invio OFF. Next 13.5.1 e la revisione delle vulnerabilità preesistenti restano un prerequisito del rilascio. Nessun merge o deploy in produzione effettuato.
+
+
+## Aggiornamento 5 novembre 2026 — readiness
+
+35 test applicativi passati, typecheck, build Next 15.5.29 e lint passati. Browser locale preview su Edge: 320/390/768/1440, scelta esplicita problema principale, nessun marketing, navigazione e modifica senza perdita dati, invio OFF, privacy noindex, nessuno sbordo/errore JS. Evidenze in qa-operational. API vecchia 410 e health senza credenziale 401. Audit dipendenze: 0 critiche/alte, 8 moderate nei tool di build/lint. Migrazioni remote applicate al progetto del sito e permessi controllati; prova acquire/idempotenza/claim/checkpoint/release con rollback riuscita. Job pg_cron ogni minuto con esecuzioni riuscite e heartbeat; delivery switch false, nessuna consegna HTTP. 15 proprietà CRM approvate e create, readback di schema da completare con campo univoco/opzione telefono e token server. E2E CRM/email ancora NON eseguito. Privacy predisposta ma non approvata; invio pubblico OFF.

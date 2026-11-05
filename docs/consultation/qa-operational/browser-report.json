@@ -1,0 +1,47 @@
+{
+  "base": "http://localhost:3138",
+  "checks": [
+    {
+      "width": 320,
+      "forwardBackRetainsData": true,
+      "disabledIntake": true,
+      "allSectors": true,
+      "noOverflow": true,
+      "keyboardRadio": true,
+      "reducedMotion": true,
+      "noPersonalStorage": true
+    },
+    {
+      "width": 390,
+      "forwardBackRetainsData": true,
+      "disabledIntake": true,
+      "allSectors": true,
+      "noOverflow": true,
+      "keyboardRadio": true,
+      "reducedMotion": true,
+      "noPersonalStorage": true
+    },
+    {
+      "width": 768,
+      "forwardBackRetainsData": true,
+      "disabledIntake": true,
+      "allSectors": true,
+      "noOverflow": true,
+      "keyboardRadio": true,
+      "reducedMotion": true,
+      "noPersonalStorage": true
+    },
+    {
+      "width": 1440,
+      "forwardBackRetainsData": true,
+      "disabledIntake": true,
+      "allSectors": true,
+      "noOverflow": true,
+      "keyboardRadio": true,
+      "reducedMotion": true,
+      "noPersonalStorage": true
+    }
+  ],
+  "errors": [],
+  "requests": []
+}

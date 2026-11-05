@@ -1,4 +1,4 @@
-import { ImageResponse } from '@vercel/og';
+import { ImageResponse } from 'next/og';
 
 /**
  * Favicon dinamico Next.js — generato server-side al deploy.

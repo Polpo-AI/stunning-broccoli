@@ -7,7 +7,7 @@ async function run(){
  const db=new Client({connectionString:url.href});await db.connect();
  const count=await db.query("select count(*) from information_schema.tables where table_schema='public'");assert.equal(Number(count.rows[0].count),0,'database must be empty');
  await db.query('create role anon; create role authenticated; create role service_role bypassrls');
- await db.query(fs.readFileSync('supabase/migrations/20261104_polpo_consultation.sql','utf8'));
+ await db.query(fs.readFileSync('supabase/migrations/20261105003702_polpo_consultation.sql','utf8'));
  const rpc=async(name,args=[])=> (await db.query(`select public.${name}(${args.map((_,i)=>'$'+(i+1)).join(',')}) as value`,args)).rows[0].value;
  const acquire=(key=randomUUID(),fingerprint=randomUUID(),contact=randomUUID(),ip=randomUUID())=>rpc('polpo_consultation_acquire',[key,fingerprint,contact,ip,JSON.stringify({synthetic:true}),'test-only','test-email-only']);
  let checks=0;

@@ -1,3 +1,4 @@
+import { marketingAvailable } from './privacy';
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { isIP } from 'node:net';
 import { parseConsultation, parseEvent } from './domain';
@@ -28,6 +29,7 @@ export async function intake(request:Request,config:ServerConfig,store:Pick<Lead
  let body:unknown;try{body=await limitedBody(request);}catch(error){const code=error instanceof Error?error.message:'';return reply(code==='BODY_LIMIT'?413:400,{code:'invalid_request'});}
  const parsed=parseConsultation(body);if(!parsed.ok)return reply(422,{code:'invalid_fields',errors:parsed.errors});
  const input=parsed.value;
+ if(input.marketingOptIn&&!marketingAvailable)return reply(422,{code:'invalid_fields',errors:{marketingOptIn:'Gli aggiornamenti email non sono attivi.'}});
  const identity=input.contact.email?`email:${input.contact.email}`:`phone:${input.contact.phone}|${input.contact.name.toLocaleLowerCase('it')}|${input.contact.businessName.toLocaleLowerCase('it')}`;
  const contactKey=hash(config.hmacKey,identity);
  const {submissionId:_,journeyId:__,...answers}=input;

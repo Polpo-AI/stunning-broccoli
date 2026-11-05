@@ -22,7 +22,7 @@ export type Problem = typeof problems[number]['id'];
 export type Tool = typeof tools[number]['id'];
 export type Consultation = {
  schemaVersion:1; submissionId:string; journeyId:string; sector:Sector; problems:Problem[]; tools:Tool[];
- managementSoftware:string; details:string;
+ managementSoftware:string; details:string; primaryProblem:Problem|'';
  contact:{name:string;businessName:string;email:string;phone:string;preference:''|'email'|'phone'};
  privacyAccepted:true; marketingOptIn:boolean; website:string;
 };
@@ -52,12 +52,14 @@ export function validateContact(value:unknown):{value:Consultation['contact'];er
 }
 export function parseConsultation(input:unknown):{ok:true;value:Consultation}|{ok:false;errors:FieldErrors}{
  if(!record(input))return {ok:false,errors:{form:'Richiesta non valida.'}};
- const errors:FieldErrors={};if(record(input.contact)&&Object.keys(input.contact).some(k=>!['name','businessName','email','phone','preference'].includes(k)))errors.form='Richiesta non valida.';const allowed=['schemaVersion','submissionId','journeyId','sector','problems','tools','managementSoftware','details','contact','privacyAccepted','marketingOptIn','website'];
+ const errors:FieldErrors={};if(record(input.contact)&&Object.keys(input.contact).some(k=>!['name','businessName','email','phone','preference'].includes(k)))errors.form='Richiesta non valida.';const allowed=['schemaVersion','submissionId','journeyId','sector','problems','primaryProblem','tools','managementSoftware','details','contact','privacyAccepted','marketingOptIn','website'];
  if(Object.keys(input).some(k=>!allowed.includes(k))||input.schemaVersion!==1)errors.form='Richiesta non valida.';
  if(!isUUID(input.submissionId)||!isUUID(input.journeyId))errors.form='Ricarica il percorso e riprova.';
  if(!sectors.some(x=>x.id===input.sector))errors.sector='Scegli il tuo settore.';
  function list<T extends string>(v:unknown,valid:readonly T[],key:string):T[]{if(!Array.isArray(v)||v.length>valid.length||v.some(x=>!valid.includes(x))){errors[key]='Controlla le opzioni selezionate.';return [];}return valid.filter(x=>v.includes(x));}
  const chosenProblems=list(input.problems,problems.map(x=>x.id),'problems');const chosenTools=list(input.tools,tools.map(x=>x.id),'tools');
+ const primaryProblem=input.primaryProblem??(chosenProblems.length===1?chosenProblems[0]:'');
+ if(typeof primaryProblem!=='string'||(primaryProblem&&!chosenProblems.includes(primaryProblem as Problem))||(chosenProblems.length>1&&!primaryProblem))errors.primaryProblem='Indica quale dei passaggi selezionati è il principale.';
  const managementSoftware=text(input.managementSoftware,100),details=text(input.details,1000,true),website=text(input.website,200);
  if(managementSoftware===null)errors.managementSoftware='Usa al massimo 100 caratteri.';
  if(details===null)errors.details='Usa al massimo 1000 caratteri.';
@@ -67,7 +69,7 @@ export function parseConsultation(input:unknown):{ok:true;value:Consultation}|{o
  if(typeof input.marketingOptIn!=='boolean')errors.marketingOptIn='Controlla la scelta facoltativa.';
  if(input.marketingOptIn===true&&!contact.value.email)errors.marketingOptIn='Per gli aggiornamenti email serve un indirizzo email.';
  if(Object.keys(errors).length)return {ok:false,errors};
- return {ok:true,value:{schemaVersion:1,submissionId:String(input.submissionId),journeyId:String(input.journeyId),sector:input.sector as Sector,problems:chosenProblems,tools:chosenTools,managementSoftware:chosenTools.includes('management')?managementSoftware||'':'',details:details||'',contact:contact.value,privacyAccepted:true,marketingOptIn:input.marketingOptIn===true,website:''}};
+ return {ok:true,value:{schemaVersion:1,submissionId:String(input.submissionId),journeyId:String(input.journeyId),sector:input.sector as Sector,problems:chosenProblems,primaryProblem:primaryProblem as Problem|'',tools:chosenTools,managementSoftware:chosenTools.includes('management')?managementSoftware||'':'',details:details||'',contact:contact.value,privacyAccepted:true,marketingOptIn:input.marketingOptIn===true,website:''}};
 }
 export const eventNames=['start','step_complete','abandon','submit_success','submit_error'] as const;
 export type ConsultationEvent={journeyId:string;event:typeof eventNames[number];step:number};

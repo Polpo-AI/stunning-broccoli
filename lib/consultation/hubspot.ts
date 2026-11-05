@@ -1,10 +1,11 @@
+import {sectorValues,problemValues,toolValues,commercialProperties} from './crm-mapping';
 import type { ServerConfig } from './server-config';
 import { DeliveryError, type Job } from './store';
 
 type CRMRecord={id:string;properties:Record<string,string|null>;associations?:{companies?:{results:{id:string}[]}}};
 const personalDomains=new Set(['gmail.com','googlemail.com','outlook.com','hotmail.com','hotmail.it','live.com','live.it','msn.com','yahoo.com','yahoo.it','icloud.com','me.com','mac.com','libero.it','virgilio.it','alice.it','tin.it','tiscali.it','aol.com','proton.me','protonmail.com','gmx.com','mail.com']);
 export class HubSpotClient{
- constructor(private config:Pick<ServerConfig,'hubspotToken'|'companyDomains'>,private fetcher:typeof fetch=fetch){}
+ constructor(private config:Pick<ServerConfig,'hubspotToken'|'hubspotPortalId'|'companyDomains'>,private fetcher:typeof fetch=fetch){}
  async call<T>(path:string,method='GET',body?:unknown):Promise<T>{
   let res:Response;
   try{res=await this.fetcher(`https://api.hubapi.com${path}`,{method,headers:{Authorization:`Bearer ${this.config.hubspotToken}`,'Content-Type':'application/json'},...(body===undefined?{}:{body:JSON.stringify(body)}),signal:AbortSignal.timeout(4500),cache:'no-store'});}catch{throw new DeliveryError('HUBSPOT_TIMEOUT',true);}
@@ -12,17 +13,26 @@ export class HubSpotClient{
   if(res.status===204)return undefined as T;
   try{return await res.json() as T;}catch{throw new DeliveryError('HUBSPOT_INVALID_RESPONSE',true);}
  }
+ async verifyPortal():Promise<void>{
+  const account=await this.call<{portalId?:number;hubId?:number}>('/integrations/v1/me');
+  const actual=String(account.portalId??account.hubId??'');
+  if(!actual||actual!==this.config.hubspotPortalId)throw new DeliveryError('HUBSPOT_PORTAL_MISMATCH',false);
+ }
  async sync(job:Job):Promise<{contactId:string;companyId:string|null}>{
   const {contact}=job.payload;const base='/crm/objects/2026-09';
   let existing:CRMRecord|undefined;
   {
-   const found=await this.call<{results:CRMRecord[]}>(`${base}/contacts/search`,'POST',{filterGroups:[{filters:[{propertyName:contact.email?'email':'polpo_contact_key',operator:'EQ',value:contact.email||job.contact_key}]}],properties:['firstname','phone','company','polpo_received_at'],limit:2});
+   const found=await this.call<{results:CRMRecord[]}>(`${base}/contacts/search`,'POST',{filterGroups:[{filters:[{propertyName:contact.email?'email':'polpo_contact_key',operator:'EQ',value:contact.email||job.contact_key}]}],properties:['firstname','phone','company','polpo_received_at','polpo_request_id',...commercialProperties],limit:2});
    if(!Array.isArray(found.results))throw new DeliveryError('HUBSPOT_INVALID_RESPONSE',true);
    if(found.results.length>1)throw new DeliveryError('CONTACT_AMBIGUOUS',false);
    existing=found.results[0];
   }
   const received=String(Date.parse(job.acquired_at));
-  const props:Record<string,string>={polpo_contact_key:job.contact_key,polpo_sector:job.payload.sector,polpo_problems:job.payload.problems.join(';'),polpo_tools:job.payload.tools.join(';'),polpo_management_software:job.payload.managementSoftware,polpo_operational_context:job.payload.details,polpo_request_id:job.id,polpo_received_at:received,polpo_business_name:contact.businessName,polpo_full_name:contact.name,polpo_contact_preference:contact.preference||'unspecified',polpo_source:'polpo-ai.com/contatti/mini-consultation',polpo_privacy_version:job.privacy_version,polpo_privacy_ack_at:received,polpo_request_marketing_opt_in:String(job.payload.marketingOptIn)};
+  const props:Record<string,string>={polpo_contact_key:job.contact_key,polpo_settore:sectorValues[job.payload.sector],polpo_prodotto:'automazioni_ai',polpo_origine_richiesta:'analisi_gratuita',polpo_problems:job.payload.problems.join(';'),polpo_strumenti:job.payload.tools.map(t=>toolValues[t]).join(';'),polpo_management_software:job.payload.managementSoftware,polpo_operational_context:job.payload.details,polpo_request_id:job.id,polpo_received_at:received,polpo_business_name:contact.businessName,polpo_full_name:contact.name,polpo_contact_preference:contact.preference||'unspecified',polpo_source:'polpo-ai.com/contatti/mini-consultation',polpo_privacy_version:job.privacy_version,polpo_privacy_ack_at:received,polpo_request_marketing_opt_in:String(job.payload.marketingOptIn)};
+  if(job.payload.primaryProblem)props.polpo_problema_principale=problemValues[job.payload.primaryProblem];
+  // Existing operator-managed commercial classifications are preserved. Full
+  // answers remain in the request archive and latest-request technical fields.
+  for(const key of commercialProperties)if(existing?.properties[key])delete props[key];
   // An unchecked box is not a withdrawal of pre-existing marketing preferences.
   // These are consent evidence properties, not enrollment in a subscription or a Deal.
   if(job.payload.marketingOptIn){props.polpo_marketing_consent_at=received;props.polpo_marketing_consent_version=job.marketing_version;}
@@ -32,9 +42,14 @@ export class HubSpotClient{
   if(contact.phone&&!existing?.properties.phone)props.phone=contact.phone;
   let id=existing?.id;
   const previous=existing?.properties.polpo_received_at||'';const previousTime=Number(previous)||Date.parse(previous);
-  if(existing&&previousTime>Number(received))return {contactId:existing.id,companyId:null};
+  if(existing&&(previousTime>Number(received)||(previousTime===Number(received)&&(existing.properties.polpo_request_id||'')>job.id)))return {contactId:existing.id,companyId:null};
   if(id){await this.call(`${base}/contacts/${encodeURIComponent(id)}`,'PATCH',{properties:props});}
-  else{
+  else if(contact.email){
+   // A create conflict is retried after search catches up. Unlike an email
+   // upsert, a stale search cannot overwrite an existing contact's context.
+   const created=await this.call<CRMRecord>(`${base}/contacts`,'POST',{properties:props});
+   id=created.id;if(!id)throw new DeliveryError('HUBSPOT_INVALID_RESPONSE',true);
+  }else{
    const result=await this.call<{results:CRMRecord[]}>(`${base}/contacts/batch/upsert`,'POST',{inputs:[{id:contact.email||job.contact_key,idProperty:contact.email?'email':'polpo_contact_key',properties:props}]});
    id=result.results?.[0]?.id;if(!id)throw new DeliveryError('HUBSPOT_INVALID_RESPONSE',true);
   }

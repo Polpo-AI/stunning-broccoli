@@ -14,9 +14,11 @@ export function readConfig(env:Record<string,string|undefined>=process.env):Serv
  if(env.POLPO_LEADS_SITE_PROJECT_CONFIRMED!=='true')reasons.push('SITE_PROJECT_NOT_CONFIRMED');
  const hmacKey=need('POLPO_CONSULTATION_HMAC_KEY',32),hubspotToken=need('POLPO_HUBSPOT_ACCESS_TOKEN',20),hubspotPortalId=need('POLPO_HUBSPOT_PORTAL_ID');
  if(!/^\d+$/.test(hubspotPortalId))reasons.push('HUBSPOT_PORTAL_ID');
- const resendKey=need('POLPO_RESEND_API_KEY',12),resendFrom=need('POLPO_RESEND_FROM');
+ const resendKey=env.POLPO_RESEND_API_KEY||env.RESEND_API_KEY||'',resendFrom=need('POLPO_RESEND_FROM');
+ if(resendKey.length<12)reasons.push('POLPO_RESEND_API_KEY');
  if(!/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(resendFrom))reasons.push('RESEND_FROM');
  const workerSecret=need('POLPO_CONSULTATION_WORKER_SECRET',32);
+ if(env.CRON_SECRET&&env.CRON_SECRET!==workerSecret)reasons.push('CRON_SECRET_MISMATCH');
  const origins=(env.POLPO_CONSULTATION_ALLOWED_ORIGINS||'https://polpo-ai.com').split(',').map(s=>s.trim()).filter(Boolean);
  if(env.VERCEL_ENV==='preview'&&env.VERCEL_URL)origins.push(`https://${env.VERCEL_URL}`);
  for(const origin of origins){try{const u=new URL(origin);if(u.origin!==origin||u.protocol!=='https:')reasons.push('INVALID_ORIGIN');}catch{reasons.push('INVALID_ORIGIN');}}

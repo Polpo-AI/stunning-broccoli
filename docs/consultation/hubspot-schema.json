@@ -1,24 +1,23 @@
 {
   "group": {
-    "name": "polpo_consultation",
-    "label": "Polpo — mini-consulenza",
-    "displayOrder": 20
+    "name": "contact_information",
+    "label": "Informazioni contatto"
   },
   "properties": [
     {
       "name": "polpo_contact_key",
-      "label": "Polpo — identity key",
+      "label": "Polpo — chiave identità",
       "type": "string",
       "fieldType": "text",
-      "groupName": "polpo_consultation",
+      "groupName": "contact_information",
       "hasUniqueValue": true
     },
     {
-      "name": "polpo_sector",
-      "label": "Polpo — settore",
+      "name": "polpo_settore",
+      "label": "Settore Polpo",
       "type": "enumeration",
       "fieldType": "select",
-      "groupName": "polpo_consultation",
+      "groupName": "contact_information",
       "options": [
         {
           "label": "Sport e circoli",
@@ -32,12 +31,12 @@
         },
         {
           "label": "Ristorazione",
-          "value": "restaurant",
+          "value": "ristorazione",
           "displayOrder": 2
         },
         {
           "label": "Studi professionali",
-          "value": "professional",
+          "value": "studi_professionali",
           "displayOrder": 3
         },
         {
@@ -47,7 +46,104 @@
         },
         {
           "label": "Altro",
-          "value": "other",
+          "value": "altro",
+          "displayOrder": 5
+        }
+      ]
+    },
+    {
+      "name": "polpo_prodotto",
+      "label": "Prodotto Polpo",
+      "type": "enumeration",
+      "fieldType": "select",
+      "groupName": "contact_information",
+      "options": [
+        {
+          "label": "Automazioni AI",
+          "value": "automazioni_ai",
+          "displayOrder": 0
+        },
+        {
+          "label": "Polpo Padel",
+          "value": "polpo_padel",
+          "displayOrder": 1
+        },
+        {
+          "label": "Altro",
+          "value": "altro",
+          "displayOrder": 2
+        }
+      ]
+    },
+    {
+      "name": "polpo_origine_richiesta",
+      "label": "Origine richiesta Polpo",
+      "type": "enumeration",
+      "fieldType": "select",
+      "groupName": "contact_information",
+      "options": [
+        {
+          "label": "Analisi gratuita",
+          "value": "analisi_gratuita",
+          "displayOrder": 0
+        },
+        {
+          "label": "Contatto diretto",
+          "value": "contatto_diretto",
+          "displayOrder": 1
+        },
+        {
+          "label": "Referral",
+          "value": "referral",
+          "displayOrder": 2
+        },
+        {
+          "label": "Campagna",
+          "value": "campagna",
+          "displayOrder": 3
+        },
+        {
+          "label": "Altro",
+          "value": "altro",
+          "displayOrder": 4
+        }
+      ]
+    },
+    {
+      "name": "polpo_problema_principale",
+      "label": "Problema principale",
+      "type": "enumeration",
+      "fieldType": "select",
+      "groupName": "contact_information",
+      "options": [
+        {
+          "label": "Prenotazioni",
+          "value": "prenotazioni",
+          "displayOrder": 0
+        },
+        {
+          "label": "Messaggi",
+          "value": "messaggi",
+          "displayOrder": 1
+        },
+        {
+          "label": "Promemoria e cancellazioni",
+          "value": "cancellazioni",
+          "displayOrder": 2
+        },
+        {
+          "label": "Operazioni manuali",
+          "value": "processi_manuali",
+          "displayOrder": 3
+        },
+        {
+          "label": "Integrazioni",
+          "value": "integrazioni",
+          "displayOrder": 4
+        },
+        {
+          "label": "Altro",
+          "value": "altro",
           "displayOrder": 5
         }
       ]
@@ -57,7 +153,7 @@
       "label": "Polpo — problemi operativi",
       "type": "enumeration",
       "fieldType": "checkbox",
-      "groupName": "polpo_consultation",
+      "groupName": "contact_information",
       "options": [
         {
           "label": "Prenotazioni",
@@ -87,11 +183,11 @@
       ]
     },
     {
-      "name": "polpo_tools",
-      "label": "Polpo — strumenti",
+      "name": "polpo_strumenti",
+      "label": "Strumenti utilizzati",
       "type": "enumeration",
       "fieldType": "checkbox",
-      "groupName": "polpo_consultation",
+      "groupName": "contact_information",
       "options": [
         {
           "label": "WhatsApp",
@@ -100,7 +196,7 @@
         },
         {
           "label": "Telefono",
-          "value": "phone",
+          "value": "telefono",
           "displayOrder": 1
         },
         {
@@ -110,7 +206,7 @@
         },
         {
           "label": "Calendari",
-          "value": "calendar",
+          "value": "calendario",
           "displayOrder": 3
         },
         {
@@ -120,8 +216,13 @@
         },
         {
           "label": "Gestionali",
-          "value": "management",
+          "value": "gestionale",
           "displayOrder": 5
+        },
+        {
+          "label": "Altro",
+          "value": "altro",
+          "displayOrder": 6
         }
       ]
     },
@@ -130,49 +231,49 @@
       "label": "Polpo — gestionale",
       "type": "string",
       "fieldType": "text",
-      "groupName": "polpo_consultation"
+      "groupName": "contact_information"
     },
     {
       "name": "polpo_operational_context",
       "label": "Polpo — contesto operativo",
       "type": "string",
       "fieldType": "textarea",
-      "groupName": "polpo_consultation"
+      "groupName": "contact_information"
     },
     {
       "name": "polpo_request_id",
       "label": "Polpo — ultima richiesta",
       "type": "string",
       "fieldType": "text",
-      "groupName": "polpo_consultation"
+      "groupName": "contact_information"
     },
     {
       "name": "polpo_received_at",
       "label": "Polpo — acquisizione richiesta",
       "type": "datetime",
       "fieldType": "date",
-      "groupName": "polpo_consultation"
+      "groupName": "contact_information"
     },
     {
       "name": "polpo_business_name",
       "label": "Polpo — attività dichiarata",
       "type": "string",
       "fieldType": "text",
-      "groupName": "polpo_consultation"
+      "groupName": "contact_information"
     },
     {
       "name": "polpo_full_name",
       "label": "Polpo — nome dichiarato",
       "type": "string",
       "fieldType": "text",
-      "groupName": "polpo_consultation"
+      "groupName": "contact_information"
     },
     {
       "name": "polpo_contact_preference",
       "label": "Polpo — preferenza contatto",
       "type": "enumeration",
       "fieldType": "select",
-      "groupName": "polpo_consultation",
+      "groupName": "contact_information",
       "options": [
         {
           "label": "Non indicata",
@@ -196,49 +297,49 @@
       "label": "Polpo — provenienza",
       "type": "string",
       "fieldType": "text",
-      "groupName": "polpo_consultation"
+      "groupName": "contact_information"
     },
     {
       "name": "polpo_privacy_version",
       "label": "Polpo — versione informativa",
       "type": "string",
       "fieldType": "text",
-      "groupName": "polpo_consultation"
+      "groupName": "contact_information"
     },
     {
       "name": "polpo_privacy_ack_at",
       "label": "Polpo — presa visione",
       "type": "datetime",
       "fieldType": "date",
-      "groupName": "polpo_consultation"
+      "groupName": "contact_information"
     },
     {
       "name": "polpo_request_marketing_opt_in",
       "label": "Polpo — opt-in email in questa richiesta",
       "type": "bool",
       "fieldType": "booleancheckbox",
-      "groupName": "polpo_consultation"
+      "groupName": "contact_information"
     },
     {
       "name": "polpo_marketing_consent_at",
       "label": "Polpo — ultimo opt-in email esplicito",
       "type": "datetime",
       "fieldType": "date",
-      "groupName": "polpo_consultation"
+      "groupName": "contact_information"
     },
     {
       "name": "polpo_marketing_consent_version",
       "label": "Polpo — testo ultimo opt-in email",
       "type": "string",
       "fieldType": "text",
-      "groupName": "polpo_consultation"
+      "groupName": "contact_information"
     },
     {
       "name": "polpo_company_match_status",
       "label": "Polpo — associazione azienda",
       "type": "enumeration",
       "fieldType": "select",
-      "groupName": "polpo_consultation",
+      "groupName": "contact_information",
       "options": [
         {
           "label": "Dominio aziendale esistente",

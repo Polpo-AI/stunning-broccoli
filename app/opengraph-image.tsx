@@ -1,4 +1,4 @@
-import { ImageResponse } from '@vercel/og';
+import { ImageResponse } from 'next/og';
 export const runtime = 'edge';
 export const alt = 'Polpo AI — Automazioni intelligenti per le PMI';
 export const size = { width: 1200, height: 630 };

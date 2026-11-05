@@ -2,7 +2,7 @@ const {chromium}=require(process.env.POLPO_TEST_PLAYWRIGHT_MODULE||'playwright')
 (async()=>{
  const base=process.env.POLPO_TEST_BASE_URL||'http://localhost:3107';
  const browser=await chromium.launch({channel:'msedge',headless:true}),report={base,checks:[],errors:[],requests:[]};
- const out='docs/consultation/qa';fs.mkdirSync(out,{recursive:true});
+ const out=process.env.POLPO_TEST_QA_DIR||'docs/consultation/qa';fs.mkdirSync(out,{recursive:true});
  try{
   for(const width of [320,390,768,1440]){
    const context=await browser.newContext({viewport:{width,height:900},reducedMotion:'reduce'}),page=await context.newPage();
@@ -20,8 +20,9 @@ const {chromium}=require(process.env.POLPO_TEST_PLAYWRIGHT_MODULE||'playwright')
    await page.getByRole('button',{name:'Continua',exact:true}).click();await page.locator('textarea').fill('Solo dati sintetici di prova.');
    await page.getByRole('button',{name:'Continua',exact:true}).click();
    await page.locator('input[name="name"]').fill('Persona test');await page.locator('input[name="businessName"]').fill('Attività test');await page.locator('input[name="phone"]').fill('+393331234567');
-   const marketing=page.getByRole('checkbox',{name:/aggiornamenti/i});assert.equal(await marketing.isChecked(),false);assert.equal(await marketing.isDisabled(),true);
-   await page.locator('input[name="email"]').fill('persona@example.test');assert.equal(await marketing.isChecked(),false);assert.equal(await marketing.isEnabled(),true);
+   assert.equal(await page.getByRole('checkbox',{name:/aggiornamenti/i}).count(),0);
+   const primary=page.getByLabel('Qual è il passaggio principale?');await primary.selectOption('messages');assert.equal(await primary.inputValue(),'messages');
+   await page.locator('input[name="email"]').fill('persona@example.test');
    assert.equal(await page.getByRole('button',{name:'Invio non ancora attivo'}).isDisabled(),true);
    assert.equal(await page.getByRole('checkbox',{name:/Ho preso visione/}).isDisabled(),true);
    assert.equal(await page.getByRole('link',{name:/informativa privacy/}).getAttribute('href'),'/privacy');
@@ -38,7 +39,7 @@ const {chromium}=require(process.env.POLPO_TEST_PLAYWRIGHT_MODULE||'playwright')
    const stored=await page.evaluate(()=>JSON.stringify({...sessionStorage,...localStorage}));assert.ok(!/Persona test|persona@example|3331234567|Solo dati/.test(stored));
    await page.locator('input[value="sport"]').focus();await page.keyboard.press('ArrowDown');assert.equal(await page.locator('input[value="beauty"]').isChecked(),true);
    report.checks.push({width,forwardBackRetainsData:true,disabledIntake:true,allSectors:true,noOverflow:true,keyboardRadio:true,reducedMotion:true,noPersonalStorage:true});
-   await page.goto(base+'/privacy');assert.ok(await page.locator('h1').textContent().then(s=>/informativa/i.test(s)));assert.ok(await page.locator('meta[name="robots"]').getAttribute('content').then(s=>s.includes('noindex')));
+   await page.goto(base+'/privacy');assert.ok(await page.getByRole('heading',{name:'Titolare e contatti'}).isVisible());assert.ok(await page.locator('meta[name="robots"]').getAttribute('content').then(s=>s.includes('noindex')));
    const intake=await context.request.post(base+'/api/consultation',{data:{synthetic:true}});assert.equal(intake.status(),503);
    const worker=await context.request.get(base+'/api/internal/consultation-deliveries');assert.equal(worker.status(),401);
    await context.close();
