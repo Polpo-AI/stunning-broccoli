@@ -6,7 +6,11 @@
 
 Il titolare del trattamento è **Polpo AI**, con sede in via Madrid 38, Aprilia (LT), Italia. Per domande sul trattamento o per esercitare i diritti puoi scrivere a **info@polpo-ai.com**.
 
-La denominazione, la sede e il contatto sono stati confermati dal titolare anche per questa iniziativa. **Verificare se è stato nominato un responsabile della protezione dei dati (DPO); se sì, aggiungere i suoi contatti.**
+La denominazione, la sede e il contatto sono stati confermati dal titolare anche per questa iniziativa. Il contatto privacy è **info@polpo-ai.com**; non è stato indicato un DPO nominato.
+
+### In breve
+
+Puoi partecipare se hai almeno 14 anni. Per rispondere non devi scrivere il tuo nome o la tua email. Se vuoi, dopo puoi lasciare un recapito per essere ricontattato sulla ricerca: quel recapito non viene collegato alle tue risposte. Puoi anche scegliere di non lasciare recapiti.
 
 ## Perché raccogliamo i dati e quali
 
@@ -22,16 +26,13 @@ Per sicurezza e prevenzione degli invii abusivi, il sistema usa una chiave tempo
 
 **Base giuridica della ricerca: da determinare e motivare dal titolare prima dell’attivazione.** La partecipazione facoltativa, da sola, non definisce la base giuridica. Il titolare deve documentare la scelta applicabile e, se usa il legittimo interesse, il relativo bilanciamento e le modalità per esercitare il diritto di opposizione.
 
-## Email facoltativa e scelte separate
+## Email facoltativa per il ricontatto
 
-In un passaggio separato puoi lasciare un indirizzo email e scegliere una o entrambe queste finalità. Le caselle non sono preselezionate:
+In un passaggio separato puoi lasciare un indirizzo email e chiedere di essere ricontattato per un approfondimento collegato alla ricerca. La scelta è facoltativa e non è preselezionata. Lasciare un recapito non è necessario per partecipare.
 
-- essere ricontattato per un approfondimento collegato alla ricerca;
-- ricevere comunicazioni promozionali di Polpo AI.
+Email e richiesta di ricontatto sono conservate in una tabella separata, senza identificativo o collegamento alle risposte. Il ricontatto riguarda solo la ricerca: la survey non raccoglie adesioni a comunicazioni promozionali e non invia campagne.
 
-Email e scelte sono conservate in una tabella separata, senza identificativo o collegamento alle risposte della survey. La scelta di ricevere marketing è distinta dalla partecipazione e dal ricontatto di ricerca. L’implementazione attuale non invia campagne e non sincronizza i recapiti con HubSpot.
-
-**Prima di attivare questo passaggio, definire la base giuridica, il testo mostrato accanto a ciascuna scelta, come revocare la scelta e come gestire le richieste di ricontatto.** Se si raccoglie il consenso marketing, deve poter essere revocato con la stessa facilità con cui è stato dato. Non usare la scelta di ricontatto come autorizzazione a inviare promozioni.
+**Base giuridica e testo finale per il ricontatto: da definire prima dell’attivazione.** Specificare come chiedere di non essere più ricontattati e come gestire queste richieste.
 
 ## Chi può ricevere i dati e dove sono trattati
 
@@ -51,19 +52,19 @@ Le risposte non sono collegate all’indirizzo email facoltativamente fornito. D
 
 ## Minori
 
-Il questionario è stato progettato per adulti e non chiede l’età. **Il titolare deve decidere e verificare prima dell’attivazione se escludere le persone sotto i 18 anni, come comunicarlo e come gestire un’eventuale risposta ricevuta da un minore.**
+La survey è rivolta a persone di **almeno 14 anni**, che possono anche chiedere il ricontatto di ricerca. Prima di iniziare viene chiesto di confermare di avere almeno 14 anni; la conferma non viene conservata con le risposte e non equivale a una verifica documentale dell’età. Prima dell’attivazione il titolare deve approvare un’informativa comprensibile anche a chi ha 14–17 anni e verificare la base giuridica e gli eventuali requisiti di autorizzazione del genitore o tutore per i trattamenti previsti. Definire anche cosa fare se viene ricevuta una risposta da una persona sotto i 14 anni.
 
 ## Versione
 
-Bozza di lavoro per la survey Padel, versione **0.2**, 5 novembre 2026. L’informativa pubblicabile dovrà riportare la data di approvazione e descrivere il trattamento effettivamente attivo.
+Bozza di lavoro per la survey Padel, versione **0.3**, 5 novembre 2026. L’informativa pubblicabile dovrà riportare la data di approvazione e descrivere il trattamento effettivamente attivo.
 
 ## Verifiche necessarie prima dell’approvazione
 
-- Verificare lo stato del DPO e aggiungerne i contatti se nominato.
-- Definire e documentare le basi giuridiche per risposte, sicurezza, ricontatto e marketing; approvare le due scelte e la revoca.
+- Confermare che il contatto privacy resti info@polpo-ai.com e documentare l’eventuale futura nomina di un DPO.
+- Definire e documentare le basi giuridiche per risposte, sicurezza e ricontatto; approvare il testo della richiesta e la procedura per non essere più contattati.
 - Confermare accessi interni, fornitori, contratti, località, sub-responsabili e trasferimenti.
 - Configurare e osservare la cancellazione automatica; verificare log e backup.
-- Decidere il percorso per i minori e le richieste relative a risposte non collegabili a un’identità.
+- Verificare il percorso per partecipanti di 14–17 anni, per chi ha meno di 14 anni e le richieste relative a risposte non collegabili a un’identità.
 - Approvare il testo italiano definitivo e la corrispondenza con il questionario e il codice effettivamente pubblicati.
 
 Per la ricognizione delle informative pubbliche consultate e dei criteri usati per adattare questa bozza, vedi [analisi comparativa delle informative](COMPETITOR-PRIVACY-REVIEW.md).

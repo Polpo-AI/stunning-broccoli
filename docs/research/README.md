@@ -47,7 +47,7 @@ Prima della raccolta pubblica restano aperti:
 La migrazione dedicata è `supabase/migrations/20261105113000_create_padel_research_collection.sql`. Il server valida lo schema prima della scrittura:
 
 - Risposta: `survey_version`, `audience`, `answers` con chiavi e valori enumerati del modulo domande; `priority_detail` facoltativo, massimo 300 caratteri; timestamp server e ID casuale soltanto se necessari. Niente IP/user-agent, identificatori pubblicitari o tracking tra siti nel dataset di ricerca.
-- Contatto separato: email, finalità scelte indipendenti, versione informativa e timestamp server. Nessun identificatore condiviso con le risposte. La finalità marketing non si ricava dall’interesse all’AI o all’integrazione.
+- Contatto separato: email e richiesta esplicita di ricontatto sulla ricerca, versione informativa e timestamp server. Nessun identificatore condiviso con le risposte. Il marketing non è raccolto da questa survey.
 - Distinguere mancata risposta, rifiuto, non applicabile e zero. Registrare il ramo effettivo; eliminare campi non pertinenti. Non salvare un punteggio unico bisogno/interesse/acquisto.
 
 ## Misure di completamento e ricerca
@@ -56,7 +56,7 @@ Questa preview non trasmette metriche, né persistenti né aggregate. Non sono a
 
 Prima di Ads/rilascio, prova osservata con circa 5 persone per percorso, includendo amici fissi, partite aperte, prenotazione Playtomic senza matchmaking e circoli soddisfatti. Con autorizzazione appropriata annotare manualmente: avvii, arrivi al riepilogo, percorso e domanda d’interruzione, durata attiva, errori/aiuti necessari e formulazioni non comprese. Nessun appunto identificativo o screenshot con risposte reali.
 
-Per la successiva raccolta, definire prima: avvio = prima interazione di risposta; completamento = acquisizione server confermata delle 7 domande; tasso = acquisizioni/avvii nello stesso periodo e versione; abbandono per ultimo passaggio con denominatore degli arrivi; durata mediana e percentile 90 escludendo inattività secondo una soglia dichiarata. Schermata contatto e opt-in marketing hanno denominatori separati e non cambiano il completamento della survey. Non attivare questa telemetria finché privacy e sistema di raccolta non sono approvati.
+Per la successiva raccolta, definire prima: avvio = prima interazione di risposta dopo la conferma di età; completamento = acquisizione server confermata delle 7 domande; tasso = acquisizioni/avvii nello stesso periodo e versione; abbandono per ultimo passaggio con denominatore degli arrivi; durata mediana e percentile 90 escludendo inattività secondo una soglia dichiarata. La schermata facoltativa di ricontatto non cambia il completamento della survey. Non attivare questa telemetria finché privacy e sistema di raccolta non sono approvati.
 
 ## Verifica riproducibile
 
@@ -78,7 +78,7 @@ Limite di misura: la domanda sul canale rileva il canale principale dell’ultim
 
 ### Esito locale del backend — 5 novembre 2026
 
-16/16 test survey e 46/46 test mini-consulenza; typecheck, lint e build completati. Browser Chromium headless: 17 stati layout senza overflow a 320/390/768/1440 px, riduzione motion, preview senza richieste di rete mutative, API o telemetria; flusso active simulato ha verificato retry 503, risposte mantenute, consenso ricerca senza marketing, invio senza email e nessun collegamento tra richieste. SQL della migrazione applicato in PostgreSQL 15 locale usa-e-getta; idempotenza accepted/duplicate/conflict, rate limits e accesso anonimo negato verificati. Due richieste concorrenti con stessa chiave hanno prodotto una sola riga e ricevute accepted/duplicate.
+16/16 test survey e 46/46 test mini-consulenza; typecheck, lint e build completati prima delle modifiche a età e contatto. Browser Chromium headless: 17 stati layout senza overflow a 320/390/768/1440 px, riduzione motion, preview senza richieste di rete mutative, API o telemetria; flusso active simulato ha verificato retry 503, risposte mantenute, ricontatto ricerca, invio senza email e nessun collegamento tra richieste. SQL della migrazione applicato in PostgreSQL 15 locale usa-e-getta; idempotenza accepted/duplicate/conflict, rate limits e accesso anonimo negato verificati. Due richieste concorrenti con stessa chiave hanno prodotto una sola riga e ricevute accepted/duplicate. **Queste verifiche precedono il gate di età 14+ e l’aggiornamento del contatto; vanno ripetute prima dell’attivazione.**
 
 Nessuna migrazione o scrittura al Supabase remoto; solo lettura metadati/schema. Nessun test con dati reali, CRM, invio email o deploy remoto.
 

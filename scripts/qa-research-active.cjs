@@ -33,6 +33,7 @@ let contactAttempt = 0;
   const completePlayer = async () => {
     await page.goto(`${base}/ricerca/giocatori`);
     assert.equal(await page.getByRole('button', { name: /Inizia la ricerca/ }).isVisible(), true);
+    await page.getByLabel('Confermo di avere almeno 14 anni.').check();
     await page.getByRole('button', { name: /Inizia la ricerca/ }).click();
     await choose('frequency', 'monthly'); await next();
     await choose('group', 'friends'); await next();

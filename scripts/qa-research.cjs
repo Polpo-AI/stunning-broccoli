@@ -15,7 +15,7 @@ const report = { layouts: [], flows: [], errors: [], writes: [], telemetry: [] }
     if (!['GET', 'HEAD'].includes(request.method())) report.writes.push({ method: request.method(), url: request.url() });
     if (/analytics|insights|vitals|\/api\//.test(request.url())) report.telemetry.push(request.url());
   });
-  const click = name => page.getByRole('button', { name, exact: true }).click();
+  const click = async name => { if (name === 'Prova la survey') await page.getByLabel('Confermo di avere almeno 14 anni.').check(); return page.getByRole('button', { name, exact: true }).click(); };
   const choose = async (name, value) => { await page.locator(`input[name="${name}"][value="${value}"]`).check(); };
   async function start(audience) {
     const response = await page.goto(`${base}/ricerca/${audience}`);
@@ -25,7 +25,7 @@ const report = { layouts: [], flows: [], errors: [], writes: [], telemetry: [] }
     assert.match(response.headers()['content-security-policy'], /form-action 'none'/);
     assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'), 'noindex, nofollow, noarchive');
     await click('Prova la survey');
-    assert.equal(await page.locator('input:checked').count(), 0);
+    assert.equal(await page.locator('input[name=frequency]:checked').count(), 0);
   }
   async function assertLayout(label) {
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));

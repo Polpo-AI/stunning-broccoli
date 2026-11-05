@@ -61,12 +61,12 @@ export function createResearchIntake(config: ResearchConfig, store: ResearchStor
         const reason = (error as Error).message;
         return reply(reason === 'too_large' ? 413 : 400, { code: 'invalid_request' });
       }
-      const keys = ['audience', 'surveyVersion', 'answers', 'detail', 'idempotencyKey', 'website'];
+      const keys = ['audience', 'surveyVersion', 'answers', 'ageConfirmed', 'detail', 'idempotencyKey', 'website'];
       if (!validObject(body, keys, keys.filter(key => key !== 'detail')) || (body.audience !== 'giocatori' && body.audience !== 'circoli') ||
           body.surveyVersion !== RESEARCH_VERSION || typeof body.idempotencyKey !== 'string' || !UUID.test(body.idempotencyKey) ||
-          body.website !== '' || (body.detail !== undefined && typeof body.detail !== 'string') ||
+          body.ageConfirmed !== true || body.website !== '' || (body.detail !== undefined && typeof body.detail !== 'string') ||
           !validAnswerSet(body.audience as Audience, body.answers, body.detail)) {
-        return reply(422, { code: 'invalid_fields', message: 'Controlla le risposte e riprova.' });
+        return reply(422, { code: 'invalid_fields', message: 'Conferma di avere almeno 14 anni e controlla le risposte.' });
       }
       const detail = typeof body.detail === 'string' && body.detail.trim() ? body.detail.trim() : null;
       const record = {
@@ -94,13 +94,12 @@ export function createResearchIntake(config: ResearchConfig, store: ResearchStor
         const reason = (error as Error).message;
         return reply(reason === 'too_large' ? 413 : 400, { code: 'invalid_request' });
       }
-      const keys = ['email', 'researchContact', 'marketingOptIn', 'idempotencyKey', 'website'];
+      const keys = ['email', 'researchContact', 'marketingOptIn', 'ageConfirmed', 'idempotencyKey', 'website'];
       if (!validObject(body, keys) || typeof body.email !== 'string' || body.email.length > 254 ||
           !/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(body.email) ||
-          typeof body.researchContact !== 'boolean' || typeof body.marketingOptIn !== 'boolean' ||
-          (!body.researchContact && !body.marketingOptIn) || typeof body.idempotencyKey !== 'string' ||
+          body.researchContact !== true || body.marketingOptIn !== false || body.ageConfirmed !== true || typeof body.idempotencyKey !== 'string' ||
           !UUID.test(body.idempotencyKey) || body.website !== '') {
-        return reply(422, { code: 'invalid_fields', message: 'Inserisci un’email valida e scegli almeno una finalità.' });
+        return reply(422, { code: 'invalid_fields', message: 'Conferma di avere almeno 14 anni e scegli il ricontatto sulla ricerca.' });
       }
       const normalizedEmail = body.email.trim().toLowerCase();
       const contact = {

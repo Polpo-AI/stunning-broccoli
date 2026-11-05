@@ -152,7 +152,7 @@ test('response API stores seven answers without contact and confirms only after 
     response: async payload => { saved.push(payload); return { code: 'accepted', response_id: '11111111-1111-4111-8111-111111111111' }; },
     contact: async () => { throw new Error('unexpected contact write'); },
   });
-  const body = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), idempotencyKey: idempotencyKey(), website: '' };
+  const body = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), ageConfirmed: true, idempotencyKey: idempotencyKey(), website: '' };
   const response = await service.response(request('https://polpo-ai.com/api/research/responses', body));
   assert.equal(response.status, 202);
   assert.equal((await response.json()).status, 'saved');
@@ -165,7 +165,7 @@ test('response API stores seven answers without contact and confirms only after 
 test('response API rejects origin, body, version, extra fields, incomplete and invalid branches', async () => {
   let calls = 0;
   const service = intake.createResearchIntake(fakeConfig, { response: async () => { calls++; return {}; }, contact: async () => ({}) });
-  const base = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), idempotencyKey: idempotencyKey(), website: '' };
+  const base = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), ageConfirmed: true, idempotencyKey: idempotencyKey(), website: '' };
   assert.equal((await service.response(request('', base, { headers: { Origin: 'https://evil.example' } }))).status, 403);
   assert.equal((await service.response(request('', { ...base, extra: 1 }))).status, 422);
   assert.equal((await service.response(request('', { ...base, surveyVersion: 'padel-surveys-v1' }))).status, 422);
@@ -182,7 +182,7 @@ test('disabled backend never calls storage; storage errors do not report success
   const disabled = intake.createResearchIntake({ ...fakeConfig, enabled: false }, { response: async () => { calls++; return {}; }, contact: async () => ({}) });
   assert.equal((await disabled.response(request('', {}))).status, 503);
   const broken = intake.createResearchIntake(fakeConfig, { response: async () => { throw new Error('synthetic db failure with private payload'); }, contact: async () => ({}) });
-  const body = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), idempotencyKey: idempotencyKey(), website: '' };
+  const body = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), ageConfirmed: true, idempotencyKey: idempotencyKey(), website: '' };
   const result = await broken.response(request('', body));
   assert.equal(result.status, 503);
   assert.equal((await result.text()).includes('synthetic db failure'), false);
@@ -198,7 +198,7 @@ test('duplicate retry is safe and changed payload with the same key is rejected'
     },
     contact: async () => ({}),
   });
-  const body = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), idempotencyKey: idempotencyKey(), website: '' };
+  const body = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), ageConfirmed: true, idempotencyKey: idempotencyKey(), website: '' };
   const a = await service.response(request('', body));
   assert.equal(a.status, 202);
   const changed = { ...body, answers: { ...body.answers, group: ['open'] } };
@@ -212,12 +212,12 @@ test('rate-limit responses are explicit and do not claim a saved receipt', async
     response: async () => ({ code: 'rate_limited' }),
     contact: async () => ({ code: 'rate_limited' }),
   });
-  const responseBody = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), idempotencyKey: idempotencyKey(), website: '' };
+  const responseBody = { audience: 'giocatori', surveyVersion: q.VERSION, answers: validPlayerAnswers(), ageConfirmed: true, idempotencyKey: idempotencyKey(), website: '' };
   const limited = await service.response(request('', responseBody));
   assert.equal(limited.status, 429);
   assert.equal(limited.headers.get('retry-after'), '900');
   assert.equal((await limited.json()).status, undefined);
-  const contactBody = { email: 'synthetic@example.test', researchContact: true, marketingOptIn: false, idempotencyKey: idempotencyKey(), website: '' };
+  const contactBody = { email: 'synthetic@example.test', researchContact: true, marketingOptIn: false, ageConfirmed: true, idempotencyKey: idempotencyKey(), website: '' };
   assert.equal((await service.contact(request('', contactBody))).status, 429);
 });
 
@@ -228,14 +228,14 @@ test('contact API requires a valid email and explicit independent purpose, and i
     response: async () => { responseWrites++; return {}; },
     contact: async value => { contactWrites++; purposes.push([value.research_contact, value.marketing_opt_in]); assert.equal(value.privacy_version, 'padel-research-privacy-v1'); return { code: 'accepted', contact_id: '33333333-3333-4333-8333-333333333333' }; },
   });
-  const base = { email: 'research@example.test', researchContact: true, marketingOptIn: false, idempotencyKey: idempotencyKey(), website: '' };
+  const base = { email: 'research@example.test', researchContact: true, marketingOptIn: false, ageConfirmed: true, idempotencyKey: idempotencyKey(), website: '' };
   assert.equal((await service.contact(request('', { ...base, email: 'bad' }))).status, 422);
   assert.equal((await service.contact(request('', { ...base, researchContact: false }))).status, 422);
   assert.equal((await service.contact(request('', base))).status, 202);
-  const marketingOnly = { ...base, researchContact: false, marketingOptIn: true, idempotencyKey: 'f5a6a394-6232-46a4-84dd-a112e851f167' };
-  assert.equal((await service.contact(request('', marketingOnly))).status, 202);
-  assert.equal(contactWrites, 2);
-  assert.deepEqual(purposes, [[true, false], [false, true]]);
+  const marketingRequest = { ...base, marketingOptIn: true, idempotencyKey: 'f5a6a394-6232-46a4-84dd-a112e851f167' };
+  assert.equal((await service.contact(request('', marketingRequest))).status, 422);
+  assert.equal(contactWrites, 1);
+  assert.deepEqual(purposes, [[true, false]]);
   assert.equal(responseWrites, 0);
 });
 
