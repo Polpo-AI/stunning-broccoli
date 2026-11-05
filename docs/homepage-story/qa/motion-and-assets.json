@@ -1,0 +1,25 @@
+{
+  "animations": [
+    {
+      "name": "hero-emerge",
+      "opacity": "1"
+    },
+    {
+      "name": "hero-line",
+      "opacity": "0.935828"
+    }
+  ],
+  "keyboardSteps": "Enter and Space advance; final next disabled",
+  "localResourceErrors": [],
+  "expectedLocalVercelAnalyticsUnavailable": [
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:3137/_vercel/insights/script.js"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:3137/_vercel/speed-insights/script.js"
+    }
+  ],
+  "openGraph": 200
+}

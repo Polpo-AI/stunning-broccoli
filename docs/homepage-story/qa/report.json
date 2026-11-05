@@ -1,0 +1,114 @@
+{
+  "base": "http://127.0.0.1:3137",
+  "layouts": [
+    {
+      "width": 320,
+      "scenarios": 6,
+      "stepsPerScenario": 3,
+      "overflow": false,
+      "heroBottom": 252,
+      "leadBottom": 331
+    },
+    {
+      "width": 390,
+      "scenarios": 6,
+      "stepsPerScenario": 3,
+      "overflow": false,
+      "heroBottom": 272,
+      "leadBottom": 356
+    },
+    {
+      "width": 700,
+      "scenarios": 6,
+      "stepsPerScenario": 3,
+      "overflow": false,
+      "heroBottom": 342,
+      "leadBottom": 405
+    },
+    {
+      "width": 768,
+      "scenarios": 6,
+      "stepsPerScenario": 3,
+      "overflow": false,
+      "heroBottom": 258,
+      "leadBottom": 362
+    },
+    {
+      "width": 1024,
+      "scenarios": 6,
+      "stepsPerScenario": 3,
+      "overflow": false,
+      "heroBottom": 258,
+      "leadBottom": 362
+    },
+    {
+      "width": 1440,
+      "scenarios": 6,
+      "stepsPerScenario": 3,
+      "overflow": false,
+      "heroBottom": 288,
+      "leadBottom": 391
+    },
+    {
+      "width": 1920,
+      "scenarios": 6,
+      "stepsPerScenario": 3,
+      "overflow": false,
+      "heroBottom": 295,
+      "leadBottom": 398
+    }
+  ],
+  "keyboard": [
+    "End/Home/arrow wrap and focus pass"
+  ],
+  "touch": [
+    "horizontal swipe changes scenario",
+    "vertical scroll does not change scenario"
+  ],
+  "routes": [
+    {
+      "route": "/soluzioni",
+      "status": 200
+    },
+    {
+      "route": "/settori",
+      "status": 200
+    },
+    {
+      "route": "/metodo",
+      "status": 200
+    },
+    {
+      "route": "/contatti",
+      "status": 200
+    },
+    {
+      "route": "/agenti-ai",
+      "status": 200
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni",
+      "status": 200
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-padel",
+      "status": 200
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-centri-estetici",
+      "status": 200
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-ristoranti",
+      "status": 200
+    },
+    {
+      "route": "/chatbot-whatsapp-prenotazioni-hotel-bb",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "noJavaScript": "6 scenarios, 18 moments visible",
+  "reducedMotion": "none",
+  "oldSectorExplorer": "5 tabs preserved"
+}
