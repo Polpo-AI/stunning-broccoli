@@ -22,7 +22,7 @@ export default function ResearchPrivacyDraft() {
   return <main className="research research-policy research-policy-designed">
     <div className="research-orbit" aria-hidden="true" />
     <div className="research-shell research-policy-shell">
-      <div className="research-policy-top"><Link className="research-policy-back" href="/ricerca/giocatori">← Torna alla ricerca</Link><span>POLPO AI <i>·</i> PRIVACY</span></div>
+      <div className="research-policy-top"><Link className="research-policy-back" href="/">← Torna a Polpo AI</Link><span>POLPO AI <i>·</i> PRIVACY</span></div>
       <header className="research-policy-hero">
         <p className="research-eyebrow">INFORMATIVA · RICERCA PADEL</p>
         <h1>La ricerca parte da te.<br /><em>I tuoi dati, con chiarezza.</em></h1>
@@ -38,7 +38,7 @@ export default function ResearchPrivacyDraft() {
           <section id="approvazione" className="research-policy-section research-policy-final"><span className="research-policy-number">09</span><div><h2>Contatti e approvazione</h2><p>Per informazioni: <a href="mailto:info@polpo-ai.com">info@polpo-ai.com</a>. Questa bozza riguarda solo la survey Padel e non sostituisce l’informativa degli altri servizi Polpo AI.</p><p>Prima della pubblicazione vanno definite le basi giuridiche, verificati accessi e fornitori, trasferimenti, conservazione effettiva e procedura per i diritti; va inoltre approvato il percorso per i partecipanti di 14–17 anni.</p><p className="research-policy-last">Il testo definitivo dovrà corrispondere al questionario e ai trattamenti effettivamente attivi.</p></div></section>
         </div>
       </div>
-      <footer className="research-policy-footer"><span>POLPO AI · RICERCA PADEL</span><Link href="/ricerca/giocatori">Torna al questionario ↑</Link></footer>
+      <footer className="research-policy-footer"><span>POLPO AI · RICERCA PADEL</span><Link href="/">Torna al sito Polpo AI ↑</Link></footer>
     </div>
   </main>;
 }

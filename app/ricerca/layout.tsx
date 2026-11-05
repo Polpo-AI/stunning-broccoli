@@ -1,6 +1,4 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { researchPublicEnabled } from '@/lib/research/availability';
 import './research.css';
 export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
@@ -11,6 +9,5 @@ export const metadata: Metadata = {
   referrer: 'no-referrer',
 };
 export default function ResearchLayout({ children }: { children: React.ReactNode }) {
-  if (!researchPublicEnabled()) notFound();
   return children;
 }
