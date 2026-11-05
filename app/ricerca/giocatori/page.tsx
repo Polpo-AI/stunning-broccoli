@@ -1,2 +1,4 @@
 import Survey from '@/components/research/Survey';
-export default function PlayersSurvey() { return <Survey audience="giocatori" />; }
+import { readResearchConfig } from '@/lib/research/server-config';
+export const dynamic = 'force-dynamic';
+export default function PlayersSurvey() { return <Survey audience="giocatori" collectionEnabled={readResearchConfig().enabled} />; }

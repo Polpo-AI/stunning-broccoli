@@ -9,6 +9,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test:research": "node --test scripts/test-research.cjs",
+    "qa:research:active": "node scripts/qa-research-active.cjs",
     "test:consultation": "node --test scripts/test-consultation.cjs"
   },
   "dependencies": {

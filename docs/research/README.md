@@ -1,19 +1,19 @@
-# Survey padel private — v1
+# Survey padel — v2
 
-Due percorsi indipendenti: `/ricerca/giocatori` e `/ricerca/circoli`. Sette domande per percorso, riepilogo modificabile e schermata contatto fuori dalle sette domande. Nessun link aggiunto a homepage, navigazione o sitemap. Base `origin/main` a `baf5f4b`; PR #18 già integrata prima di questo lavoro. Nessuna modifica al dominio mini-consulenza, al suo backend o al refactor homepage parallelo.
+Due percorsi indipendenti: `/ricerca/giocatori` e `/ricerca/circoli`. Sette domande per percorso, riepilogo modificabile e schermata contatto fuori dalle sette domande. Nessun link aggiunto a homepage, navigazione o sitemap. PR #18–23 e #25 sono già integrate nella base `main` aggiornata (bc7a39b al controllo iniziale). La mini-consulenza e la homepage non sono state modificate.
 
 ## Prova e confini
 
-- `npm ci`, `npm run dev`: percorsi disponibili soltanto in sviluppo. Per provare una build locale: impostare `RESEARCH_LOCAL_PREVIEW=1`, poi `npm run build` e `npm start -- --hostname 127.0.0.1 --port 3190`.
-- Vercel Preview: disponibili con `VERCEL_ENV=preview`; mantenere la protezione Vercel Authentication. `VERCEL_ENV=production` prevale su ogni override e restituisce 404. Senza Vercel, una build produzione è chiusa salvo override locale esplicito: non configurarlo su hosting pubblico.
-- Nessun endpoint di acquisizione, SDK database, credenziale, local/session storage, cookie, beacon, evento analytics o salvataggio. Stato React in memoria, cancellato a fine prova, al reset o ricaricando. Nessun messaggio di “risposte ricevute”. Usare esclusivamente dati fittizi.
-- Email e due consensi separati visibili ma disabilitati; nessun nome, telefono, circolo, indirizzo o ruolo aggiuntivo nel contatto. Non è possibile trasformare il form in raccolta attiva cambiando una variabile.
+- In locale e in preview i percorsi mostrano la prova quando i gate di raccolta sono spenti. In produzione le pagine richiedono gate pubblico e raccolta attivi, progetto autorizzato, versione privacy approvata e retention verificata; per default rispondono 404.
+- Con i gate spenti non partono richieste di acquisizione, le risposte restano nella memoria React e il contatto è disabilitato. Ricaricare o chiudere la pagina elimina la prova.
+- Con i gate attivi, un invio esplicito dopo il riepilogo salva le risposte senza richiedere un recapito. L’email resta facoltativa ed è acquisita tramite endpoint e tabella distinti con finalità separate.
+- Le risposte e i recapiti sono inviati solo ai rispettivi endpoint same-origin quando la raccolta è attiva. Nessuna email o risposta viene conservata in cookie/local/session storage. Nessun link a homepage, navigazione o sitemap.
 - `noindex/nofollow/noarchive`, header no-store, referrer disabilitato, CSP con form-action none e connessioni same-origin. Noindex non è controllo accessi: la riservatezza remota dipende dalla protezione dell’hosting.
 - Analytics e Speed Insights esclusi per il prefisso `/ricerca`, inclusi eventi tardivi dopo navigazione interna. Dati tecnici e log della piattaforma di hosting/autenticazione restano possibili: non promettiamo anonimato assoluto.
 
 ## Decisioni sul questionario
 
-Testi operativi completi in `lib/research/questions.ts`, identificativi stabili e versione `padel-surveys-v1`. Non assegnare valori di default alle scale. “Non so”, “non applicabile”, “nessun problema” e rifiuto di rispondere sono distinti dallo zero.
+Testi operativi completi in `lib/research/questions.ts`, identificativi stabili e versione `padel-surveys-v2`. Non assegnare valori di default alle scale. “Non so”, “non applicabile”, “nessun problema” e rifiuto di rispondere sono distinti dallo zero.
 
 | Percorso | Domande / logica |
 | --- | --- |
@@ -34,20 +34,20 @@ Letta la conversazione “Analisi integrazione WhatsApp” nei turni disponibili
 
 ## Prima di raccogliere risposte reali
 
-Dipendenze ancora aperte, nessuna risolta da questa preview:
+Prima della raccolta pubblica restano aperti:
 
 1. Informativa di ricerca approvata: titolare e contatto reali, finalità, basi giuridiche, destinatari/fornitori, eventuali trasferimenti, tempi di conservazione, cancellazione e diritti. Stabilire anche destinatari ammessi ed eventuale gestione dei minori. Non riutilizzare la bozza della mini-consulenza.
-2. Backend dedicato, validazione server dello schema e dei branch, limiti body/testo/richieste, idempotenza e anti-abuso. Salvataggio atomico prima di confermare ricezione; gestione errori/retry senza duplicati. Nessuna chiave privilegiata nel browser.
-3. Separazione tecnica e accessi minimi per risposte e recapiti; verifica permessi, conservazione e cancellazione su dati sintetici. Evitare collegamento tra risposta e contatto salvo necessità esplicita documentata; con contatto collegato non parlare di anonimato.
-4. Consenso al ricontatto di ricerca distinto da marketing, entrambi facoltativi e non preselezionati; registrare versione del testo e data solo quando la raccolta è attiva. Partecipazione senza recapito e senza marketing. Rifiuto marketing non blocca il ricontatto di ricerca. Non iscrivere automaticamente a newsletter/CRM.
-5. Verifica del trattamento dei dati tecnici da hosting, autenticazione e log; nessun testo libero o recapito in log, URL o analytics. Revisione di sicurezza e test del flusso di acquisizione reale separati da quelli di questa preview.
+2. Review indipendente di migrazione, RLS, endpoint, rate limit, gestione errori e viste aggregate; collaudo sul database isolato/branch.
+3. Pianificazione e verifica della cancellazione automatica e procedura per richieste individuali. La migrazione include la funzione di purge ma il job non è configurato.
+4. Verifica dei log tecnici di Vercel e Supabase, WAF, retention dei log e accessi ai risultati. Le chiavi anti-abuso HMAC sono separate dalle risposte e scadono entro 24 ore.
+5. Test E2E su deploy protetto con dati sintetici, responsive e accessibilità; autorizzazione esplicita del titolare prima di configurare i gate.
 
-### Contratto dati proposto per una fase successiva
+### Contratto dati implementato
 
-Nessun record viene creato ora. Proposta da implementare e validare sul server prima dell’attivazione:
+La migrazione dedicata è `supabase/migrations/20261105113000_create_padel_research_collection.sql`. Il server valida lo schema prima della scrittura:
 
 - Risposta: `survey_version`, `audience`, `answers` con chiavi e valori enumerati del modulo domande; `priority_detail` facoltativo, massimo 300 caratteri; timestamp server e ID casuale soltanto se necessari. Niente IP/user-agent, identificatori pubblicitari o tracking tra siti nel dataset di ricerca.
-- Contatto separato: email, finalità scelte, versione informativa/testi consenso, timestamp server. Nessun identificatore condiviso con le risposte per default. La finalità marketing non si ricava dall’interesse all’AI o all’integrazione.
+- Contatto separato: email, finalità scelte indipendenti, versione informativa e timestamp server. Nessun identificatore condiviso con le risposte. La finalità marketing non si ricava dall’interesse all’AI o all’integrazione.
 - Distinguere mancata risposta, rifiuto, non applicabile e zero. Registrare il ramo effettivo; eliminare campi non pertinenti. Non salvare un punteggio unico bisogno/interesse/acquisto.
 
 ## Misure di completamento e ricerca
@@ -62,15 +62,26 @@ Per la successiva raccolta, definire prima: avvio = prima interazione di rispost
 
 - `npm run test:research`: branch, validazione, limiti, esclusività, invalidazione e gate produzione.
 - `npm run typecheck`, `npm run lint`, `npm run build`.
-- `scripts/qa-research.cjs`: richiede Playwright già disponibile (`PLAYWRIGHT_MODULE` opzionale) e Edge; build servita in loopback su 3190 con override locale e su 3191 con `VERCEL_ENV=production`. Flussi completi, 320/390/768/1440 px, focus, campi disabilitati, zero richieste mutative/API/telemetria, storage/cookie vuoti, produzione 404, pagine esistenti 200.
+- `scripts/qa-research.cjs`: prova preview con Playwright (Chromium predefinito; `PLAYWRIGHT_CHANNEL` opzionale), build su 3190 e produzione simulata su 3191. Flussi completi, 320/390/768/1440 px, focus, reduced motion, zero richieste mutative/API/telemetria, storage/cookie vuoti, produzione 404, pagine esistenti 200.
+- `npm run qa:research:active`: server locale su 3192 con chiavi sintetiche e gate espliciti; Playwright intercetta ogni POST e risponde con esiti sintetici, senza chiamare il database. Verifica retry, risposte mantenute dopo 503, idempotenza frontend, invio senza email, recapito separato e responsive.
 - Evidenze sintetiche in `qa/`. La verifica browser usa la build locale. La protezione e lo stato della preview remota sono verificati separatamente e documentati nella Draft PR.
 
 Limiti: non è un audit WCAG completo né una prova su dispositivi fisici/screen reader; la ricerca breve non sostituisce interviste operative, verifica commerciale o tecnica. Nessuna raccolta reale, nessun merge, nessuna pubblicazione in produzione.
 
-### Esito locale del 5 novembre 2026
+### Esito della preview in PR #24 — 5 novembre 2026
 
 7/7 test survey e 40/40 test applicativi mini-consulenza passati (questi ultimi usano adapter fittizi, nessuna consegna reale). Typecheck, lint e build completati. Browser Edge headless sulla build: 17 verifiche layout senza overflow, percorsi completi e modifica branch, selezione da tastiera, focus al titolo e reduced motion verificati. Zero errori pagina, richieste mutative/API/telemetria, cookie e storage. Entrambi i percorsi 404 in ambiente produzione simulato anche con override locale; homepage, contatti e soluzioni 200. Screenshot desktop/mobile ispezionati, compresa scala a 320 px e contatto disabilitato.
 
 Avvisi ereditati non bloccanti della build: utility easing Tailwind ambigua e generazione statica disabilitata per una route edge. Primo caricamento survey circa 116 kB secondo Next. Nessuna dipendenza nuova. Nessun punteggio Lighthouse dichiarato.
 
 Limite di misura: la domanda sul canale rileva il canale principale dell’ultimo episodio. Non selezionare Playtomic non dimostra che non sia stato usato per una prenotazione secondaria o in altre occasioni.
+
+### Esito locale del backend — 5 novembre 2026
+
+16/16 test survey e 46/46 test mini-consulenza; typecheck, lint e build completati. Browser Chromium headless: 17 stati layout senza overflow a 320/390/768/1440 px, riduzione motion, preview senza richieste di rete mutative, API o telemetria; flusso active simulato ha verificato retry 503, risposte mantenute, consenso ricerca senza marketing, invio senza email e nessun collegamento tra richieste. SQL della migrazione applicato in PostgreSQL 15 locale usa-e-getta; idempotenza accepted/duplicate/conflict, rate limits e accesso anonimo negato verificati. Due richieste concorrenti con stessa chiave hanno prodotto una sola riga e ricevute accepted/duplicate.
+
+Nessuna migrazione o scrittura al Supabase remoto; solo lettura metadati/schema. Nessun test con dati reali, CRM, invio email o deploy remoto.
+
+## Raccolta server-side
+
+L’implementazione successiva vive nel branch dedicato e mantiene spente raccolta e visibilità pubblica per default. Vedere [IMPLEMENTATION.md](IMPLEMENTATION.md) per schema, gate, migrazione, test e checklist; [PRIVACY-DRAFT.md](PRIVACY-DRAFT.md) è un’informativa separata ancora in bozza e non approvata. Nessuna raccolta reale è autorizzata da questo documento.

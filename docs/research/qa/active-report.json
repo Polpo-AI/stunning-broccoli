@@ -1,0 +1,13 @@
+{
+  "result": "pass",
+  "syntheticResponseRequests": 3,
+  "syntheticContactRequests": 2,
+  "responseAndContactUnlinked": true,
+  "retryPreservedForm": true,
+  "testedWidths": [
+    320,
+    390,
+    768,
+    1440
+  ]
+}

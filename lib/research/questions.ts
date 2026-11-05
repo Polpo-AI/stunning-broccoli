@@ -58,3 +58,25 @@ export function validQuestion(question: Question, answers: Answers): boolean {
       !(values.length > 1 && values.some(value => field.exclusive?.includes(value)));
   });
 }
+
+/** Server-side contract validation: answers must match every visible field and no other field. */
+export function validAnswerSet(audience: Audience, answers: unknown, detail?: unknown): answers is Answers {
+  if (!answers || typeof answers !== 'object' || Array.isArray(answers)) return false;
+  const input = answers as Record<string, unknown>;
+  if (Object.values(input).some(value => !Array.isArray(value) || value.some(item => typeof item !== 'string'))) return false;
+  const validInput = input as Answers;
+  const relevant = questions(audience, validInput);
+  const fields = relevant.flatMap(question => question.fields);
+  const expected = new Set(fields.map(field => field.id));
+  if (Object.keys(input).length !== expected.size || Object.keys(input).some(key => !expected.has(key))) return false;
+  if (!relevant.every(question => validQuestion(question, validInput))) return false;
+  if (audience === 'giocatori') {
+    if (validInput.channel?.[0] === 'never' && !['na', 'skip'].includes(validInput.ease?.[0] ?? '')) return false;
+    if (validInput.channel?.[0] === 'never' && !['never', 'unknown', 'skip'].includes(validInput.bookingChannel?.[0] ?? '')) return false;
+    if (validInput.failures?.[0] === 'no_intent' && !['no_intent', 'unknown', 'skip'].includes(validInput.obstacle?.[0] ?? '')) return false;
+  }
+  if (audience === 'giocatori' && detail !== undefined) return false;
+  if (detail !== undefined && (typeof detail !== 'string' || detail.length > 300 || /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/.test(detail))) return false;
+  if (audience === 'circoli' && input.priority !== undefined && !Array.isArray(input.priority)) return false;
+  return true;
+}

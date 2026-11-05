@@ -7,7 +7,7 @@ const out = path.resolve('docs/research/qa');
 const report = { layouts: [], flows: [], errors: [], writes: [], telemetry: [] };
 (async () => {
   fs.mkdirSync(out, { recursive: true });
-  const browser = await chromium.launch({ channel: 'msedge', headless: true });
+  const browser = await chromium.launch({ ...(process.env.PLAYWRIGHT_CHANNEL ? { channel: process.env.PLAYWRIGHT_CHANNEL } : {}), headless: true });
   const context = await browser.newContext({ reducedMotion: 'reduce' });
   const page = await context.newPage();
   page.on('pageerror', error => report.errors.push(error.message));
@@ -28,6 +28,7 @@ const report = { layouts: [], flows: [], errors: [], writes: [], telemetry: [] }
     assert.equal(await page.locator('input:checked').count(), 0);
   }
   async function assertLayout(label) {
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     const state = await page.evaluate(() => ({ width: innerWidth, scroll: document.documentElement.scrollWidth, headings: document.querySelectorAll('h1').length, focused: document.activeElement.tagName }));
     assert.ok(state.scroll <= state.width, `${label}: horizontal overflow ${JSON.stringify(state)}`);
     assert.equal(state.headings, 1);
@@ -59,7 +60,7 @@ const report = { layouts: [], flows: [], errors: [], writes: [], telemetry: [] }
   await choose('group', 'friends'); await click('Continua');
   await choose('channel', 'playtomic');
   await click('Continua'); assert.ok(await page.locator('.research-error[role=alert]').isVisible());
-  await choose('playtomicUse', 'booking'); await click('Continua');
+  await choose('playtomicUse', 'booking'); await choose('bookingChannel', 'playtomic'); await click('Continua');
   await page.setViewportSize({ width: 320, height: 900 });
   await assertLayout('Scale at 320');
   await page.screenshot({ path: path.join(out, 'giocatori-320-scale.png'), fullPage: true });
@@ -91,7 +92,7 @@ const report = { layouts: [], flows: [], errors: [], writes: [], telemetry: [] }
   assert.equal(await page.locator('input[name=problems][value=players]').isDisabled(), true);
   await choose('problems', 'none'); assert.equal(await page.locator('input:checked').count(), 1);
   await choose('problems', 'messages'); await choose('problems', 'admin'); await click('Continua');
-  await choose('mainActivity', 'admin'); await choose('activeHours', '1_3'); await click('Continua');
+  await choose('mainActivity', 'admin'); await choose('activeHours', '1_3'); await choose('incidents', 'zero'); await click('Continua');
   await choose('satisfaction', '4'); await click('Continua');
   await choose('priority', 'admin'); await page.locator('textarea').fill('Esempio sintetico: mantenere il calendario attuale.'); await click('Continua');
   await choose('interest', 'no'); await click('Rivedi la prova'); await click('Prosegui senza invio →');
