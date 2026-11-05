@@ -4,15 +4,15 @@ import './world-explorer.css';
 import './inner.css';
 import './consultation.css';
 import type { Metadata, Viewport } from 'next';
-import { Inter, Plus_Jakarta_Sans, Fraunces } from 'next/font/google';
+import localFont from 'next/font/local';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Navbar from '@/components/landing/Navbar';
 import PageChrome from '@/components/landing/PageChrome';
 
-const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' });
-const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'], display: 'swap', variable: '--font-jakarta', weight: ['400', '500', '600', '700', '800'] });
-const fraunces = Fraunces({ subsets: ['latin'], display: 'swap', variable: '--font-fraunces', weight: ['300', '400', '600'], style: ['normal', 'italic'] });
+const inter = localFont({ src: './fonts/Inter.woff2', display: 'swap', variable: '--font-inter', weight: '100 900' });
+const jakarta = localFont({ src: './fonts/PlusJakartaSans.woff2', display: 'swap', variable: '--font-jakarta', weight: '200 800' });
+const fraunces = localFont({ src: [{path:'./fonts/Fraunces.woff2',style:'normal',weight:'100 900'},{path:'./fonts/Fraunces-Italic.woff2',style:'italic',weight:'100 900'}], display: 'swap', variable: '--font-fraunces' });
 const description = 'Polpo AI, specialista di automazioni AI per le PMI. Assistenti intelligenti, prenotazioni e processi connessi, progettati intorno al tuo lavoro. Richiedi la tua analisi gratuita.';
 const isPreview = process.env.VERCEL_ENV === 'preview';
 
