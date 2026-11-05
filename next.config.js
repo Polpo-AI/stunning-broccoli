@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async redirects() { return [{ source: '/creazione-siti-web', destination: '/#soluzioni', permanent: true }, { source: '/portfolio/:path*', destination: '/#soluzioni', permanent: true }]; },
+  async redirects() { return [
+    { source: '/icon', destination: '/icon.png', permanent: true },
+    { source: '/apple-icon', destination: '/apple-icon.png', permanent: true },
+    { source: '/opengraph-image', destination: '/opengraph-image.png', permanent: true },
+    { source: '/creazione-siti-web', destination: '/#soluzioni', permanent: true },
+    { source: '/portfolio/:path*', destination: '/#soluzioni', permanent: true },
+  ]; },
   // Image optimization Next.js: serve AVIF/WebP responsive automaticamente
   // (su Vercel è incluso; su Netlify serve @netlify/plugin-nextjs già presente).
   images: {
