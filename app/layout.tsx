@@ -5,8 +5,8 @@ import './inner.css';
 import './consultation.css';
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/next';
+import SiteTelemetry from '@/components/research/SiteTelemetry';
+
 import Navbar from '@/components/landing/Navbar';
 import PageChrome from '@/components/landing/PageChrome';
 
@@ -53,7 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <Navbar />
         <PageChrome>{children}</PageChrome>
-        <Analytics /><SpeedInsights />
+        <SiteTelemetry />
       </body>
     </html>
   );
