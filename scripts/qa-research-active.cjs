@@ -47,6 +47,13 @@ let contactAttempt = 0;
   };
 
   await completePlayer();
+  const noticeOpened = context.waitForEvent('page');
+  await page.getByRole('link', {name:'informativa', exact:true}).click();
+  const notice = await noticeOpened;
+  await notice.waitForLoadState('domcontentloaded');
+  assert.ok(notice.url().endsWith('/ricerca/informativa'));
+  await notice.close();
+  assert.match(await page.locator('.research-review').innerText(), /1–3 volte al mese/);
   assert.equal(await page.getByRole('button', { name: /Invia le risposte/ }).isEnabled(), false);
   await page.getByRole('checkbox', {name:/Ho letto/}).check();
   await page.getByRole('button', { name: /Invia le risposte/ }).click();

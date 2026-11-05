@@ -74,7 +74,7 @@ export function createResearchIntake(config: ResearchConfig, store: ResearchStor
         survey_version: RESEARCH_VERSION,
         answers: body.answers as Answers,
         priority_detail: detail,
-        idempotency_hash: hash(config.hmacKey, `response:${body.idempotencyKey}`),
+        idempotency_hash: hash(config.hmacKey, `response:${body.idempotencyKey.toLowerCase()}`),
         payload_hash: hash(config.hmacKey, JSON.stringify({ audience: body.audience, version: RESEARCH_VERSION, ageBand: body.ageBand, privacyVersion: RESEARCH_PRIVACY_VERSION, answers: body.answers, detail })),
         ip_hash: ipHash(request, config, 'response'), age_band: body.ageBand as '14_17' | '18_plus', privacy_version: RESEARCH_PRIVACY_VERSION,
       };
@@ -107,7 +107,7 @@ export function createResearchIntake(config: ResearchConfig, store: ResearchStor
         research_contact: body.researchContact,
         marketing_opt_in: body.marketingOptIn,
         privacy_version: RESEARCH_PRIVACY_VERSION,
-        idempotency_hash: hash(config.hmacKey, `contact:${body.idempotencyKey}`),
+        idempotency_hash: hash(config.hmacKey, `contact:${body.idempotencyKey.toLowerCase()}`),
         payload_hash: hash(config.hmacKey, JSON.stringify({ email: normalizedEmail, researchContact: body.researchContact, marketingOptIn: body.marketingOptIn, privacyVersion: RESEARCH_PRIVACY_VERSION, ageBand: body.ageBand })),
         ip_hash: ipHash(request, config, 'contact'), age_band: body.ageBand as '14_17' | '18_plus',
       };
@@ -161,7 +161,7 @@ export async function withdrawResearch(request: Request, config: ResearchConfig,
   if (!validObject(body, ['purpose', 'code']) || !['response', 'contact'].includes(String(body.purpose)) || typeof body.code !== 'string' || !UUID.test(body.code)) return reply(422, { code: 'invalid_fields' });
   try {
     const result = await store.rpc<{ code: string }>('research_withdraw', {
-      p_purpose: body.purpose, p_subject_hash: hash(config.hmacKey, `${body.purpose}:${body.code}`), p_ip_hash: ipHash(request, config, 'withdrawal'),
+      p_purpose: body.purpose, p_subject_hash: hash(config.hmacKey, `${body.purpose}:${body.code.toLowerCase()}`), p_ip_hash: ipHash(request, config, 'withdrawal'),
     });
     if (result.code === 'rate_limited') return reply(429, { code: 'rate_limited' }, { 'Retry-After': '900' });
     if (result.code !== 'revoked') throw new Error('storage');

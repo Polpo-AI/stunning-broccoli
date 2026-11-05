@@ -274,5 +274,8 @@ test('withdrawal validates origin and secret receipt, supports closed collection
   assert.equal((await intake.withdrawResearch(request('',{purpose:'response',code:idempotencyKey()}),cfg,store)).status,200);
   assert.match(calls[0].body.p_subject_hash,/^[0-9a-f]{64}$/);
   assert.equal(JSON.stringify(calls[0]).includes(idempotencyKey()),false);
+  assert.equal((await intake.withdrawResearch(request('',{purpose:'response',code:idempotencyKey().toUpperCase()}),cfg,store)).status,200);
+  assert.equal(calls[1].body.p_subject_hash,calls[0].body.p_subject_hash);
   assert.equal((await intake.withdrawResearch(request('',{purpose:'contact',code:idempotencyKey()}),cfg,{rpc:async()=>{throw Error('private');}})).status,503);
 });
+

@@ -22,6 +22,13 @@ begin
  perform public.research_delete_expired();
  assert not exists(select 1 from research_private.consent_evidence where subject_hash=repeat('a',64));
  assert exists(select 1 from research_private.consent_evidence where subject_hash=repeat('e',64));
+-- Small cells are absent until there are at least five distinct responses.
+ insert into research_private.survey_responses(survey_type,survey_version,answers,idempotency_hash,payload_hash)
+ select 'circoli','padel-surveys-v2','{"synthetic_question":["synthetic_answer"]}',lpad(i::text,64,'0'),repeat('b',64) from generate_series(1,4) i;
+ assert not exists(select 1 from research_private.response_distribution where question_id='synthetic_question');
+ insert into research_private.survey_responses(survey_type,survey_version,answers,idempotency_hash,payload_hash)
+ values ('circoli','padel-surveys-v2','{"synthetic_question":["synthetic_answer"]}',lpad('5',64,'0'),repeat('b',64));
+ assert (select response_count=5 from research_private.response_distribution where question_id='synthetic_question');
 end $$;
 set local role anon;
 do $$ begin
