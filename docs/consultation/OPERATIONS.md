@@ -1,6 +1,6 @@
 # Configurazione e attivazione — mini-consulenza
 
-## Stato di questa PR
+## Stato iniziale della PR #18 (storico)
 
 Anteprima funzionante, invio **disabilitato**. Nessuna migrazione remota, nessuna credenziale aggiunta, nessun contatto HubSpot reale creato, nessuna notifica reale inviata. I test PostgreSQL locali dimostrano il comportamento del codice SQL, non l'esistenza di una coda operativa nel progetto Supabase del sito.
 
@@ -78,6 +78,8 @@ Eventi solo allowlist nome+fase+identificatore casuale, deduplicati client e DB.
 Fonti primarie: [HubSpot contatti](https://developers.hubspot.com/docs/api-reference/latest/crm/objects/contacts/guide), [proprietà](https://developers.hubspot.com/docs/api-reference/latest/crm/properties/guide), [associazioni](https://developers.hubspot.com/docs/api-reference/latest/crm/associations/associate-records/guide), [header Vercel](https://vercel.com/docs/headers/request-headers), [idempotenza Resend](https://resend.com/docs/dashboard/emails/idempotency-keys). API HubSpot fissate alla versione `2026-09`; compatibilità effettiva del portale da verificare nell'E2E.
 
 
-## Aggiornamento 5 novembre 2026
+## Stato corrente — 5 novembre 2026
 
-Lo stato operativo corrente è in [ACTIVATION.md](ACTIVATION.md), con migrazioni remote applicate, cron Supabase predisposto ma consegne OFF, schema italiano da approvare e credenziali mancanti. Le indicazioni iniziali sopra su assenza migrazioni, manifest di 18 proprietà e creazione private app descrivono la PR originaria e sono superate da questo aggiornamento. Il manifest corrente riusa le cinque proprietà italiane e contiene 21 proprietà totali. Il worker ha maxDuration 120 secondi, mantenendo il limite di avvio nuovi job a 20 secondi; controllare il piano effettivo. Il primo avvio non offre marketing.
+Lo stato verificato e le azioni mancanti sono in [ACTIVATION.md](ACTIVATION.md). Supabase, credenziali runtime e schema HubSpot sono configurati; scheduler attivo con autorizzazione esplicita, email ricevuta. La consegna CRM sintetica ha fallito con HTTP 400 e il worker restituisce anche 503. La PR #23 corregge le risposte vuote dello storage e aggiunge diagnostica sicura; attende recensione obbligatoria. Invio pubblico disabilitato, servizio completo non ancora attestato.
+
+Le indicazioni iniziali su assenza migrazioni/credenziali, manifest di 18 proprietà e private app sono storiche. Il manifest corrente riusa cinque proprietà italiane e contiene 21 proprietà totali; si usa una Service Key. Il worker ha maxDuration 120 secondi e avvia nuovi job per massimo 20 secondi. Nessun marketing al primo avvio. Non attivare il pubblico sulla sola base di questo documento storico.

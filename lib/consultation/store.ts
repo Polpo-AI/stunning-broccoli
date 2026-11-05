@@ -10,7 +10,9 @@ export class LeadStore{
   try{
    const res=await this.fetcher(`${this.config.databaseUrl.replace(/\/$/,'')}/rest/v1/rpc/${name}`,{method:'POST',headers:{apikey:this.config.databaseKey,Authorization:`Bearer ${this.config.databaseKey}`,'Content-Type':'application/json'},body:JSON.stringify(body),signal:AbortSignal.timeout(5000),cache:'no-store'});
    if(!res.ok)throw new DeliveryError('STORAGE_UNAVAILABLE',true);
-   return await res.json() as T;
+   if(res.status===204)return null as T;
+   const text=await res.text();
+   return (text ? JSON.parse(text) : null) as T;
   }catch{throw new DeliveryError('STORAGE_UNAVAILABLE',true);}
  }
  acquire(input:Consultation,fingerprint:string,contactKey:string,ipKey:string,privacyVersion:string,marketingVersion:string){return this.rpc<{code:'accepted'|'conflict'|'rate_limited';request_id?:string}>('polpo_consultation_acquire',{p_key:input.submissionId,p_fingerprint:fingerprint,p_contact_key:contactKey,p_ip_key:ipKey,p_payload:input,p_privacy_version:privacyVersion,p_marketing_version:marketingVersion});}
