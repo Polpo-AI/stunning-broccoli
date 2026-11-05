@@ -6,8 +6,8 @@ import { RESEARCH_PRIVACY_VERSION, RESEARCH_VERSION, type ResearchConfig } from 
 type Receipt = { code: 'accepted' | 'duplicate' | 'conflict' | 'rate_limited'; response_id?: string };
 type ContactReceipt = { code: 'accepted' | 'duplicate' | 'conflict' | 'rate_limited'; contact_id?: string };
 export type ResearchStore = {
-  response(input: { audience: Audience; survey_version: string; answers: Answers; priority_detail: string | null; idempotency_hash: string; payload_hash: string; ip_hash: string }): Promise<Receipt>;
-  contact(input: { email: string; research_contact: boolean; marketing_opt_in: boolean; privacy_version: string; idempotency_hash: string; payload_hash: string; ip_hash: string }): Promise<ContactReceipt>;
+  response(input: { audience: Audience; survey_version: string; answers: Answers; priority_detail: string | null; idempotency_hash: string; payload_hash: string; ip_hash: string; age_band: '14_17' | '18_plus'; privacy_version: string }): Promise<Receipt>;
+  contact(input: { email: string; research_contact: boolean; marketing_opt_in: boolean; privacy_version: string; idempotency_hash: string; payload_hash: string; ip_hash: string; age_band: '14_17' | '18_plus' }): Promise<ContactReceipt>;
 };
 
 const headers = { 'Cache-Control': 'no-store', 'Content-Type': 'application/json; charset=utf-8', 'X-Content-Type-Options': 'nosniff' };
@@ -61,12 +61,12 @@ export function createResearchIntake(config: ResearchConfig, store: ResearchStor
         const reason = (error as Error).message;
         return reply(reason === 'too_large' ? 413 : 400, { code: 'invalid_request' });
       }
-      const keys = ['audience', 'surveyVersion', 'answers', 'ageConfirmed', 'detail', 'idempotencyKey', 'website'];
+      const keys = ['audience', 'surveyVersion', 'answers', 'ageConfirmed', 'ageBand', 'consentAccepted', 'privacyVersion', 'detail', 'idempotencyKey', 'website'];
       if (!validObject(body, keys, keys.filter(key => key !== 'detail')) || (body.audience !== 'giocatori' && body.audience !== 'circoli') ||
           body.surveyVersion !== RESEARCH_VERSION || typeof body.idempotencyKey !== 'string' || !UUID.test(body.idempotencyKey) ||
-          body.ageConfirmed !== true || body.website !== '' || (body.detail !== undefined && typeof body.detail !== 'string') ||
+          body.ageConfirmed !== true || !['14_17', '18_plus'].includes(String(body.ageBand)) || body.consentAccepted !== true || body.privacyVersion !== RESEARCH_PRIVACY_VERSION || body.website !== '' || (body.detail !== undefined && typeof body.detail !== 'string') ||
           !validAnswerSet(body.audience as Audience, body.answers, body.detail)) {
-        return reply(422, { code: 'invalid_fields', message: 'Conferma di avere almeno 14 anni e controlla le risposte.' });
+        return reply(422, { code: 'invalid_fields', message: 'Conferma la fascia di età, il consenso e controlla le risposte.' });
       }
       const detail = typeof body.detail === 'string' && body.detail.trim() ? body.detail.trim() : null;
       const record = {
@@ -75,8 +75,8 @@ export function createResearchIntake(config: ResearchConfig, store: ResearchStor
         answers: body.answers as Answers,
         priority_detail: detail,
         idempotency_hash: hash(config.hmacKey, `response:${body.idempotencyKey}`),
-        payload_hash: hash(config.hmacKey, JSON.stringify({ audience: body.audience, version: RESEARCH_VERSION, answers: body.answers, detail })),
-        ip_hash: ipHash(request, config, 'response'),
+        payload_hash: hash(config.hmacKey, JSON.stringify({ audience: body.audience, version: RESEARCH_VERSION, ageBand: body.ageBand, privacyVersion: RESEARCH_PRIVACY_VERSION, answers: body.answers, detail })),
+        ip_hash: ipHash(request, config, 'response'), age_band: body.ageBand as '14_17' | '18_plus', privacy_version: RESEARCH_PRIVACY_VERSION,
       };
       try {
         const saved = await store.response(record);
@@ -94,10 +94,10 @@ export function createResearchIntake(config: ResearchConfig, store: ResearchStor
         const reason = (error as Error).message;
         return reply(reason === 'too_large' ? 413 : 400, { code: 'invalid_request' });
       }
-      const keys = ['email', 'researchContact', 'marketingOptIn', 'ageConfirmed', 'idempotencyKey', 'website'];
+      const keys = ['email', 'researchContact', 'marketingOptIn', 'ageConfirmed', 'ageBand', 'consentAccepted', 'privacyVersion', 'idempotencyKey', 'website'];
       if (!validObject(body, keys) || typeof body.email !== 'string' || body.email.length > 254 ||
           !/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(body.email) ||
-          body.researchContact !== true || body.marketingOptIn !== false || body.ageConfirmed !== true || typeof body.idempotencyKey !== 'string' ||
+          body.researchContact !== true || body.marketingOptIn !== false || body.ageConfirmed !== true || !['14_17', '18_plus'].includes(String(body.ageBand)) || body.consentAccepted !== true || body.privacyVersion !== RESEARCH_PRIVACY_VERSION || typeof body.idempotencyKey !== 'string' ||
           !UUID.test(body.idempotencyKey) || body.website !== '') {
         return reply(422, { code: 'invalid_fields', message: 'Conferma di avere almeno 14 anni e scegli il ricontatto sulla ricerca.' });
       }
@@ -108,8 +108,8 @@ export function createResearchIntake(config: ResearchConfig, store: ResearchStor
         marketing_opt_in: body.marketingOptIn,
         privacy_version: RESEARCH_PRIVACY_VERSION,
         idempotency_hash: hash(config.hmacKey, `contact:${body.idempotencyKey}`),
-        payload_hash: hash(config.hmacKey, JSON.stringify({ email: normalizedEmail, researchContact: body.researchContact, marketingOptIn: body.marketingOptIn, privacyVersion: RESEARCH_PRIVACY_VERSION })),
-        ip_hash: ipHash(request, config, 'contact'),
+        payload_hash: hash(config.hmacKey, JSON.stringify({ email: normalizedEmail, researchContact: body.researchContact, marketingOptIn: body.marketingOptIn, privacyVersion: RESEARCH_PRIVACY_VERSION, ageBand: body.ageBand })),
+        ip_hash: ipHash(request, config, 'contact'), age_band: body.ageBand as '14_17' | '18_plus',
       };
       try {
         const saved = await store.contact(contact);
@@ -124,7 +124,7 @@ export function createResearchIntake(config: ResearchConfig, store: ResearchStor
 
 export class ResearchStoreClient implements ResearchStore {
   constructor(private readonly config: ResearchConfig, private readonly fetcher: typeof fetch = fetch) {}
-  private async rpc<T>(name: string, body: object): Promise<T> {
+  async rpc<T>(name: string, body: object): Promise<T> {
     const response = await this.fetcher(`${this.config.databaseUrl.replace(/\/$/, '')}/rest/v1/rpc/${name}`, {
       method: 'POST',
       headers: { apikey: this.config.databaseKey, Authorization: `Bearer ${this.config.databaseKey}`, 'Content-Type': 'application/json' },
@@ -140,14 +140,31 @@ export class ResearchStoreClient implements ResearchStore {
     return this.rpc<Receipt>('research_submit_response', {
       p_audience: input.audience, p_survey_version: input.survey_version, p_answers: input.answers,
       p_priority_detail: input.priority_detail, p_idempotency_hash: input.idempotency_hash,
-      p_payload_hash: input.payload_hash, p_ip_hash: input.ip_hash,
+      p_payload_hash: input.payload_hash, p_ip_hash: input.ip_hash, p_age_band: input.age_band, p_privacy_version: input.privacy_version,
     });
   }
   contact(input: Parameters<ResearchStore['contact']>[0]) {
     return this.rpc<ContactReceipt>('research_submit_contact', {
       p_email: input.email, p_research_contact: input.research_contact, p_marketing_opt_in: input.marketing_opt_in,
       p_privacy_version: input.privacy_version, p_idempotency_hash: input.idempotency_hash,
-      p_payload_hash: input.payload_hash, p_ip_hash: input.ip_hash,
+      p_payload_hash: input.payload_hash, p_ip_hash: input.ip_hash, p_age_band: input.age_band,
     });
   }
+}
+
+
+export async function withdrawResearch(request: Request, config: ResearchConfig, store: Pick<ResearchStoreClient, 'rpc'>) {
+  if (!config.databaseKey || !config.hmacKey) return reply(503, { code: 'not_available' });
+  if (!allowedOrigin(request, config)) return reply(403, { code: 'origin_not_allowed' });
+  let body: unknown;
+  try { body = await readJson(request, 2048); } catch { return reply(400, { code: 'invalid_request' }); }
+  if (!validObject(body, ['purpose', 'code']) || !['response', 'contact'].includes(String(body.purpose)) || typeof body.code !== 'string' || !UUID.test(body.code)) return reply(422, { code: 'invalid_fields' });
+  try {
+    const result = await store.rpc<{ code: string }>('research_withdraw', {
+      p_purpose: body.purpose, p_subject_hash: hash(config.hmacKey, `${body.purpose}:${body.code}`), p_ip_hash: ipHash(request, config, 'withdrawal'),
+    });
+    if (result.code === 'rate_limited') return reply(429, { code: 'rate_limited' }, { 'Retry-After': '900' });
+    if (result.code !== 'revoked') throw new Error('storage');
+    return reply(200, { status: 'revoked' });
+  } catch { return reply(503, { code: 'storage_unavailable' }); }
 }

@@ -1,6 +1,8 @@
+import { createHmac } from 'node:crypto';
 export const RESEARCH_VERSION = 'padel-surveys-v2';
-export const RESEARCH_PRIVACY_VERSION = 'padel-research-privacy-v1';
-export const RESEARCH_PRIVACY_STATUS: 'draft' | 'approved' = 'draft';
+import { RESEARCH_PRIVACY_VERSION } from './privacy';
+export { RESEARCH_PRIVACY_VERSION } from './privacy';
+export const RESEARCH_PRIVACY_STATUS: 'draft' | 'approved' = 'approved';
 const SITE_PROJECT = 'llbqoyucmvuijfobzryj';
 
 export type ResearchConfig = {
@@ -13,10 +15,10 @@ export type ResearchConfig = {
 };
 
 export function readResearchConfig(env: Record<string, string | undefined> = process.env): ResearchConfig {
-  const databaseUrl = env.RESEARCH_SUPABASE_URL || '';
-  const databaseKey = env.RESEARCH_SUPABASE_SERVICE_ROLE_KEY || '';
-  const projectRef = env.RESEARCH_SUPABASE_PROJECT_REF || '';
-  const hmacKey = env.RESEARCH_HMAC_KEY || '';
+  const databaseUrl = env.RESEARCH_SUPABASE_URL || env.POLPO_LEADS_SUPABASE_URL || '';
+  const databaseKey = env.RESEARCH_SUPABASE_SERVICE_ROLE_KEY || env.POLPO_LEADS_SUPABASE_SERVICE_ROLE_KEY || '';
+  const projectRef = env.RESEARCH_SUPABASE_PROJECT_REF || env.POLPO_LEADS_SUPABASE_PROJECT_REF || '';
+  const hmacKey = env.RESEARCH_HMAC_KEY || (env.POLPO_CONSULTATION_HMAC_KEY ? createHmac('sha256', env.POLPO_CONSULTATION_HMAC_KEY).update('polpo-research-v1').digest('hex') : '');
   const simulatedApproval = env.NODE_ENV === 'development' && !env.VERCEL_ENV && env.RESEARCH_LOCAL_ACTIVE_PREVIEW === '1';
   let endpointMatches = false;
   try {

@@ -1,3 +1,5 @@
+> Documento storico del 5 novembre. Per lo stato corrente vedere `docs/launch-readiness/REPORT.md`, l’informativa `/ricerca/informativa` e [consultazione risultati](RESULTS.md). Le approvazioni privacy successive sono registrate nel report.
+
 # Survey padel — v2
 
 Due percorsi indipendenti: `/ricerca/giocatori` e `/ricerca/circoli`. Sette domande per percorso, riepilogo modificabile e schermata contatto fuori dalle sette domande. Nessun link aggiunto a homepage, navigazione o sitemap. PR #18–23 e #25 sono già integrate nella base `main` aggiornata (bc7a39b al controllo iniziale). La mini-consulenza e la homepage non sono state modificate.
@@ -44,7 +46,7 @@ Prima della raccolta pubblica restano aperti:
 
 ### Contratto dati implementato
 
-La migrazione dedicata è `supabase/migrations/20261105113000_create_padel_research_collection.sql`. Il server valida lo schema prima della scrittura:
+La migrazione dedicata è `supabase/migrations/20261105141357_create_padel_research_collection.sql`. Il server valida lo schema prima della scrittura:
 
 - Risposta: `survey_version`, `audience`, `answers` con chiavi e valori enumerati del modulo domande; `priority_detail` facoltativo, massimo 300 caratteri; timestamp server e ID casuale soltanto se necessari. Niente IP/user-agent, identificatori pubblicitari o tracking tra siti nel dataset di ricerca.
 - Contatto separato: email e richiesta esplicita di ricontatto sulla ricerca, versione informativa e timestamp server. Nessun identificatore condiviso con le risposte. Il marketing non è raccolto da questa survey.
