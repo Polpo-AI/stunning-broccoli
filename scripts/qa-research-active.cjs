@@ -1,0 +1,92 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const base = process.env.TEST_ACTIVE_BASE_URL || 'http://127.0.0.1:3192';
+const uuid = 'bd139655-387e-4c8e-8f4e-33af26ced50c';
+const writtenResponses = [];
+const writtenContacts = [];
+let responseAttempt = 0;
+let contactAttempt = 0;
+
+(async () => {
+  const browser = await chromium.launch({ ...(process.env.PLAYWRIGHT_EXECUTABLE_PATH ? { executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH } : {}), ...(process.env.PLAYWRIGHT_CHANNEL ? { channel: process.env.PLAYWRIGHT_CHANNEL } : {}), headless: true });
+  const context = await browser.newContext({ reducedMotion: 'reduce' });
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.route('**/api/research/responses', async route => {
+    const body = route.request().postDataJSON();
+    writtenResponses.push(body);
+    responseAttempt++;
+    if (responseAttempt === 1) return route.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ code: 'storage_unavailable', message: 'Riprova: risposte conservate in pagina.' }) });
+    return route.fulfill({ status: 202, contentType: 'application/json', body: JSON.stringify({ status: 'saved', receipt: 'synthetic-receipt' }) });
+  });
+  await page.route('**/api/research/contacts', async route => {
+    writtenContacts.push(route.request().postDataJSON());
+    contactAttempt++;
+    if (contactAttempt === 1) return route.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ code: 'storage_unavailable', message: 'Riprova a salvare il recapito.' }) });
+    return route.fulfill({ status: 202, contentType: 'application/json', body: JSON.stringify({ status: 'saved' }) });
+  });
+  const choose = async (field, value) => page.locator(`input[name="${field}"][value="${value}"]`).check();
+  const next = async () => page.getByRole('button', { name: /Continua/ }).click();
+  const completePlayer = async () => {
+    await page.goto(`${base}/ricerca/giocatori`);
+    assert.equal(await page.getByRole('button', { name: /Inizia la ricerca/ }).isVisible(), true);
+    await page.getByLabel('Confermo di avere almeno 14 anni.').check();
+    await page.getByRole('button', { name: /Inizia la ricerca/ }).click();
+    await choose('frequency', 'monthly'); await next();
+    await choose('group', 'friends'); await next();
+    await choose('channel', 'never'); await choose('bookingChannel', 'never'); await next();
+    await choose('ease', 'na'); await next();
+    await choose('failures', 'no_intent'); await next();
+    await choose('obstacle', 'no_intent'); await next();
+    await choose('aiActions', 'none');
+    await page.getByRole('button', { name: /Rivedi la prova/ }).click();
+    assert.equal(await page.getByRole('button', { name: /Invia le risposte/ }).isVisible(), true);
+  };
+
+  await completePlayer();
+  assert.equal(await page.getByRole('button', { name: /Invia le risposte/ }).isEnabled(), true);
+  await page.getByRole('button', { name: /Invia le risposte/ }).click();
+  await page.locator('.research-error[role=alert]').waitFor({ state: 'visible' });
+  assert.equal(await page.locator('.research-error[role=alert]').isVisible(), true);
+  assert.match(await page.locator('.research-review').innerText(), /1–3 volte al mese/);
+  assert.match(await page.locator('.research-review').innerText(), /gruppo fisso/);
+  await page.getByRole('button', { name: /Invia le risposte/ }).click();
+  await page.getByRole('heading', { name: /Restare in contatto/ }).waitFor();
+  assert.equal(writtenResponses[0].idempotencyKey, writtenResponses[1].idempotencyKey);
+  assert.equal(JSON.stringify(writtenResponses[1]).includes('@'), false);
+  assert.equal(JSON.stringify(writtenResponses[1]).includes('email'), false);
+  for (const width of [320, 390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    const layout = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, width: innerWidth, offenders: Array.from(document.querySelectorAll('body *')).map(el => ({ tag: el.tagName, cls: el.className, right: Math.round(el.getBoundingClientRect().right), width: Math.round(el.getBoundingClientRect().width) })).filter(el => el.right > innerWidth + 1) }));
+    assert.ok(layout.scroll <= width, `contact overflow at ${width}px: ${JSON.stringify(layout)}`);
+  }
+  assert.equal(writtenContacts.length, 0);
+  await page.getByRole('button', { name: /Termina senza lasciare recapiti/ }).click();
+  assert.equal(await page.getByRole('heading', { name: /La tua voce conta/ }).isVisible(), true);
+
+  await completePlayer();
+  await page.getByRole('button', { name: /Invia le risposte/ }).click();
+  await page.getByLabel('Email facoltativa').fill('synthetic@example.test');
+  await page.getByRole('checkbox', { name: /ricontattato per questa ricerca/ }).check();
+  await page.getByRole('button', { name: /Salva il recapito/ }).click();
+  await page.locator('.research-error[role=alert]').waitFor({ state: 'visible' });
+  assert.equal(await page.locator('.research-error[role=alert]').isVisible(), true);
+  assert.equal(await page.getByLabel('Email facoltativa').inputValue(), 'synthetic@example.test');
+  await page.getByRole('button', { name: /Salva il recapito/ }).click();
+  assert.equal(await page.getByRole('status').innerText(), 'Il recapito è stato salvato separatamente.');
+  assert.equal(writtenContacts[0].idempotencyKey, writtenContacts[1].idempotencyKey);
+  assert.equal(writtenContacts[1].researchContact, true);
+  assert.equal(writtenContacts[1].marketingOptIn, false);
+  assert.equal('responseId' in writtenContacts[1], false);
+  assert.equal('response_id' in writtenContacts[1], false);
+  assert.equal(writtenResponses.length, 3);
+  assert.equal(errors.length, 0, JSON.stringify(errors));
+  await browser.close();
+  const report = { result: 'pass', syntheticResponseRequests: writtenResponses.length, syntheticContactRequests: writtenContacts.length, responseAndContactUnlinked: true, retryPreservedForm: true, testedWidths: [320, 390, 768, 1440] };
+  fs.writeFileSync(path.resolve('docs/research/qa/active-report.json'), JSON.stringify(report, null, 2) + '\n');
+  console.log(JSON.stringify(report));
+})().catch(error => { console.error(error); process.exit(1); });

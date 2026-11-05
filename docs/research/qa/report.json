@@ -1,0 +1,131 @@
+{
+  "layouts": [
+    {
+      "label": "giocatori intro 320",
+      "width": 320,
+      "scroll": 320,
+      "headings": 1,
+      "focused": "BODY"
+    },
+    {
+      "label": "giocatori question 320",
+      "width": 320,
+      "scroll": 320,
+      "headings": 1,
+      "focused": "H1"
+    },
+    {
+      "label": "circoli intro 320",
+      "width": 320,
+      "scroll": 320,
+      "headings": 1,
+      "focused": "BODY"
+    },
+    {
+      "label": "circoli question 320",
+      "width": 320,
+      "scroll": 320,
+      "headings": 1,
+      "focused": "H1"
+    },
+    {
+      "label": "giocatori intro 390",
+      "width": 390,
+      "scroll": 390,
+      "headings": 1,
+      "focused": "BODY"
+    },
+    {
+      "label": "giocatori question 390",
+      "width": 390,
+      "scroll": 390,
+      "headings": 1,
+      "focused": "H1"
+    },
+    {
+      "label": "circoli intro 390",
+      "width": 390,
+      "scroll": 390,
+      "headings": 1,
+      "focused": "BODY"
+    },
+    {
+      "label": "circoli question 390",
+      "width": 390,
+      "scroll": 390,
+      "headings": 1,
+      "focused": "H1"
+    },
+    {
+      "label": "giocatori intro 768",
+      "width": 768,
+      "scroll": 768,
+      "headings": 1,
+      "focused": "BODY"
+    },
+    {
+      "label": "giocatori question 768",
+      "width": 768,
+      "scroll": 768,
+      "headings": 1,
+      "focused": "H1"
+    },
+    {
+      "label": "circoli intro 768",
+      "width": 768,
+      "scroll": 768,
+      "headings": 1,
+      "focused": "BODY"
+    },
+    {
+      "label": "circoli question 768",
+      "width": 768,
+      "scroll": 768,
+      "headings": 1,
+      "focused": "H1"
+    },
+    {
+      "label": "giocatori intro 1440",
+      "width": 1440,
+      "scroll": 1440,
+      "headings": 1,
+      "focused": "BODY"
+    },
+    {
+      "label": "giocatori question 1440",
+      "width": 1440,
+      "scroll": 1440,
+      "headings": 1,
+      "focused": "H1"
+    },
+    {
+      "label": "circoli intro 1440",
+      "width": 1440,
+      "scroll": 1440,
+      "headings": 1,
+      "focused": "BODY"
+    },
+    {
+      "label": "circoli question 1440",
+      "width": 1440,
+      "scroll": 1440,
+      "headings": 1,
+      "focused": "H1"
+    },
+    {
+      "label": "Scale at 320",
+      "width": 320,
+      "scroll": 320,
+      "headings": 1,
+      "focused": "H1"
+    }
+  ],
+  "flows": [
+    "Players: friends-only, Playtomic booking, exclusive AI choices, change to open group, review, disabled separate contact, finish",
+    "Clubs: two fields, multi tools, max two, no-problem exclusion, attributed active hours, scale, optional detail, no interest, contact, finish",
+    "Reload clears answers; storage/cookies empty; zero mutations/API/telemetry; production 404; existing routes 200"
+  ],
+  "errors": [],
+  "writes": [],
+  "telemetry": []
+}
