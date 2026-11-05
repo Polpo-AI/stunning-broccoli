@@ -3,6 +3,7 @@ import { createHmac, timingSafeEqual } from 'node:crypto';
 import { isIP } from 'node:net';
 import { parseConsultation, parseEvent } from './domain';
 import type { ServerConfig } from './server-config';
+import type {Consultation} from './domain';
 import type { LeadStore } from './store';
 
 export const hash=(secret:string,value:string)=>createHmac('sha256',secret).update(value).digest('hex');
@@ -23,12 +24,13 @@ function ipKey(request:Request,config:ServerConfig){
  const ip=isIP(candidate)?candidate:'unknown';
  return hash(config.hmacKey,`${new Date().toISOString().slice(0,10)}:${ip}`);
 }
-export async function intake(request:Request,config:ServerConfig,store:Pick<LeadStore,'acquire'>):Promise<Response>{
+export async function intake(request:Request,config:ServerConfig,store:Pick<LeadStore,'acquire'>,policy?:(input:Consultation)=>boolean):Promise<Response>{
  if(!config.enabled)return reply(503,{code:'not_available',message:'L’invio non è ancora disponibile.'});
  if(!config.origins.includes(request.headers.get('origin')||''))return reply(403,{code:'origin_not_allowed'});
  let body:unknown;try{body=await limitedBody(request);}catch(error){const code=error instanceof Error?error.message:'';return reply(code==='BODY_LIMIT'?413:400,{code:'invalid_request'});}
  const parsed=parseConsultation(body);if(!parsed.ok)return reply(422,{code:'invalid_fields',errors:parsed.errors});
  const input=parsed.value;
+ if(policy&&!policy(input))return reply(422,{code:'invalid_fields',errors:{form:'Questa prova accetta esclusivamente i dati fittizi predisposti.'}});
  if(input.marketingOptIn&&!marketingAvailable)return reply(422,{code:'invalid_fields',errors:{marketingOptIn:'Gli aggiornamenti email non sono attivi.'}});
  const identity=input.contact.email?`email:${input.contact.email}`:`phone:${input.contact.phone}|${input.contact.name.toLocaleLowerCase('it')}|${input.contact.businessName.toLocaleLowerCase('it')}`;
  const contactKey=hash(config.hmacKey,identity);
