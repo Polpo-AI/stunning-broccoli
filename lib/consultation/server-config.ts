@@ -1,9 +1,10 @@
+import {supportedContactLegalBasis} from './legal-basis';
 import { privacyDocument, marketingTextVersion } from './privacy';
 
 export type ServerConfig={
  enabled:boolean;workerEnabled:boolean;analytics:boolean;reasons:string[];origins:string[];privacyVersion:string;marketingVersion:string;
  databaseUrl:string;databaseKey:string;hmacKey:string;hubspotToken:string;hubspotPortalId:string;
- resendKey:string;resendFrom:string;workerSecret:string;retentionDays:number;companyDomains:string[];
+ hubspotLegalBasis:string;resendKey:string;resendFrom:string;workerSecret:string;retentionDays:number;companyDomains:string[];
 };
 export function readConfig(env:Record<string,string|undefined>=process.env):ServerConfig{
  const reasons:string[]=[];const need=(name:string,min=1)=>{const value=env[name]||'';if(value.length<min)reasons.push(name);return value;};
@@ -26,11 +27,13 @@ export function readConfig(env:Record<string,string|undefined>=process.env):Serv
  if(!Number.isInteger(retentionDays)||retentionDays<7||retentionDays>730)reasons.push('RETENTION_NOT_CONFIGURED');
  const coreReady=reasons.length===0;
  const workerEnabled=coreReady&&env.POLPO_CONSULTATION_DELIVERY_ENABLED==='true'&&env.POLPO_HUBSPOT_SCHEMA_VERIFIED==='true'&&env.POLPO_HUBSPOT_AUTOMATIONS_REVIEWED==='true'&&env.POLPO_PLATFORM_SECURITY_REVIEWED==='true';
+ const hubspotLegalBasis=env.POLPO_HUBSPOT_CONTACT_LEGAL_BASIS||'';
+ if(!supportedContactLegalBasis(hubspotLegalBasis))reasons.push('HUBSPOT_LEGAL_BASIS_UNCONFIGURED');
  if(!workerEnabled)reasons.push('DELIVERY_NOT_ENABLED');
  for(const flag of ['POLPO_HUBSPOT_SCHEMA_VERIFIED','POLPO_HUBSPOT_AUTOMATIONS_REVIEWED','POLPO_CONSULTATION_SCHEDULER_VERIFIED','POLPO_CONSULTATION_MONITORING_VERIFIED','POLPO_CONSULTATION_NOTIFICATION_VERIFIED','POLPO_CONSULTATION_E2E_VERIFIED','POLPO_CONSULTATION_RELEASE_APPROVED','POLPO_PLATFORM_SECURITY_REVIEWED'])if(env[flag]!=='true')reasons.push(flag);
  if(privacyDocument.status!=='approved'||env.POLPO_PRIVACY_VERIFIED_VERSION!==privacyDocument.version)reasons.push('PRIVACY_DRAFT');
  if(env.POLPO_CONSULTATION_ENABLED!=='true')reasons.push('FEATURE_DISABLED');
  const companyDomains=(env.POLPO_HUBSPOT_COMPANY_DOMAIN_ALLOWLIST||'').split(',').map(x=>x.trim().toLowerCase()).filter(x=>/^[a-z0-9.-]+\.[a-z]{2,}$/.test(x));
- return {enabled:reasons.length===0,workerEnabled,analytics:reasons.length===0&&env.POLPO_CONSULTATION_ANALYTICS_ENABLED==='true',reasons,origins:Array.from(new Set(origins)),privacyVersion:privacyDocument.version,marketingVersion:marketingTextVersion,databaseUrl,databaseKey,hmacKey,hubspotToken,hubspotPortalId,resendKey,resendFrom,workerSecret,retentionDays,companyDomains};
+ return {hubspotLegalBasis,enabled:reasons.length===0,workerEnabled,analytics:reasons.length===0&&env.POLPO_CONSULTATION_ANALYTICS_ENABLED==='true',reasons,origins:Array.from(new Set(origins)),privacyVersion:privacyDocument.version,marketingVersion:marketingTextVersion,databaseUrl,databaseKey,hmacKey,hubspotToken,hubspotPortalId,resendKey,resendFrom,workerSecret,retentionDays,companyDomains};
 }
 export function previewAvailable(env:Record<string,string|undefined>=process.env){return env.VERCEL_ENV==='preview'||env.NODE_ENV==='development';}
