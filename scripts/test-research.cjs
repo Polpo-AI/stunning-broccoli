@@ -36,11 +36,13 @@ test('friends-only excludes matchmaking obstacles and uses coordination suggesti
 });
 test('Playtomic purpose is required only when selected and cleared after change', () => {
   const question = q.questions('giocatori', { channel: ['playtomic'] })[2];
-  assert.equal(question.fields.length, 2);
+  assert.equal(question.fields.length, 3);
   assert.equal(q.validQuestion(question, { channel: ['playtomic'] }), false);
-  for (const purpose of ['booking', 'matching', 'both']) assert.ok(q.validQuestion(question, { channel: ['playtomic'], playtomicUse: [purpose] }));
-  assert.equal(q.questions('giocatori', { channel: ['whatsapp'] })[2].fields.length, 1);
-  assert.equal(q.updateAnswer({ playtomicUse: ['matching'] }, 'channel', ['whatsapp']).playtomicUse, undefined);
+  for (const purpose of ['booking', 'matching', 'both']) assert.ok(q.validQuestion(question, { channel: ['playtomic'], playtomicUse: [purpose], bookingChannel: ['playtomic'] }));
+  assert.equal(q.questions('giocatori', { channel: ['whatsapp'] })[2].fields.length, 2);
+  assert.ok(q.validQuestion(q.questions('giocatori', { channel: ['whatsapp'] })[2], { channel: ['whatsapp'], bookingChannel: ['playtomic'] }));
+  assert.equal(q.updateAnswer({ playtomicUse: ['matching'], bookingChannel: ['playtomic'] }, 'channel', ['whatsapp']).playtomicUse, undefined);
+  assert.equal(q.updateAnswer({ bookingChannel: ['playtomic'] }, 'channel', ['other_app']).bookingChannel, undefined);
 });
 test('first-time player can complete without inventing an ease rating', () => {
   const question = q.questions('giocatori', { channel: ['never'] })[3];
@@ -63,6 +65,11 @@ test('weekly work is attributed to a selected activity; editing clears dependent
   assert.equal(q.validQuestion(question, { mainActivity: ['players'], activeHours: ['1_3'] }), false);
   const changed = q.updateAnswer({ mainActivity: ['messages'], activeHours: ['8_plus'] }, 'problems', ['admin']);
   assert.equal(changed.mainActivity, undefined); assert.equal(changed.activeHours, undefined);
+  assert.ok(question.fields.some(f => f.id === 'incidents'));
+  assert.ok(question.fields.find(f => f.id === 'incidents').options.some(o => o.value === 'zero'));
+  assert.ok(q.questions('circoli', {})[6].fields[0].options.some(o => o.value === 'offer'));
+  assert.ok(q.questions('giocatori', {})[5].fields[0].options.some(o => o.value === 'no_intent'));
+  assert.equal(q.updateAnswer({ incidents: ['4_plus'] }, 'mainActivity', ['admin']).incidents, undefined);
 });
 test('production routes remain unavailable even with local override', () => {
   for (const env of [
