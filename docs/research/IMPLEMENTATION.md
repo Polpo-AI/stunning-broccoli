@@ -11,7 +11,7 @@
 - **IMPLEMENTATO:** questionari e API di produzione chiusi per default. La sola pagina informativa può essere consultata anche con raccolta disabilitata e resta chiaramente marcata DRAFT. Per aprire i questionari servono contemporaneamente gate pubblico e raccolta, versione privacy approvata, progetto Supabase atteso e configurazione di conservazione verificata. Preview/dev continua a mostrare la prova senza acquisire dati se il gate è spento.
 - **IN ATTESA DI APPROVAZIONE:** informativa dedicata in PRIVACY-DRAFT.md, con ricognizione delle informative pubbliche Playtomic e MATCHi in COMPETITOR-PRIVACY-REVIEW.md. Il titolare ha confermato nome, sede e contatto anche per questa iniziativa; non è stato indicato un DPO. Restano da verificare basi giuridiche, informativa e requisiti applicabili ai partecipanti 14–17 anni, fornitori/trasferimenti, risposte di minori sotto i 14 e tempi effettivi. L’email dei recapiti non viene collegata alle risposte.
 - **NON IMPLEMENTATO:** sincronizzazione CRM, campagne, dashboard, telemetria di avvio/abbandono, gestione pubblica dei diritti e flusso di cancellazione individuale basato su identità. La migrazione pianifica il purge giornaliero via `pg_cron`; l’esecuzione e la cancellazione dei record scaduti devono ancora essere osservate prima dell’attivazione.
-- **NON VERIFICATO SU SERVIZI REMOTI:** la migrazione non è stata applicata. Il progetto remoto Sito Polpo AI è stato soltanto ispezionato in lettura. Nessun invio reale, deploy o test su Supabase remoto.
+- **VERIFICATO SU SERVIZI REMOTI:** migrazione applicata al progetto Sito Polpo AI; le tre tabelle sono vuote, RLS è attiva, anon/authenticated non hanno accesso e il job `padel-research-retention` risulta attivo. Nessun dato reale o test di scrittura è stato inviato a Supabase. In produzione la pagina informativa è pubblicata come DRAFT e i due questionari rispondono 404; le variabili `RESEARCH_*` non sono configurate.
 
 ## Architettura
 
@@ -39,7 +39,7 @@ I flag devono restare non configurati o false fino all’autorizzazione del tito
 
 ## Migrazione, collaudo e rollback
 
-La migrazione supabase/migrations/20261105113000_create_padel_research_collection.sql è versionata e destinata esclusivamente al progetto del sito. Crea il job `padel-research-retention` alle 03:17 UTC ogni giorno. Applicarla solo al progetto `llbqoyucmvuijfobzryj`, mai al database prodotto Polpo Padel. Dopo l’applicazione verificare `cron.job` e osservare una cancellazione sintetica prima di impostare il flag di retention verificata.
+La migrazione supabase/migrations/20261105113000_create_padel_research_collection.sql è versionata e destinata esclusivamente al progetto del sito. È stata applicata al progetto `llbqoyucmvuijfobzryj`, mai al database prodotto Polpo Padel. Il job `padel-research-retention` è attivo alle 03:17 UTC ogni giorno; la prima esecuzione remota e la cancellazione dei record scaduti non sono ancora state osservate. Non impostare il flag di retention verificata finché questa prova non è stata completata in un ambiente isolato.
 
 ### Gestione manuale dei ricontatti
 
