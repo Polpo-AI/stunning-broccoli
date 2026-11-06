@@ -73,7 +73,7 @@ export default function Survey({ audience, collectionEnabled = false }: { audien
   function finish() { setAnswers({}); setDetail(''); setAgeBand(''); setConsentAccepted(false); setContactEmail(''); setResearchContact(false); setContactKey(''); navigate('done'); }
   function next() {
     clearAdvance();
-    if (!validQuestion(question, answers)) { setError('Scegli una risposta per ogni gruppo. Puoi usare “Preferisco non rispondere” dove presente.'); return; }
+    if (!validQuestion(question, answers)) { setError('Scegli una risposta per ogni gruppo.'); return; }
     setError('');
     if (step === 6) navigate('review'); else setStep(step + 1);
   }
