@@ -10,3 +10,18 @@
 .research-age-check{display:flex;align-items:flex-start;gap:12px;max-width:520px;margin:22px 0 3px;color:#dfe9f6;font-size:13px;line-height:1.6;cursor:pointer}.research-age-check input{flex:0 0 18px;width:18px;height:18px;margin:2px 0 0;accent-color:#8ce8ef}.research-age-note{margin:0 0 17px 30px;color:#aebdd3;font-size:11px;line-height:1.6}.research .research-primary:disabled{opacity:.48;cursor:not-allowed;filter:saturate(.5)}@media(max-width:700px){.research-age-check{font-size:12px}.research-age-note{font-size:10px}}
 .research-policy-summary{max-width:680px;margin:26px 0 0;padding:18px 22px;border-left:2px solid #8ce8ef;background:#91e9ef0a}.research-policy-summary>p:first-child{margin:0 0 7px;color:#8ce8ef;font-size:9px;letter-spacing:.16em}.research-policy-summary h2{margin:0 0 7px;color:#f0f5ff;font:500 17px/1.4 var(--font-jakarta),sans-serif}.research-policy-summary>p:last-child{margin:0;color:#c5d2e4;font-size:12px;line-height:1.75}
 .research-age-check select,.research-contact select{max-width:100%;padding:12px;border:1px solid #8ca8bd;background:#102336;color:#fff;border-radius:8px;font:inherit}.research-age-check select:focus-visible,.research-contact select:focus-visible{outline:3px solid #74fff2;outline-offset:3px}.research-privacy code{overflow-wrap:anywhere;word-break:break-all}.research-age-check a{text-decoration:underline}
+
+/* Keep the intro controls aligned with the copy at narrow phone widths. */
+.research-intro-copy{min-width:0;width:100%}
+.research-age-check{align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.research-age-note{margin-left:0;max-width:520px}
+@media(max-width:700px){
+  .research-topline{flex-wrap:wrap;gap:10px 16px}
+  .research-badge{white-space:normal;max-width:100%;line-height:1.5}
+  .research h1{font-size:clamp(34px,10.25vw,40px)}
+  .research-intro .research-meta{margin:22px 0}
+  .research-age-check{display:flex;flex-direction:column;align-items:stretch;gap:8px;font-size:13px;margin:22px 0 10px}
+  .research-age-check select{width:100%;min-width:0;min-height:48px;font-size:16px}
+  .research-age-note{font-size:11px;margin:0 0 20px}
+  .research-start{width:100%;gap:16px}
+}
