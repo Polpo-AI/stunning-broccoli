@@ -42,19 +42,53 @@ export default function Survey({ audience, collectionEnabled = false }: { audien
   const [submissionKey, setSubmissionKey] = useState('');
   const [contactKey, setContactKey] = useState('');
   const title = useRef<HTMLHeadingElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const clearAdvance = () => {
+    if (advanceTimer.current !== null) clearTimeout(advanceTimer.current);
+    advanceTimer.current = null;
+  };
+  useEffect(() => () => {
+    if (advanceTimer.current !== null) clearTimeout(advanceTimer.current);
+  }, []);
   const isPlayer = audience === 'giocatori';
   const allQuestions = questions(audience, answers);
   const question = allQuestions[step];
   useEffect(() => {
-    if (screen !== 'intro') title.current?.focus();
+    if (screen === 'intro') return;
+    // Move accessibility focus without triggering the browser's unpredictable focus scroll.
+    const frame = requestAnimationFrame(() => {
+      title.current?.focus({ preventScroll: true });
+      if (window.matchMedia('(max-width: 700px)').matches) {
+        panel.current?.scrollIntoView({ behavior: 'auto', block: 'start' });
+      }
+    });
+    return () => cancelAnimationFrame(frame);
   }, [screen, step]);
-  function navigate(next: Screen) { setError(''); setScreen(next); }
+  function navigate(next: Screen) { clearAdvance(); setError(''); setScreen(next); }
   function reset() { setReceipts([]); setAnswers({}); setDetail(''); setAgeBand(''); setConsentAccepted(false); setStep(0); setResponseSaved(false); setContactEmail(''); setResearchContact(false); setContactSaved(false); setSubmissionKey(''); setContactKey(''); navigate('intro'); }
   function finish() { setAnswers({}); setDetail(''); setAgeBand(''); setConsentAccepted(false); setContactEmail(''); setResearchContact(false); setContactKey(''); navigate('done'); }
   function next() {
+    clearAdvance();
     if (!validQuestion(question, answers)) { setError('Scegli una risposta per ogni gruppo. Puoi usare “Preferisco non rispondere” dove presente.'); return; }
     setError('');
     if (step === 6) navigate('review'); else setStep(step + 1);
+  }
+  function choose(field: Field, values: string[]) {
+    clearAdvance();
+    setError('');
+    setSubmissionKey('');
+    const updated = updateAnswer(answers, field.id, values);
+    setAnswers(updated);
+    const updatedQuestion = questions(audience, updated)[step];
+    // Multiple-choice and free-text questions require an explicit Continue action.
+    // With multiple single-choice fields, only advance after the last is answered.
+    if (field.multi || updatedQuestion.detail || updatedQuestion.fields.some(item => item.multi) || !validQuestion(updatedQuestion, updated)) return;
+    advanceTimer.current = setTimeout(() => {
+      advanceTimer.current = null;
+      if (step === 6) navigate('review');
+      else setStep(current => current === step ? current + 1 : current);
+    }, 250);
   }
   async function saveResponse() {
     if (!collectionEnabled || !consentAccepted || sending || responseSaved) return;
@@ -111,16 +145,16 @@ export default function Survey({ audience, collectionEnabled = false }: { audien
         <div className="research-art" aria-hidden="true"><Image src="/immersive-a-hero.webp" alt="" fill sizes="(max-width: 700px) 100vw, 45vw" priority /><span>OTTO BRACCIA.<br />UN PO’ DI ASCOLTO.</span></div>
       </div> : <div className="research-workspace">
         <aside className="research-aside"><p className="research-eyebrow">{isPlayer ? 'GIOCATORI' : 'CIRCOLI'}</p><p className="research-aside-title">Prima ascoltare.<br /><em>Poi immaginare.</em></p><p>Non ci sono risposte giuste. Anche “nessun problema” ci aiuta a capire.</p><button className="research-text-button" onClick={reset}>Ricomincia la compilazione</button></aside>
-        <div className="research-panel">
+        <div className="research-panel" ref={panel}>
           {screen === 'questions' && <>
             <div className="research-progress-label"><span>Domanda {step + 1} di 7</span><span>{Math.round(step / 7 * 100)}% del percorso</span></div>
             <progress value={step} max={7} aria-label="Domande completate" />
             <h1 ref={title} tabIndex={-1}>{question.title}</h1><p className="research-hint" id="question-hint">{question.hint}</p>
             <form onSubmit={event => { event.preventDefault(); next(); }} aria-describedby="question-hint">
-              {question.fields.map(field => <Choices key={field.id} field={field} values={answers[field.id] ?? []} onChange={values => { setError(''); setSubmissionKey(''); setAnswers(previous => updateAnswer(previous, field.id, values)); }} />)}
+              {question.fields.map(field => <Choices key={field.id} field={field} values={answers[field.id] ?? []} onChange={values => choose(field, values)} />)}
               {question.detail && <label className="research-detail">Dettaglio facoltativo <span>(massimo 300 caratteri)</span><textarea maxLength={300} rows={3} value={detail} onChange={event => { setDetail(event.target.value); setSubmissionKey(''); }} placeholder="Cosa miglioreresti o manterresti? Senza nomi, recapiti o dati di altre persone." /><small>{detail.length}/300 · Evita nomi e informazioni identificative.</small></label>}
               {error && <p role="alert" className="research-error">{error}</p>}
-              <div className="research-actions"><button type="button" className="research-secondary" onClick={() => { setError(''); step === 0 ? navigate('intro') : setStep(step - 1); }}>Indietro</button><button className="research-primary" type="submit">{step === 6 ? 'Rivedi la prova' : 'Continua'} <span aria-hidden="true">→</span></button></div>
+              <div className="research-actions"><button type="button" className="research-secondary" onClick={() => { clearAdvance(); setError(''); step === 0 ? navigate('intro') : setStep(step - 1); }}>Indietro</button>{(question.detail || question.fields.some(field => field.multi)) && <button className="research-primary" type="submit">{step === 6 ? 'Rivedi le risposte' : 'Continua'} <PolpoIcon name="outward" /></button>}</div>
             </form>
           </>}
           {screen === 'review' && <>
