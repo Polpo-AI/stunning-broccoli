@@ -42,7 +42,6 @@ export default function Survey({ audience, collectionEnabled = false }: { audien
   const [submissionKey, setSubmissionKey] = useState('');
   const [contactKey, setContactKey] = useState('');
   const title = useRef<HTMLHeadingElement>(null);
-  const panel = useRef<HTMLDivElement>(null);
   const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const clearAdvance = () => {
     if (advanceTimer.current !== null) clearTimeout(advanceTimer.current);
@@ -58,9 +57,13 @@ export default function Survey({ audience, collectionEnabled = false }: { audien
     if (screen === 'intro') return;
     // Move accessibility focus without triggering the browser's unpredictable focus scroll.
     const frame = requestAnimationFrame(() => {
-      title.current?.focus({ preventScroll: true });
-      if (window.matchMedia('(max-width: 700px)').matches) {
-        panel.current?.scrollIntoView({ behavior: 'auto', block: 'start' });
+      const heading = title.current;
+      heading?.focus({ preventScroll: true });
+      if (heading && window.matchMedia('(max-width: 700px)').matches) {
+        // Align the actual question, not the container above its progress bar.
+        // A fixed offset leaves room for the site header while showing answers immediately.
+        const headingTop = window.scrollY + heading.getBoundingClientRect().top;
+        window.scrollTo({ top: Math.max(0, headingTop - 92), behavior: 'instant' });
       }
     });
     return () => cancelAnimationFrame(frame);
@@ -145,7 +148,7 @@ export default function Survey({ audience, collectionEnabled = false }: { audien
         <div className="research-art" aria-hidden="true"><Image src="/immersive-a-hero.webp" alt="" fill sizes="(max-width: 700px) 100vw, 45vw" priority /><span>OTTO BRACCIA.<br />UN PO’ DI ASCOLTO.</span></div>
       </div> : <div className="research-workspace">
         <aside className="research-aside"><p className="research-eyebrow">{isPlayer ? 'GIOCATORI' : 'CIRCOLI'}</p><p className="research-aside-title">Prima ascoltare.<br /><em>Poi immaginare.</em></p><p>Non ci sono risposte giuste. Anche “nessun problema” ci aiuta a capire.</p><button className="research-text-button" onClick={reset}>Ricomincia la compilazione</button></aside>
-        <div className="research-panel" ref={panel}>
+        <div className="research-panel">
           {screen === 'questions' && <>
             <div className="research-progress-label"><span>Domanda {step + 1} di 7</span><span>{Math.round(step / 7 * 100)}% del percorso</span></div>
             <progress value={step} max={7} aria-label="Domande completate" />
