@@ -63,7 +63,10 @@ export default function Survey({ audience, collectionEnabled = false }: { audien
         // Align the actual question, not the container above its progress bar.
         // A fixed offset leaves room for the site header while showing answers immediately.
         const headingTop = window.scrollY + heading.getBoundingClientRect().top;
-        window.scrollTo({ top: Math.max(0, headingTop - 92), behavior: 'instant' });
+        const header = document.querySelector<HTMLElement>('header');
+        const headerHeight = header?.getBoundingClientRect().height ?? 0;
+        const offset = Math.min(headerHeight, 76) + 12;
+        window.scrollTo({ top: Math.max(0, headingTop - offset), behavior: 'instant' });
       }
     });
     return () => cancelAnimationFrame(frame);
@@ -157,7 +160,7 @@ export default function Survey({ audience, collectionEnabled = false }: { audien
               {question.fields.map(field => <Choices key={field.id} field={field} values={answers[field.id] ?? []} onChange={values => choose(field, values)} />)}
               {question.detail && <label className="research-detail">Dettaglio facoltativo <span>(massimo 300 caratteri)</span><textarea maxLength={300} rows={3} value={detail} onChange={event => { setDetail(event.target.value); setSubmissionKey(''); }} placeholder="Cosa miglioreresti o manterresti? Senza nomi, recapiti o dati di altre persone." /><small>{detail.length}/300 · Evita nomi e informazioni identificative.</small></label>}
               {error && <p role="alert" className="research-error">{error}</p>}
-              <div className="research-actions"><button type="button" className="research-secondary" onClick={() => { clearAdvance(); setError(''); step === 0 ? navigate('intro') : setStep(step - 1); }}>Indietro</button>{(question.detail || question.fields.some(field => field.multi)) && <button className="research-primary" type="submit">{step === 6 ? 'Rivedi le risposte' : 'Continua'} <PolpoIcon name="outward" /></button>}</div>
+              <div className="research-actions"><button type="button" className="research-secondary" onClick={() => { clearAdvance(); setError(''); step === 0 ? navigate('intro') : setStep(step - 1); }}>Indietro</button>{(!isPlayer || question.detail || question.fields.some(field => field.multi)) && <button className="research-primary" type="submit">{step === 6 ? 'Rivedi le risposte' : 'Continua'} <PolpoIcon name="outward" /></button>}</div>
             </form>
           </>}
           {screen === 'review' && <>
