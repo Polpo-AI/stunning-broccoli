@@ -9,7 +9,7 @@ const out = path.resolve(process.env.QA_OUTPUT || '../survey-mobile-qa');
   const browser = await chromium.launch({ channel: 'msedge', headless: true });
   try {
     const context = await browser.newContext({ isMobile: true, hasTouch: true, reducedMotion: 'reduce' });
-    const page = await context.newPage();
+    let page = await context.newPage();
     const errors = [], results = [], writes = [];
     page.on('pageerror', error => errors.push(error.message));
     page.on('request', request => { if (request.url().includes('/api/research/') && request.method() !== 'GET') writes.push(request.url()); });
@@ -18,6 +18,11 @@ const out = path.resolve(process.env.QA_OUTPUT || '../survey-mobile-qa');
     for (const width of [320, 375, 390, 768, 1440]) {
       await page.setViewportSize({ width, height: width < 701 ? 844 : 1000 });
       for (const audience of ['giocatori', 'circoli']) {
+        await page.close();
+        page = await context.newPage();
+        await page.setViewportSize({width,height:width < 701 ? 844 : 1000});
+        page.on('pageerror', error => errors.push(error.message));
+        page.on('request', request => { if (request.url().includes('/api/research/') && request.method() !== 'GET') writes.push(request.url()); });
         const response = await page.goto(`${base}/ricerca/${audience}`, { waitUntil: 'domcontentloaded' });
         assert.equal(response.status(), 200);
         await page.evaluate(() => document.fonts.ready);
@@ -47,7 +52,9 @@ const out = path.resolve(process.env.QA_OUTPUT || '../survey-mobile-qa');
           assert.ok(Math.abs(metrics.select.width - metrics.button.width) < 1, 'full-width controls');
           assert.ok(metrics.select.height >= 44 && metrics.button.height >= 44, 'touch targets');
         }
-        await page.locator('.research-art img').evaluate(img => img.decode());
+        await page.locator('.research-art').scrollIntoViewIfNeeded();
+        await page.waitForFunction(() => {const img=document.querySelector('.research-art img');return img.complete && img.naturalWidth > 0;});
+        await page.evaluate(() => window.scrollTo(0,0));
         await page.screenshot({ path: path.join(out, `${audience}-${width}-intro.png`), fullPage: true });
         await button.click();
         assert.match(await page.locator('.research-progress-label').innerText(), /Domanda 1 di 7/);
