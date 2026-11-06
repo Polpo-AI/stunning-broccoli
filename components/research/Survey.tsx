@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import PolpoIcon from '@/components/landing/PolpoIcon';
 import { RESEARCH_PRIVACY_VERSION } from '@/lib/research/privacy';
 import { useEffect, useRef, useState } from 'react';
 import { type Answers, type Audience, type Field, questions, toggle, updateAnswer, validQuestion, VERSION } from '@/lib/research/questions';
@@ -103,7 +104,7 @@ export default function Survey({ audience, collectionEnabled = false }: { audien
           <label className="research-age-check">La tua fascia di età <select aria-label="Fascia di età" value={ageBand} onChange={event => setAgeBand(event.target.value)}><option value="">Scegli</option><option value="under_14">Meno di 14 anni</option><option value="14_17">14–17 anni</option><option value="18_plus">18 anni o più</option></select></label>
           {ageBand === 'under_14' && <p role="alert">Per questa ricerca devi avere almeno 14 anni. Non inviare dati.</p>}
           <p className="research-age-note">La fascia di età è conservata solo nella prova del consenso. Per partecipare devi avere almeno 14 anni.</p>
-          <button className="research-primary" disabled={!ageConfirmed} onClick={() => navigate('questions')}>{collectionEnabled ? 'Inizia la ricerca' : 'Prova la survey'} <span aria-hidden="true">↗</span></button>
+          <button className="research-primary research-start" disabled={!ageConfirmed} onClick={() => navigate('questions')}>{collectionEnabled ? 'Inizia la ricerca' : 'Prova la survey'} <PolpoIcon name="outward" /></button>
           <p className="research-fine">{collectionEnabled ? 'La partecipazione non richiede un recapito. Le risposte vengono inviate solo dopo il riepilogo e un tuo invio esplicito.' : 'Questa è una prova privata. Usa risposte fittizie: rimangono nella memoria di questa pagina, senza invio o salvataggio. Ricaricando o uscendo dalla pagina le perdi.'}</p>
           {collectionEnabled && <p className="research-fine"><a href="/ricerca/informativa" target="_blank" rel="noopener noreferrer">Leggi l’informativa prima di iniziare</a>.</p>}
         </div>
