@@ -26,10 +26,10 @@
   .research-start{width:100%;gap:16px}
 }
 
-/* A stable landing position for each mobile question, below the fixed site header. */
+/* Keep browser scroll anchoring from fighting the per-question mobile position. */
 @media(max-width:700px){
-  .research-panel{scroll-margin-top:82px}
-  .research-panel h1{scroll-margin-top:0}
+  .research-panel{overflow-anchor:none}
+  .research-panel h1{scroll-margin-top:92px}
 }
 /* The checked option is visible before the next single-choice question appears. */
 .research-option{transition:background-color .2s ease,border-color .2s ease}
