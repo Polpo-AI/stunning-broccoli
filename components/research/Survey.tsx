@@ -89,7 +89,7 @@ export default function Survey({ audience, collectionEnabled = false }: { audien
     const updatedQuestion = questions(audience, updated)[step];
     // Multiple-choice and free-text questions require an explicit Continue action.
     // With multiple single-choice fields, only advance after the last is answered.
-    if (field.multi || updatedQuestion.detail || updatedQuestion.fields.some(item => item.multi) || !validQuestion(updatedQuestion, updated)) return;
+    if (field.multi || updatedQuestion.fields.some(item => item.multi) || !validQuestion(updatedQuestion, updated)) return;
     advanceTimer.current = setTimeout(() => {
       advanceTimer.current = null;
       if (step === 6) navigate('review');
@@ -158,14 +158,14 @@ export default function Survey({ audience, collectionEnabled = false }: { audien
             <h1 ref={title} tabIndex={-1}>{question.title}</h1><p className="research-hint" id="question-hint">{question.hint}</p>
             <form onSubmit={event => { event.preventDefault(); next(); }} aria-describedby="question-hint">
               {question.fields.map(field => <Choices key={field.id} field={field} values={answers[field.id] ?? []} onChange={values => choose(field, values)} />)}
-              {question.detail && <label className="research-detail">Dettaglio facoltativo <span>(massimo 300 caratteri)</span><textarea maxLength={300} rows={3} value={detail} onChange={event => { setDetail(event.target.value); setSubmissionKey(''); }} placeholder="Cosa miglioreresti o manterresti? Senza nomi, recapiti o dati di altre persone." /><small>{detail.length}/300 · Evita nomi e informazioni identificative.</small></label>}
               {error && <p role="alert" className="research-error">{error}</p>}
-              <div className="research-actions"><button type="button" className="research-secondary" onClick={() => { clearAdvance(); setError(''); step === 0 ? navigate('intro') : setStep(step - 1); }}>Indietro</button>{(question.detail || question.fields.some(field => field.multi)) && <button className="research-primary" type="submit">{step === 6 ? 'Rivedi le risposte' : 'Continua'} <PolpoIcon name="outward" /></button>}</div>
+              <div className="research-actions"><button type="button" className="research-secondary" onClick={() => { clearAdvance(); setError(''); step === 0 ? navigate('intro') : setStep(step - 1); }}>Indietro</button>{question.fields.some(field => field.multi) && <button className="research-primary" type="submit">{step === 6 ? 'Rivedi le risposte' : 'Continua'} <PolpoIcon name="outward" /></button>}</div>
             </form>
           </>}
           {screen === 'review' && <>
             <p className="research-eyebrow">7 DI 7 · RIEPILOGO LOCALE</p><h1 ref={title} tabIndex={-1}>Tutto come volevi?</h1><p className="research-hint">Puoi correggere le scelte. Nessuna risposta è stata inviata.</p>
             <ol className="research-review">{allQuestions.map((item, index) => <li key={item.title}><div><h2>{index + 1}. {item.title}</h2>{item.fields.map(field => <p key={field.id}><strong>{field.label}: </strong>{(answers[field.id] ?? []).map(value => field.options.find(option => option.value === value)?.label).filter(Boolean).join('; ') || 'Da completare'}</p>)}{item.detail && detail && <p>{detail}</p>}</div><button aria-label={`Modifica domanda ${index + 1}`} onClick={() => { setStep(index); navigate('questions'); }}>Modifica</button></li>)}</ol>
+            {!isPlayer && <label className="research-detail">Vuoi aggiungere un dettaglio alla priorità indicata? <span>(facoltativo, massimo 300 caratteri)</span><textarea maxLength={300} rows={3} value={detail} onChange={event => { setDetail(event.target.value); setSubmissionKey(''); }} placeholder="Cosa miglioreresti o manterresti? Senza nomi, recapiti o dati di altre persone." /><small>{detail.length}/300 · Evita nomi e informazioni identificative.</small></label>}
             {collectionEnabled && <label className="research-age-check"><input type="checkbox" checked={consentAccepted} onChange={event => setConsentAccepted(event.target.checked)} /><span>Ho letto l’<a href="/ricerca/informativa" target="_blank" rel="noopener noreferrer">informativa</a> e acconsento al trattamento delle risposte per questa ricerca. Posso revocare il consenso con il codice ricevuto. Nessun marketing.</span></label>}
             {error && <p role="alert" className="research-error">{error}</p>}
             <div className="research-actions"><button className="research-secondary" onClick={() => { setStep(6); navigate('questions'); }}>Indietro</button><button className="research-primary" disabled={sending || (collectionEnabled && !consentAccepted)} onClick={() => { const missing = allQuestions.findIndex(item => !validQuestion(item, answers)); if (missing >= 0) { setStep(missing); navigate('questions'); setError('Completa questa domanda dopo la modifica del percorso.'); } else if (collectionEnabled) void saveResponse(); else navigate('contact'); }}>{sending ? 'Salvataggio…' : collectionEnabled ? 'Invia le risposte' : 'Prosegui senza invio'} →</button></div>
