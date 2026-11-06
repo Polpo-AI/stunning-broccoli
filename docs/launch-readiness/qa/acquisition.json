@@ -1,0 +1,87 @@
+{
+  "base": "https://polpo-ai.com",
+  "live": true,
+  "transport": "live TLS-verified proxy forwarding",
+  "errors": [],
+  "layouts": [
+    {
+      "label": "giocatori-intro",
+      "width": 320,
+      "scroll": 320
+    },
+    {
+      "label": "giocatori-intro",
+      "width": 390,
+      "scroll": 390
+    },
+    {
+      "label": "giocatori-intro",
+      "width": 768,
+      "scroll": 768
+    },
+    {
+      "label": "giocatori-intro",
+      "width": 1440,
+      "scroll": 1440
+    },
+    {
+      "label": "giocatori-contact",
+      "width": 390,
+      "scroll": 390
+    },
+    {
+      "label": "circoli-intro",
+      "width": 320,
+      "scroll": 320
+    },
+    {
+      "label": "circoli-intro",
+      "width": 390,
+      "scroll": 390
+    },
+    {
+      "label": "circoli-intro",
+      "width": 768,
+      "scroll": 768
+    },
+    {
+      "label": "circoli-intro",
+      "width": 1440,
+      "scroll": 1440
+    },
+    {
+      "label": "circoli-contact",
+      "width": 390,
+      "scroll": 390
+    },
+    {
+      "label": "homepage",
+      "width": 390,
+      "scroll": 390
+    },
+    {
+      "label": "homepage",
+      "width": 1440,
+      "scroll": 1440
+    }
+  ],
+  "surveys": [
+    {
+      "audience": "giocatori",
+      "receipt": "bad7e47c-c4ae-446f-aa96-a20aa3afb4b0",
+      "ageBand": "14_17",
+      "status": 202
+    },
+    {
+      "audience": "circoli",
+      "receipt": "b1cfbf4c-480b-47ef-92cd-dc22f4e7f7a4",
+      "ageBand": "18_plus",
+      "status": 202
+    }
+  ],
+  "telemetry": [],
+  "consultation": {
+    "reference": "0bd4c7e6-2ad2-453f-92c0-3fcd1c0a66ce",
+    "status": 202
+  }
+}

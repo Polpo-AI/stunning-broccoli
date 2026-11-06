@@ -40,7 +40,27 @@ Il worker mini-consulenza è attivo tramite Supabase cron; health prima del nuov
 
 ## Evidenze finali
 
-Questa sezione verrà completata con esiti browser, scheduler, deploy e test sintetici di produzione. Finché mancano queste evidenze il documento non dichiara il lancio completato.
+Esito: **collaudo operativo completato**, 6 novembre 2026, circa 01:03 Europe/Rome.
+
+- PR #36: https://github.com/Polpo-AI/stunning-broccoli/pull/36, integrata con autorizzazione esplicita al merge amministrativo. Le due osservazioni della review automatica sono corrette: informativa in nuova scheda senza perdita delle risposte e codici UUID normalizzati, incluso il caso maiuscolo.
+- Produzione: commit `4df5593dc28084fcbc267b59c22bae3e49fac894`, deployment `dpl_JAJmP2Kmsft2NgynTkUv42SSap8e`, **READY**, Next.js, build remota circa 45 secondi. Alias `polpo-ai.com` e `www.polpo-ai.com` assegnati. Vercel Hobby confermato, nessun acquisto.
+- Browser su dominio pubblico: HTTP 200 per entrambe le survey, informativa, revoca e contatti; HTTP 202 per due risposte sintetiche e il recapito separato, retry con stessa chiave senza duplicati, invio senza consenso rifiutato 422, under 14 bloccato prima delle domande. Nessuna telemetria survey, storage locale/sessione vuoto, zero errori JavaScript.
+- Responsive: survey a 320/390/768/1440 px e homepage a 390/1440 px, senza overflow. Un solo h1 con «Otto braccia. Una sola missione: liberare le tue.». Screenshot ispezionati. Preferenza di movimento ridotto attiva.
+- Readback Supabase: risposte di entrambi i percorsi e un recapito separato, tre prove del consenso; fasce 14–17 e 18+, scadenze a 90 giorni e 24 mesi confermate. Cella statistica sotto cinque soppressa, soglia cinque verificata in PostgreSQL isolato; query dei risultati remoti eseguita con accesso riservato.
+- Revoca sul dominio pubblico, con codici anche in maiuscolo: HTTP 200; risposte sintetiche e recapito assenti al readback. Reinvio dopo revoca rifiutato 409. Le tre prove minime sono annotate come revocate; la scadenza resta 24 mesi dall’acquisizione. Nessun fixture survey attivo residuo.
+- Mini-consulenza: richiesta sintetica `0bd4c7e6-2ad2-453f-92c0-3fcd1c0a66ce` acquisita dal browser in produzione e confermata in Supabase. Retry restituisce lo stesso riferimento. Il cron effettivo ha portato CRM a `synced` e notifica a `sent`, senza errori.
+- HubSpot: contatto sintetico `914179186934`, readback del riferimento, sport, automazioni_ai, analisi_gratuita, WhatsApp e problema messaggi, marketing `false`, azienda in revisione manuale. Nessuna trattativa né iscrizione marketing richiesta dal codice. Il record sintetico resta riconoscibile come POLPO TEST per l’audit: non rappresenta una richiesta cliente.
+- Email: Resend ha restituito `lastEvent: delivered`, `providerAccepted: true`, `deliveryVerified: true` attraverso il controllo server riservato ai fixture sintetici. È prova di consegna del provider, non di lettura umana.
+- `/api/contact`: 410. `/contatti/prova`: 404. Endpoint di evidenza senza autenticazione: 401. Il vecchio componente contatti è eliminato.
+- Health finale: zero richieste CRM/notifiche pendenti, zero fallite, worker HTTP 200 senza timeout. Scansione Vercel del nuovo deployment: nessun log `error`/`fatal` nella finestra di 15 minuti. Nessuna affermazione su errori fuori dalla finestra o non registrati.
+
+Nel cloud, Chromium non utilizzava correttamente la CA del proxy gestito. Il runner inoltra ogni richiesta browser reale tramite il trasporto Playwright API configurato con lo stesso proxy e con verifica TLS attiva e CA dell’ambiente. Nessuna API, risposta o dato di produzione è simulato. Questo dettaglio è registrato in `acquisition.json` e `withdrawal.json`. Il runner `scripts/qa-launch-production.cjs` include il supporto al trasporto del cloud con `POLPO_CLOUD_PROXY_TRANSPORT=true`; da un normale ambiente può usare direttamente la rete del browser.
+
+Questo documento e la descrizione aggiornata della PR #36 riportano gli esiti finali. Le prove del consenso sintetiche seguono la normale retention; non vengono eliminate per occultare il test.
+
+## Consultare i risultati
+
+Aprire https://supabase.com/dashboard/project/llbqoyucmvuijfobzryj/editor con l’account autorizzato e selezionare lo schema `research_private`: `survey_responses` per risposte, `survey_contacts` per i recapiti separati, `response_distribution` per le statistiche con soglia di cinque. Le query e la procedura per i diritti sono in `docs/research/RESULTS.md` nel repository. Non esiste una dashboard pubblica delle risposte.
 
 ## Limiti
 
