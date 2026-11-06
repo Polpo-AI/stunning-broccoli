@@ -1,5 +1,5 @@
 import { createHmac } from 'node:crypto';
-export const RESEARCH_VERSION = 'padel-surveys-v2';
+export { VERSION as RESEARCH_VERSION } from './questions';
 import { RESEARCH_PRIVACY_VERSION } from './privacy';
 export { RESEARCH_PRIVACY_VERSION } from './privacy';
 export const RESEARCH_PRIVACY_STATUS: 'draft' | 'approved' = 'approved';
