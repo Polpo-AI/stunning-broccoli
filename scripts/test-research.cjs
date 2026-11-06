@@ -32,10 +32,10 @@ const intake = require('../lib/research/intake.ts');
 const serverConfig = require('../lib/research/server-config.ts');
 
 function validPlayerAnswers() {
-  return { frequency: ['monthly'], group: ['friends'], channel: ['never'], bookingChannel: ['never'], ease: ['na'], failures: ['no_intent'], obstacle: ['no_intent'], aiActions: ['none'] };
+  return { frequency: ['monthly'], group: ['friends'], channel: ['friends'], ease: ['3'], failures: ['1'], obstacle: ['courts'], aiActions: ['draft', 'confirm_booking'] };
 }
 function validClubAnswers() {
-  return { role: ['manager'], courts: ['3_5'], tools: ['none'], problems: ['none'], mainActivity: ['na'], activeHours: ['na'], incidents: ['na'], satisfaction: ['na'], priority: ['none'], interest: ['no'] };
+  return { role: ['manager'], courts: ['3_5'], tools: ['none'], problems: ['none'], mainActivity: ['na'], activeHours: ['na'], incidents: ['na'], satisfaction: ['3'], priority: ['none'], interest: ['no'] };
 }
 const fakeConfig = {
   enabled: true, databaseUrl: 'https://llbqoyucmvuijfobzryj.supabase.co', databaseKey: 'synthetic-service-key-for-tests',
@@ -71,21 +71,20 @@ test('friends-only excludes matchmaking obstacles and uses coordination suggesti
   const updated = q.updateAnswer({ obstacle: ['compatibility'], aiActions: ['suggest_players'] }, 'group', ['friends']);
   assert.equal(updated.obstacle, undefined); assert.equal(updated.aiActions, undefined);
 });
-test('Playtomic purpose is required only when selected and cleared after change', () => {
-  const question = q.questions('giocatori', { channel: ['playtomic'] })[2];
-  assert.equal(question.fields.length, 3);
-  assert.equal(q.validQuestion(question, { channel: ['playtomic'] }), false);
-  for (const purpose of ['booking', 'matching', 'both']) assert.ok(q.validQuestion(question, { channel: ['playtomic'], playtomicUse: [purpose], bookingChannel: ['playtomic'] }));
-  assert.equal(q.questions('giocatori', { channel: ['whatsapp'] })[2].fields.length, 2);
-  assert.ok(q.validQuestion(q.questions('giocatori', { channel: ['whatsapp'] })[2], { channel: ['whatsapp'], bookingChannel: ['playtomic'] }));
-  assert.equal(q.updateAnswer({ playtomicUse: ['matching'], bookingChannel: ['playtomic'] }, 'channel', ['whatsapp']).playtomicUse, undefined);
-  assert.equal(q.updateAnswer({ bookingChannel: ['playtomic'] }, 'channel', ['other_app']).bookingChannel, undefined);
+test('current player channel choices exclude removed booking branches and clear ease on edits', () => {
+  const question = q.questions('giocatori', {})[2];
+  assert.deepEqual(question.fields.map(f => f.id), ['channel']);
+  for (const option of question.fields[0].options) assert.ok(q.validQuestion(question, {channel: [option.value]}));
+  assert.equal(q.validQuestion(question, {channel: ['playtomic']}), false);
+  assert.equal(q.updateAnswer({ease: ['5']}, 'channel', ['app']).ease, undefined);
 });
-test('first-time player can complete without inventing an ease rating', () => {
-  const question = q.questions('giocatori', { channel: ['never'] })[3];
-  assert.ok(q.validQuestion(question, { ease: ['na'] }));
-  assert.equal(q.validQuestion(question, { ease: ['5'] }), false);
+
+test('player ease requires one of the five currently displayed ratings', () => {
+  const question = q.questions('giocatori', {})[3];
+  for (const rating of ['1','2','3','4','5']) assert.ok(q.validQuestion(question, {ease:[rating]}));
+  for (const rating of ['na','skip']) assert.equal(q.validQuestion(question, {ease:[rating]}), false);
 });
+
 test('max two problems, exclusive no-problem and reversible choices', () => {
   const field = q.questions('circoli', {})[2].fields[0];
   let values = q.toggle(field, [], 'messages');
@@ -105,7 +104,7 @@ test('weekly work is attributed to a selected activity; editing clears dependent
   assert.ok(question.fields.some(f => f.id === 'incidents'));
   assert.ok(question.fields.find(f => f.id === 'incidents').options.some(o => o.value === 'zero'));
   assert.ok(q.questions('circoli', {})[6].fields[0].options.some(o => o.value === 'offer'));
-  assert.ok(q.questions('giocatori', {})[5].fields[0].options.some(o => o.value === 'no_intent'));
+  assert.ok(!q.questions('giocatori', {})[5].fields[0].options.some(o => o.value === 'no_intent'));
   assert.equal(q.updateAnswer({ incidents: ['4_plus'] }, 'mainActivity', ['admin']).incidents, undefined);
 });
 test('production routes remain unavailable even with local override', () => {
@@ -116,11 +115,11 @@ test('production routes remain unavailable even with local override', () => {
   for (const env of [{ NODE_ENV: 'development' }, { VERCEL_ENV: 'preview' }, { NODE_ENV: 'production', RESEARCH_LOCAL_PREVIEW: '1' }]) assert.equal(load('lib/research/availability.ts', env).researchPreviewAvailable(), true);
 });
 
-test('server schema accepts exact v2 branches and rejects unknown, missing, and incompatible data', () => {
+test('server schema accepts current question branches and rejects unknown, missing, and incompatible data', () => {
   assert.equal(q.validAnswerSet('giocatori', validPlayerAnswers()), true);
   assert.equal(q.validAnswerSet('circoli', validClubAnswers(), ''), true);
   assert.equal(q.validAnswerSet('giocatori', { ...validPlayerAnswers(), playtomicUse: ['matching'] }), false);
-  assert.equal(q.validAnswerSet('giocatori', { ...validPlayerAnswers(), ease: ['5'] }), false);
+  assert.equal(q.validAnswerSet('giocatori', { ...validPlayerAnswers(), ease: ['na'] }), false);
   assert.equal(q.validAnswerSet('giocatori', { ...validPlayerAnswers(), bookingChannel: ['playtomic'] }), false);
   assert.equal(q.validAnswerSet('giocatori', { ...validPlayerAnswers(), obstacle: ['players'] }), false);
   assert.equal(q.validAnswerSet('circoli', { ...validClubAnswers(), tools: ['none', 'whatsapp'] }), false);
@@ -279,3 +278,25 @@ test('withdrawal validates origin and secret receipt, supports closed collection
   assert.equal((await intake.withdrawResearch(request('',{purpose:'contact',code:idempotencyKey()}),cfg,{rpc:async()=>{throw Error('private');}})).status,503);
 });
 
+
+// Exercise the exact client contract against the real intake, rather than mocking a successful API reply.
+test('both current browser payloads persist with the same questionnaire version', async () => {
+  assert.equal(serverConfig.RESEARCH_VERSION, q.VERSION);
+  const saved=[];
+  const service=intake.createResearchIntake(fakeConfig, {
+    response:async record=>{saved.push(record);return {code:'accepted',response_id:idempotencyKey()};},
+    contact:async()=>{throw Error('unexpected contact');},
+  });
+  for (const [audience,answers] of [['giocatori',validPlayerAnswers()],['circoli',validClubAnswers()]]) {
+    for (const ageBand of ['14_17','18_plus']) {
+      const body={audience,answers,surveyVersion:q.VERSION,ageBand,ageConfirmed:true,consentAccepted:true,privacyVersion:'padel-research-privacy-v1',idempotencyKey:idempotencyKey(),website:'',...(audience==='circoli'?{detail:''}:{})};
+      const response=await service.response(request('',body));
+      assert.equal(response.status,202,JSON.stringify(await response.json()));
+      assert.equal(saved.at(-1).survey_version,q.VERSION);
+      const outdated=await service.response(request('',{...body,surveyVersion:'padel-surveys-v2'}));
+      assert.equal(outdated.status,422);
+      assert.equal((await outdated.json()).code,'survey_version_outdated');
+    }
+  }
+  assert.equal(saved.length,4);
+});

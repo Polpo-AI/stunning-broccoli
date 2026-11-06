@@ -62,6 +62,9 @@ export function createResearchIntake(config: ResearchConfig, store: ResearchStor
         return reply(reason === 'too_large' ? 413 : 400, { code: 'invalid_request' });
       }
       const keys = ['audience', 'surveyVersion', 'answers', 'ageConfirmed', 'ageBand', 'consentAccepted', 'privacyVersion', 'detail', 'idempotencyKey', 'website'];
+      if (validObject(body, keys, keys.filter(key => key !== 'detail')) && body.surveyVersion !== RESEARCH_VERSION) {
+        return reply(422, { code: 'survey_version_outdated', message: 'Il questionario è stato aggiornato. Ricarica la pagina e ricompila la ricerca prima di inviare.' });
+      }
       if (!validObject(body, keys, keys.filter(key => key !== 'detail')) || (body.audience !== 'giocatori' && body.audience !== 'circoli') ||
           body.surveyVersion !== RESEARCH_VERSION || typeof body.idempotencyKey !== 'string' || !UUID.test(body.idempotencyKey) ||
           body.ageConfirmed !== true || !['14_17', '18_plus'].includes(String(body.ageBand)) || body.consentAccepted !== true || body.privacyVersion !== RESEARCH_PRIVACY_VERSION || body.website !== '' || (body.detail !== undefined && typeof body.detail !== 'string') ||
