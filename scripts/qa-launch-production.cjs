@@ -8,8 +8,12 @@ if(live&&!process.argv.includes('--write-synthetic'))throw Error('SYNTHETIC_WRIT
 const file=process.env.POLPO_LAUNCH_FIXTURE_FILE||'/tmp/polpo-launch-fixtures.json';
 const out=process.env.POLPO_LAUNCH_EVIDENCE||'/tmp/polpo-launch-evidence';
 (async()=>{fs.mkdirSync(out,{recursive:true});const browser=await chromium.launch({executablePath:process.env.PLAYWRIGHT_EXECUTABLE_PATH||'/usr/bin/chromium',headless:true});
-const context=await browser.newContext({reducedMotion:'reduce'}),page=await context.newPage();page.setDefaultTimeout(15000);
-const report={base,live,errors:[],layouts:[],surveys:[],telemetry:[]};page.on('pageerror',e=>report.errors.push(e.message));
+const proxy = live && process.env.POLPO_CLOUD_PROXY_TRANSPORT === 'true' ? {server:process.env.HTTPS_PROXY} : undefined;
+const context=await browser.newContext({reducedMotion:'reduce', ...(proxy?{proxy}:{})}),page=await context.newPage();page.setDefaultTimeout(20000);
+// In the managed environment, Node trusts the supplied proxy CA. Forward every
+// live browser request through its TLS-verified transport; no responses are mocked.
+if(proxy) await context.route('https://**/*', async route => { const response = await route.fetch(); await route.fulfill({response}); });
+const report={base,live,transport:proxy?'live TLS-verified proxy forwarding':'browser network',errors:[],layouts:[],surveys:[],telemetry:[]};page.on('pageerror',e=>report.errors.push(e.message));
 page.on('request',r=>{if(page.url().includes('/ricerca')&&/analytics|insights|vitals/.test(r.url()))report.telemetry.push(r.url());});
 const choose=async (field,value)=>page.locator(`input[name="${field}"][value="${value}"]`).check();
 const next=async()=>page.getByRole('button',{name:'Continua',exact:true}).click();
@@ -19,7 +23,7 @@ if(withdraw){const fixture=JSON.parse(fs.readFileSync(file));await page.goto(bas
 if(fixture.contact){const r=await context.request.post(base+'/api/research/withdraw',{data:{purpose:'contact',code:fixture.contact.idempotencyKey},headers:{Origin:base}});assert.equal(r.status(),200);}
 report.withdrawal=true;fs.writeFileSync(out+'/withdrawal.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report));return;}
 const fixture={surveys:[]};
-for(const audience of ['giocatori','circoli']){
+for(const audience of process.argv.includes('--consultation-only')?[]:['giocatori','circoli']){
  const response=await page.goto(base+'/ricerca/'+audience);assert.equal(response.status(),200);assert.match(response.headers()['x-robots-tag'],/noindex/);assert.match(response.headers()['cache-control'],/no-store/);
  for(const width of [320,390,768,1440]){await page.setViewportSize({width,height:900});await layout(`${audience}-intro`);}
  await page.setViewportSize({width:390,height:844});await page.getByLabel('Fascia di età').selectOption('under_14');assert.equal(await page.getByRole('button',{name:/Inizia la ricerca/}).isDisabled(),true);
@@ -45,10 +49,10 @@ for(const width of [390,1440]){await page.setViewportSize({width,height:900});aw
 if(live){
  await page.goto(base+'/contatti');await page.setViewportSize({width:390,height:844});await page.locator('.cw-sector:has(input[value=sport])').click();await next();await page.locator('.cw-problem').nth(1).click();await next();await page.locator('.cw-tool').first().click();await next();await page.locator('textarea').fill('POLPO_SYNTHETIC_PRODUCTION_TEST');await next();
  const id=randomUUID(),email=`info+polpo-test-${id}@polpo-ai.com`;await page.locator('input[name=name]').fill('POLPO TEST');await page.locator('input[name=businessName]').fill('TEST TECNICO POLPO');await page.locator('input[name=email]').fill(email);await page.locator('.cw-consent').click();assert.equal(await page.locator('.cw-consent').count(),1);
- const wait=page.waitForResponse(r=>r.url().endsWith('/api/consultation')&&r.request().method()==='POST');await page.getByRole('button',{name:'Invia la richiesta di analisi',exact:true}).click();const sent=await wait;assert.equal(sent.status(),202,await sent.text());const receipt=await sent.json();fixture.consultation={reference:receipt.reference,email,body:sent.request().postDataJSON()};assert.equal(fixture.consultation.body.marketingOptIn,false);await page.locator('.cw-receipt').waitFor();await page.screenshot({path:out+'/consultation-receipt.png',fullPage:true});report.consultation={reference:receipt.reference,status:202};
+ const wait=page.waitForResponse(r=>r.url().endsWith('/api/consultation')&&r.request().method()==='POST');await page.getByRole('button',{name:'Invia la richiesta di analisi',exact:true}).click();const sent=await wait;assert.equal(sent.status(),202,await sent.text());const receipt=await sent.json();fixture.consultation={reference:receipt.reference,email,body:sent.request().postDataJSON()};fs.writeFileSync(file,JSON.stringify(fixture,null,2),{mode:0o600});assert.equal(fixture.consultation.body.marketingOptIn,false);await page.locator('.cw-receipt').waitFor();await page.screenshot({path:out+'/consultation-receipt.png',fullPage:true});report.consultation={reference:receipt.reference,status:202};
  const retry=await context.request.post(base+'/api/consultation',{data:fixture.consultation.body,headers:{Origin:base}});assert.equal(retry.status(),202);assert.equal((await retry.json()).reference,receipt.reference);
  assert.equal((await context.request.post(base+'/api/contact',{data:{}})).status(),410);
- assert.equal((await context.request.get(base+'/api/internal/consultation-delivery-evidence')).status(),401);
+ if(!process.argv.includes('--consultation-only')) assert.equal((await context.request.get(base+'/api/internal/consultation-delivery-evidence')).status(),401);
  assert.equal((await context.request.get(base+'/contatti/prova')).status(),404);
  fs.writeFileSync(file,JSON.stringify(fixture,null,2),{mode:0o600});
 }

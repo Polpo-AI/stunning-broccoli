@@ -1,0 +1,10 @@
+{
+  "base": "https://polpo-ai.com",
+  "live": true,
+  "transport": "live TLS-verified proxy forwarding",
+  "errors": [],
+  "layouts": [],
+  "surveys": [],
+  "telemetry": [],
+  "withdrawal": true
+}
