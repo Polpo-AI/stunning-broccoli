@@ -63,7 +63,10 @@ export default function Survey({ audience, collectionEnabled = false }: { audien
         // Align the actual question, not the container above its progress bar.
         // A fixed offset leaves room for the site header while showing answers immediately.
         const headingTop = window.scrollY + heading.getBoundingClientRect().top;
-        window.scrollTo({ top: Math.max(0, headingTop - 92), behavior: 'instant' });
+        const header = document.querySelector<HTMLElement>('header');
+        const headerHeight = header?.getBoundingClientRect().height ?? 0;
+        const offset = Math.min(headerHeight, 76) + 12;
+        window.scrollTo({ top: Math.max(0, headingTop - offset), behavior: 'instant' });
       }
     });
     return () => cancelAnimationFrame(frame);
@@ -73,7 +76,7 @@ export default function Survey({ audience, collectionEnabled = false }: { audien
   function finish() { setAnswers({}); setDetail(''); setAgeBand(''); setConsentAccepted(false); setContactEmail(''); setResearchContact(false); setContactKey(''); navigate('done'); }
   function next() {
     clearAdvance();
-    if (!validQuestion(question, answers)) { setError('Scegli una risposta per ogni gruppo. Puoi usare “Preferisco non rispondere” dove presente.'); return; }
+    if (!validQuestion(question, answers)) { setError('Scegli una risposta per ogni gruppo.'); return; }
     setError('');
     if (step === 6) navigate('review'); else setStep(step + 1);
   }
