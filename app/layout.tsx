@@ -43,7 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
-      { '@type': 'Organization', '@id': 'https://polpo-ai.com/#organization', name: 'Polpo AI', url: 'https://polpo-ai.com', logo: 'https://polpo-ai.com/polpo-icon.jpg', description, email: 'info@polpo-ai.com', knowsAbout: ['Assistenti AI', 'Automazione delle prenotazioni', 'Automazione dei processi aziendali'] },
+      { '@type': 'Organization', '@id': 'https://polpo-ai.com/#organization', name: 'Polpo AI', url: 'https://polpo-ai.com', logo: 'https://polpo-ai.com/polpo-icon.jpg', description, email: 'info@polpo-ai.com', telephone: '+393762031767', areaServed: { '@type': 'Country', name: 'Italia' }, contactPoint: { '@type': 'ContactPoint', contactType: 'sales', email: 'info@polpo-ai.com', telephone: '+393762031767', url: 'https://polpo-ai.com/contatti', availableLanguage: 'it' }, knowsAbout: ['Assistenti AI', 'Assistenti WhatsApp per prenotazioni', 'Automazione delle prenotazioni', 'Automazione dei processi aziendali', 'Assistenti WhatsApp per circoli di padel'] },
       { '@type': 'WebSite', '@id': 'https://polpo-ai.com/#website', name: 'Polpo AI', url: 'https://polpo-ai.com', inLanguage: 'it-IT', publisher: { '@id': 'https://polpo-ai.com/#organization' } },
     ],
   };
