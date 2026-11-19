@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useReportWebVitals } from 'next/web-vitals';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  CONSENT_OPEN_EVENT, clarityProjectId, crossedScrollThresholds, gaMeasurementId, isPrivatePath,
+  CONSENT_OPEN_EVENT, CONSENT_STORAGE_KEY, clarityProjectId, crossedScrollThresholds, gaMeasurementId, isPrivatePath,
   privatePathOf, readConsent, saveConsent, trackersLoaded, sectionName, startAnalytics, stopAnalytics, trackEvent, type ConsentChoice,
 } from '@/lib/analytics';
 
@@ -120,8 +120,21 @@ export default function SiteAnalytics() {
     setChoice(stored?.analytics ?? null);
     setBannerOpen(!stored);
     const reopen = () => { reopened.current = true; setBannerOpen(true); };
+    // Scelta fatta in un'altra scheda: la revoca vale subito anche qui (documento nuovo se i tracker erano attivi).
+    const onStorage = (event: StorageEvent) => {
+      if (event.key !== null && event.key !== CONSENT_STORAGE_KEY) return;
+      const next = readConsent();
+      if (next?.analytics !== 'granted' && trackersLoaded()) {
+        stopAnalytics();
+        window.location.reload();
+        return;
+      }
+      setChoice(next?.analytics ?? null);
+      setBannerOpen(!next);
+    };
     window.addEventListener(CONSENT_OPEN_EVENT, reopen);
-    return () => window.removeEventListener(CONSENT_OPEN_EVENT, reopen);
+    window.addEventListener('storage', onStorage);
+    return () => { window.removeEventListener(CONSENT_OPEN_EVENT, reopen); window.removeEventListener('storage', onStorage); };
   }, []);
 
   const active = enabled && choice === 'granted' && !privatePath;
