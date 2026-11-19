@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "test:research": "node --test scripts/test-research.cjs",
     "qa:research:active": "node scripts/qa-research-active.cjs",
-    "test:consultation": "node --test scripts/test-consultation.cjs"
+    "test:consultation": "node --test scripts/test-consultation.cjs",
+    "test:analytics": "node --test scripts/test-analytics.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

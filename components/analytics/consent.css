@@ -1,0 +1,16 @@
+.cookie-banner{position:fixed;z-index:1000;left:16px;right:16px;bottom:16px;max-width:520px;margin-left:auto;padding:22px 24px 20px;background:#071427f2;color:#d7e2ef;border:1px solid #6dbef640;border-radius:18px;box-shadow:0 18px 60px #0009;font-size:13px;line-height:1.7;backdrop-filter:blur(10px)}
+.cookie-banner p{margin:0}
+.cookie-banner a{color:#7be0dd;text-decoration:underline;text-underline-offset:3px}
+.cookie-banner-title{font-family:var(--font-jakarta),sans-serif;font-size:16px;font-weight:600;color:#fff;margin-bottom:8px!important;padding-right:36px}
+.cookie-banner-close{position:absolute;top:10px;right:12px;width:44px;height:44px;border:0;background:none;color:#a6bcd3;font-size:24px;line-height:1;cursor:pointer;border-radius:50%}
+.cookie-banner-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+/* Accetta e Rifiuta hanno lo stesso peso visivo (Garante, linee guida cookie 2021). */
+.cookie-banner-choice{min-height:48px;padding:12px 18px;border-radius:100px;border:1px solid #17ece7;background:transparent;color:#eaf8ff;font:700 13px/1.3 var(--font-inter),sans-serif;cursor:pointer;transition:background .2s,color .2s}
+.cookie-banner-choice:hover{background:#17ece7;color:#011c28}
+.cookie-banner-current{margin-top:12px!important;font-size:11px;color:#a6bcd3}
+.cookie-banner :focus-visible,.cookie-preferences:focus-visible{outline:2px solid #74e8e3;outline-offset:3px}
+.cookie-preferences{background:none;border:0;padding:0;min-height:44px;color:inherit;font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:760px){.cookie-banner{left:12px;right:12px;bottom:12px;padding:18px 18px 16px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){.cookie-banner-choice{transition:none}}
+.cookie-tool{margin:0 0 22px}
+.a-footer nav .cookie-preferences{font-size:11px;color:#b9cedf;text-decoration:none}.a-footer nav .cookie-preferences:hover{color:#60eee6}
