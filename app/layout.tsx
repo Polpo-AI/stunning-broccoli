@@ -6,6 +6,7 @@ import './consultation.css';
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import SiteMetrics from '@/components/landing/SiteMetrics';
+import SiteAnalytics from '@/components/analytics/SiteAnalytics';
 import Navbar from '@/components/landing/Navbar';
 import PageChrome from '@/components/landing/PageChrome';
 
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar />
         <PageChrome>{children}</PageChrome>
         <SiteMetrics />
+        <SiteAnalytics />
       </body>
     </html>
   );
