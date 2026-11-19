@@ -6,7 +6,7 @@ import { useReportWebVitals } from 'next/web-vitals';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   CONSENT_OPEN_EVENT, clarityProjectId, crossedScrollThresholds, gaMeasurementId, isPrivatePath,
-  readConsent, saveConsent, sectionName, startAnalytics, stopAnalytics, trackEvent, type ConsentChoice,
+  privatePathOf, readConsent, saveConsent, trackersLoaded, sectionName, startAnalytics, stopAnalytics, trackEvent, type ConsentChoice,
 } from '@/lib/analytics';
 
 const ids = { ga: gaMeasurementId(), clarity: clarityProjectId() };
@@ -128,6 +128,25 @@ export default function SiteAnalytics() {
   useEffect(() => { if (active) startAnalytics(ids); }, [active]);
   useEngagementTracking(active, pathname);
 
+  // GA4 e Clarity non si spengono in un documento già aperto: verso i percorsi riservati
+  // si passa sempre da un caricamento completo, che arriva senza tracker e con la CSP del middleware.
+  useEffect(() => {
+    if (!enabled) return;
+    const onClick = (event: MouseEvent) => {
+      if (!trackersLoaded() || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const link = event.target instanceof Element ? event.target.closest('a[href]') : null;
+      if (!link || (link.getAttribute('target') && link.getAttribute('target') !== '_self')) return;
+      if (!privatePathOf(link.getAttribute('href') || '', window.location.origin)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      window.location.assign((link as HTMLAnchorElement).href);
+    };
+    document.addEventListener('click', onClick, { capture: true });
+    return () => document.removeEventListener('click', onClick, { capture: true });
+  }, []);
+  // Ripiego per navigazioni senza click (indietro/avanti, router.push): documento nuovo.
+  useEffect(() => { if (privatePath && trackersLoaded()) window.location.reload(); }, [privatePath]);
+
   // Callback stabile: Next registra di nuovo gli osservatori se cambia. trackEvent controlla da sé il consenso.
   useReportWebVitals(reportWebVital);
 
@@ -136,7 +155,12 @@ export default function SiteAnalytics() {
 
   const decide = useCallback((value: ConsentChoice) => {
     saveConsent(value);
-    if (value === 'denied') stopAnalytics();
+    if (value === 'denied') {
+      const wasLoaded = trackersLoaded();
+      stopAnalytics();
+      // Il consent update non ferma le misurazioni senza cookie di GA4 né Clarity: si ricarica la pagina.
+      if (wasLoaded) { window.location.reload(); return; }
+    }
     setChoice(value);
     setBannerOpen(false);
   }, []);

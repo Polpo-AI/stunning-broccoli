@@ -150,6 +150,22 @@ export function startAnalytics(ids: { ga: string | null; clarity: string | null 
   }
 }
 
+/** GA4 o Clarity già caricati in questo documento: non si possono "scaricare", serve un documento nuovo. */
+export function trackersLoaded(): boolean {
+  const s = typeof window === 'undefined' ? undefined : window.__polpoAnalytics;
+  return Boolean(s?.ga || s?.clarity);
+}
+
+/** Percorso riservato raggiunto da un link, oppure null. */
+export function privatePathOf(href: string, origin: string): string | null {
+  try {
+    const url = new URL(href, origin);
+    return url.origin === origin && isPrivatePath(url.pathname) ? url.pathname : null;
+  } catch {
+    return null;
+  }
+}
+
 const TRACKER_COOKIES = /^(_ga(_.*)?|_gid|_gat.*|_clck|_clsk|CLID|ANONCHK|MR|MUID|SM)$/;
 
 /** Revoca: aggiorna i consensi dei tag già caricati e cancella i loro cookie di primo livello. */

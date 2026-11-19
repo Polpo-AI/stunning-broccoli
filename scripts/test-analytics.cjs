@@ -42,3 +42,13 @@ test('trackEvent non invia niente senza consenso',()=>{
   window.location.pathname='/ricerca/giocatori';a.trackEvent('cta_click');assert.equal(calls.length,1);
   delete global.window;
 });
+test('link verso percorsi riservati riconosciuti per forzare un documento nuovo',()=>{
+  const o='https://polpo-ai.com';
+  assert.equal(a.privatePathOf('/ricerca/informativa',o),'/ricerca/informativa');
+  assert.equal(a.privatePathOf('https://polpo-ai.com/contatti/prova?x=1',o),'/contatti/prova');
+  for(const h of ['/contatti','https://altro.it/ricerca','mailto:info@polpo-ai.com','#contatti'])assert.equal(a.privatePathOf(h,o),null,h);
+});
+test('trackersLoaded vero solo dopo il caricamento di GA4 o Clarity',()=>{
+  global.window={__polpoAnalytics:{granted:false}};assert.equal(a.trackersLoaded(),false);
+  window.__polpoAnalytics.clarity='zfwo22z9op';assert.equal(a.trackersLoaded(),true);delete global.window;
+});
