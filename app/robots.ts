@@ -26,7 +26,8 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/admin/', '/_next/'],
+        // Mai bloccare /_next/: contiene CSS e JS che Googlebot deve leggere per il rendering.
+        disallow: ['/api/'],
       },
 
       // ── AI search engines (citano + linkano: vogliamo essere visibili) ───
@@ -56,6 +57,5 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'MJ12bot',    disallow: '/' }, // Majestic, scraping
     ],
     sitemap: 'https://polpo-ai.com/sitemap.xml',
-    host: 'https://polpo-ai.com',
   };
 }
